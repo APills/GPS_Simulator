@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1588197528680
+Bundle-Description: Java Serial Communications Library
+Bundle-ManifestVersion: 2
+Bundle-Name: jSerialComm
+Bundle-SymbolicName: com.fazecast.jSerialComm
+Bundle-Vendor: Fazecast, Inc.
+Bundle-Version: 2.6.2
+Created-By: 9.0.4 (Oracle Corporation)
+Export-Package: com.fazecast.jSerialComm;version="2.6.2"
+Implementation-Title: jSerialComm: Java Serial Communications Library
+Implementation-Vendor: Fazecast, Inc.
+Implementation-Version: 2.6.2
+Private-Package: Android,Android.arm64-v8a,Android.armeabi-v7a,Android
+ .x86,Android.x86_64,Linux.armv5,Linux.armv6-hf,Linux.armv6,Linux.armv
+ 7-hf,Linux.armv7,Linux.armv8_32,Linux.armv8_64,Linux.x86,Linux.x86_64
+ ,OSX.x86_64,Solaris.sparcv8plus_32,Solaris.sparcv9_64,Solaris.x86,Sol
+ aris.x86_64,Windows.x86,Windows.x86_64
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.6))"
+Sealed: true
+Tool: Bnd-5.0.0.202001221519
+

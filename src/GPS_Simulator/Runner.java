@@ -1,0 +1,510 @@
+/**
+ * <h1>NMEA 0183 GPS Simulator</h1>
+ * This GPS Simulator outputs NMEA 0183 data over a serial connection using Fazecast's jSerialComm
+ *    <GPS NMEA 0183 Simulator for Raspberry Pi>
+ *    Copyright (C) <2020>  <Andrew Pillsbury>
+ * @author  Andrew Pillsbury
+ * @version 2.0.0
+ * @since   2020-03-13
+ */
+
+
+package GPS_Simulator;
+
+import com.fazecast.jSerialComm.SerialPort;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.Scanner;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Stream;
+
+public class Runner{
+    /**
+     * A cached threadpool is used in favor of a fixed threadpool because I use many smaller short lived runnable tasks,
+     * if the program were to only be using the nmea thread then a fixed thread pool would be better suited to the task
+     * of a long lived thread, instead I may need 3 at a given time or I only need 1, should the JVM ever decide to do
+     * something incorrectly and close a thread the cached pool will allow the program to run again because it doesn't
+     * have to try to reallocate the dead thread
+     */
+    public static ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
+
+    final public static String PATH = "/home/pi/Desktop/Simulations/";
+    final static String filePath = "/home/pi/Desktop/Debug/ConfigurationFiles/SimulationConfiguration";
+
+    final static SerialPort serialPort = SerialPort.getCommPort("/dev/ttyUSB0");
+    static OutputStream out = null;
+
+    public ObservableList<String> gpsList = FXCollections.observableArrayList();
+    static String fullPath;
+    public String latitude;
+    public String longitude;
+    public String altitude;
+    public String velocity;
+    public String time;
+    public static String parityType;
+
+    public static int counter = 0;
+    public static int endCount = 0;
+    public int gpsListIndex = 0;
+
+
+    public double timeTaken = 0.0;
+    public double millisecondsTimeout = 0.0;
+    public double publicMillisecondsTimeout;
+
+    public boolean running = false;
+    public boolean timeRunning = false;
+
+    ActionEvent actionEvent;
+
+    // -APills 1.0 FXML Tags are required otherwise the FX Loader can't inject the FXML data
+    @FXML Label latitudeLabel;
+    @FXML Label longitudeLabel;
+    @FXML Button SelectSimulation;
+    @FXML Button StartStop;
+    @FXML ListView<String> gpsShow;
+    @FXML Label dataBitsLabel;
+    @FXML Label parityLabel;
+    @FXML Label stopBitsLabel;
+    @FXML Label baudRateLabel;
+    @FXML Label velocityLabel;
+    @FXML Label altitudeLabel;
+    @FXML Label timeLabel;
+    @FXML Label startTimeLabel;
+    @FXML Label endTimeLabel;
+    @FXML ImageView StartStopImage;
+    @FXML Label estTimeLeftLabel;
+    @FXML Label lineCountLabel;
+
+    /**
+     * The data runnable is only called by the nmea thread and only can be called once per second, this avoids slowing
+     * down or crashing the Raspberry Pi by running too many things at once, the processor is already divided by a
+     * number of threads so having the data update every time a GPS sentence is parsed often crashes. With the data
+     * I tested the sentences contained a velocity of over 900 knots which would send data faster than every 250
+     * ms and would cause the UI elements to become unresponsive, in the nmea thread comments I elaborate on the timings further.
+     *
+     * In general UI elements must be updated on the FX thread otherwise they will not take effect, by using
+     * Platform.runLater and moving the changes to their own thread allows them to update the UI at a time when the JVM
+     * finds it convenient to run the Runnable on the FX thread.
+     */
+    public Runnable data = () -> {
+        if (!timeRunning) {
+            startTimeLabel.setText(time);
+            timeRunning = true;
+        }
+        latitudeLabel.setText(latitude);
+        longitudeLabel.setText(longitude);
+        altitudeLabel.setText(altitude);
+        velocityLabel.setText(velocity);
+        timeLabel.setText(time);
+        endTimeLabel.setText(time);
+        double sTimeoutMinutes = (publicMillisecondsTimeout / 100);
+
+        estTimeLeftLabel.setText((int)Math.floor((endCount - counter) / (sTimeoutMinutes * 60)) + " minutes");
+        if(Math.floor((endCount - counter) / (sTimeoutMinutes * 60)) < 1)
+            estTimeLeftLabel.setText((int)Math.floor((endCount - counter) / (sTimeoutMinutes)) + " seconds");
+        lineCountLabel.setText(counter + "/" + endCount);
+    };
+
+    /**
+     * When the Runnable dataReset is run it will clear out the labels. This should only occur after the nmea thread
+     * finishes or the stop button is pressed.
+     */
+    public Runnable dataReset = () -> {
+        latitudeLabel.setText("");
+        longitudeLabel.setText("");
+        altitudeLabel.setText("");
+        velocityLabel.setText("");
+        timeLabel.setText("");
+    };
+
+    /**
+     * The StartStopImageSwitch Runnable is called to Platform.runLater to update the FX thread to change the image of
+     * the Start/Stop button to either be Start or Stop, after the button changes to either start or stop once it will
+     * never need to go back to the blue Start/Stop it initially is because it will always be able to either start or
+     * stop GPS data flow.
+     */
+    Runnable StartStopImageSwitch = () -> {
+        Image startBtn = new Image(String.valueOf(this.getClass().getResource("/assets/Buttons/runner/runner_start.png")));
+        Image stopBtn = new Image(String.valueOf(this.getClass().getResource("/assets/Buttons/runner/runner_stop.png")));
+        if(StartStop.getText().equals("Stop")) {
+            StartStopImage.setImage(stopBtn);
+        }
+        if(StartStop.getText().equals("Start")) {
+            StartStopImage.setImage(startBtn);
+        }
+    };
+
+    /**
+     * The StartStopTextSwitch Runnable is called to Platform.runLater when it is necessary to update the state of the
+     * Start/Stop button without triggering any other runnables or methods
+     */
+    Runnable StartStopTextSwitch = () -> {
+        if(StartStop.getText().equals("Stop")) {
+            StartStop.setText("Start");
+        }
+        else if(StartStop.getText().equals("Start")) {
+            StartStop.setText("Stop");
+        }
+    };
+
+    /**
+     * gpsListing opens the GPS data file and reads its contents then puts it into a ListView, this does not have true
+     * protection against extremely large files which could cause Out of Memory exceptions or other problems so it is
+     * limited to the first 10000 sentences which is about 3x longer than my longest test
+     *
+     *         TODO: Add the ability to clear the simulation ListView when it has a few hundred sentences left and then clear
+     *          the list and add more data ex. if counter greater than 8000 clear 0-8000, 8001-10000 = 0-1998, counter = 0 reader.next
+     *           until counter + 1998 = 10000
+     */
+    public Runnable gpsListing = () -> {
+        counter = 0;
+        File file = new File(fullPath);
+        Scanner reader = null;
+        try {
+            reader = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        while(reader.hasNext() && counter < 10000){
+            String nexLn = reader.nextLine();
+            gpsList.add(gpsListIndex, nexLn);
+            gpsListIndex++;
+            counter++;
+        }
+        gpsShow.setItems(gpsList);
+        endCount = counter;
+        counter = 0;
+        gpsListIndex = 0;
+    };
+
+    /**
+     * The Runnable nmea handles NMEA 0183 data parsing and UI updates for Lat, Long, Alt, Vel, and Time labels including
+     * current simulation time and estimated time to completion.
+     *      <p>
+     *      <h4>TIMING DATA UPDATES</h4>
+     *      <p>
+     *
+     *
+     * setData() is polled once per second. The method looks for a time of >750 ms because the minimum that data should
+     * be allowed to be sent is at 250 ms, at the end of 1 iteration the minimum time that can be added is 750 ms, if
+     * the time is 751 it will subtract the 1000 ms making it -249 ms causing a debt, at the end of the iteration it
+     * will add a minimum of 250 putting back to 1 making it a surplus once more and clearing that debt if it was set to
+     * >1000 the issue would occur of it updating much later than once per second and causing 2 second jumps to occur on
+     * the time label more often.
+     *
+     * At the current rate real time increases by an extra .003652422 seconds per second meaning about every 5 minutes
+     * the time will visibly seem to jump 2 seconds rather than 1 for example from 100.99999 increasing by 1.00365 to
+     * 102.00364 seconds.
+     *
+
+     *      <p>
+     *      <h4>WRITING SERIAL DATA</h4>
+     *      <p>
+     *
+     *
+     * When the simulation is selected the data is loaded into a ListView. In the runnable, nmea, the data is sent to
+     * the class NMEA to be parsed into readable NMEA 0183 data and distributed to the UI elements and logic that requires it.
+     * To get the simulator to send data at a variable speed it uses getApproxTime() which is explained at the method,
+     * and returns a time in milliseconds that can be used as a delay, the faster the velocity data the faster the
+     * sentences will be sent.
+     *
+     *      <p>
+     *      <h4>ENDING THE THREAD</h4>
+     *      <p>
+     *
+     *
+     * The nmea thread can be stopped in 2 ways, pressing the stop button, or when the file runs out of data. When the
+     * thread is stopped by the stop button it sets the timeout to lower than .01 seconds, originally when it was first
+     * implemented it would near instantly run to the end of the file as it would skip the and operator of the while
+     * loop, now it has been corrected, but in the event it doesn't stop correctly it would then run to the end of the
+     * file as it did before debugging.
+     */
+    Runnable nmea = () -> {
+        while (gpsList.size()-1 >= gpsListIndex &&(millisecondsTimeout>.01)) {
+            new NMEA();
+            if (timeTaken > 750){
+                System.out.println(timeTaken);
+                timeTaken -= 1000;
+                System.out.println(timeTaken);
+                setData(NMEA.position.latitude, NMEA.position.longitude, NMEA.position.altitude, NMEA.position.velocity);
+                Platform.runLater(data);
+            }
+            gpsShow.scrollTo(gpsListIndex);
+            gpsShow.getSelectionModel().select(gpsListIndex);                                                           // -APills 1.1          Shows which line is currently being used, helpful for last lines that do not scroll
+            String nexLn = gpsList.get(gpsListIndex);
+            gpsListIndex++;
+            System.out.println(nexLn);
+            NMEA.parse(nexLn);
+            // -APills 1.0 Serial Write
+            try {
+                out.write(nexLn.getBytes());
+                out.write("\n".getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            double speed = NMEA.position.velocity;
+            millisecondsTimeout = getApproxTime(speed);
+            if (millisecondsTimeout > 250)
+                millisecondsTimeout = 250;
+            try {
+                Thread.sleep((long) (millisecondsTimeout));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            publicMillisecondsTimeout = millisecondsTimeout;
+            timeTaken += millisecondsTimeout;
+            counter++;
+        }
+        setData(NMEA.position.latitude, NMEA.position.longitude, NMEA.position.altitude, NMEA.position.velocity);
+        Platform.runLater(dataReset);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }finally {
+            timeRunning = false;
+            Platform.runLater(StartStopTextSwitch);
+            Platform.runLater(data);
+            Platform.runLater(dataReset);
+        }
+        try {
+            executor.awaitTermination(30, TimeUnit.MINUTES);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    };
+
+    /**
+     * The runner thread originally did a countdown to the start of the simulation, should that functionality need to be
+     * reinstated the runner thread stays. While runner is redundant it stays alive longer than the nmea thread and if
+     * the program is left for long enough the nmea thread might die, but the runner thread could still make a new one.
+     */
+    Runnable runner = () -> {
+        Thread nmeaThread = new Thread(nmea);
+        executor.execute(nmeaThread);
+        try {
+            executor.awaitTermination(180, TimeUnit.MINUTES);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    };
+
+    /**
+     * @author APills 1.0
+     * The setSerialSettings method is called at initialization and sets the port information from the Settings window
+     * (known as the Path_Selection window in the package due to feature changes but the name not being updated)
+     * the initialization of the serialPort is in initialize() and is explained there.
+     *
+     * @param baud Takes the baurdrate from Secondary to be set to the port
+     * @param data Takes the data bits from Secondary to be set to the port
+     * @param parity Takes the parity from Secondary to be set to the port
+     * @param stop Takes the stop bits from Secondary to be set to the port
+     */
+    public static void setSerialSettings(int baud, int parity, int stop, int data){
+        serialPort.setBaudRate(baud);
+        serialPort.setParity(parity);
+        serialPort.setNumStopBits(stop);
+        serialPort.setNumDataBits(data);
+        serialPort.setComPortTimeouts(1,1,1);
+        if(VariableStorage.ParityModeVar == 0) { parityType = " (No Parity)"; }
+        if(VariableStorage.ParityModeVar == 1) { parityType = " (Odd Parity)"; }
+        if(VariableStorage.ParityModeVar == 2) { parityType = " (Even Parity)"; }
+        if(VariableStorage.ParityModeVar == 3) { parityType = " (Mark Parity)"; }
+        if(VariableStorage.ParityModeVar == 4) { parityType = " (Space Parity)"; }
+
+    }
+
+    /**
+     * @author APills 1.0
+     * The getSimulation() method returns the file name of the selected simulation.
+     *
+     * @return simSelection returns the simulation number
+     */
+    public static String getSimulation(){
+        StringBuilder fileContent = new StringBuilder();
+        try (Stream<String> stream = Files.lines(Paths.get(filePath), StandardCharsets.UTF_8)) {
+            stream.forEach(s -> fileContent.append(s).append("\n"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String configFileString = fileContent.toString();
+        String[] simSelection = configFileString.split("%");
+        return simSelection[VariableStorage.selection -1];
+    }
+    /**
+     * @author APills 1.0
+     * The setData() method sets a public variable for all of the NMEA data so that it can be passed from the nmea
+     * runnable to the data runnable.
+     *
+     * @param altitude Takes parsed altitude data from the nmea runnable
+     * @param latitude Takes parsed latitude data from the nmea runnable
+     * @param longitude Takes parsed longitude data from the nmea runnable
+     * @param velocity Takes parsed velocity data from the nmea runnable
+     */
+    public void setData(Float latitude, Float longitude, Float altitude, Float velocity){
+        this.latitude = String.valueOf(latitude);
+        this.longitude = String.valueOf(longitude);
+        this.altitude = String.valueOf(altitude);
+        this.velocity = String.valueOf(velocity);
+        this.time = String.valueOf(LocalTime.now(ZoneId.of("GMT+0")));
+    }
+
+    /**
+     * @author APills 1.0
+     * The getApproxTime() method is how the simulator makes a variable delay in sending the sentences, if it sent at a
+     * consistent speed 1 mile at 1 knot and 1 mile at 1000 knots would take the same time.
+     *
+     * It sets the output to a very slow setting for the event the input is less than 300 knots, below 300 knots the sentences
+     * send at over 1 second per sentence and the gps fix would be lost due to the navigation system not getting
+     * constant data to solve this, anything lower than 1 second is set to 1 second.
+     *
+     * On the high speed end, anything over 1200 knots is set to the fastest speed of 250 ms by default.
+     *
+     * If the GPS data does not have a velocity it will send data at 500.
+     *
+     * The math behind the speed to time conversion is the reciprocal of the speed to allow a larger number to equal a
+     * lower ms delay and a smaller number to equal a larger delay. This is then multiplied by 3 because it was about
+     * 300000 to move the decimal 5 places to the right, 2 for the initial
+     * reciprocal conversion then 3 to get milliseconds in a usable format, to not have to multiply by 1000 it would be
+     * possible to sleep for a second delay rather than a millisecond delay, but rather than complicating the rest of
+     * the program I chose to complicate 1 line of code.
+     *
+     * @param input takes the velocity that is in the GPS data
+     * @return output sends back the millisecond timeout to wait before the next sentence is sent
+     */
+    public double getApproxTime(double input) {
+        double output = 500;
+        if(input < 1200 && input > 300){
+            output = ((1/input)*300000);
+        }
+        else if(input > 1200){
+            output = 250;
+        }
+        else if(input > 0){
+            output = 1000;
+        }
+        return output;
+    }
+
+    /**
+     * @author APills 1.0
+     * The initialize() method will always run when the window loads. Its first operation is to check if there is a
+     * simulation selected, then if there is set the full path, update the start/stop button and put the data into the
+     * list view.
+     *
+     * The initialize() method will set the serial settings first if there is no selected simulation, this uses the
+     * default values of 4800/8-N-1 and because initialize is on the FX thread it updates the serial settings labels to
+     * show the port settings.
+     * initialize() also sets the labels for the simulation.
+     */
+    public void initialize(){
+        if (VariableStorage.selected) {
+            StartStop.setText("Start");
+            fullPath = PATH + getSimulation();
+            Platform.runLater(StartStopImageSwitch);
+            Platform.runLater(gpsListing);
+
+        }
+        setSerialSettings(VariableStorage.BaudRateVar, VariableStorage.ParityModeVar, VariableStorage.StopBitsVar, VariableStorage.DataBitsVar);
+        serialPort.openPort();
+        assert serialPort.isOpen();
+        out = serialPort.getOutputStream();
+        baudRateLabel.setText(String.valueOf(VariableStorage.BaudRateVar));
+        parityLabel.setText(VariableStorage.ParityModeVar+parityType);
+        stopBitsLabel.setText(String.valueOf(VariableStorage.StopBitsVar));
+        dataBitsLabel.setText(String.valueOf(VariableStorage.DataBitsVar));
+    }
+
+    /**
+     * @author APills 1.0
+     * The SelectSimulation method opens the window to select a simulation.
+     *
+     * @param actionEvent Uses the button press, this is unused but is required for a button to function properly
+     * @throws  IOException FXMLLoader throws an IOException when loading a parent
+     */
+    public void SelectSimulation(ActionEvent actionEvent) throws IOException {
+        // serialPort.closePort();
+        if(millisecondsTimeout > 0) {
+            StartStop(actionEvent);
+        }
+        Parent simulationsViewParent = FXMLLoader.load(getClass().getResource("Simulations.fxml"));
+        Scene simulationsView = new Scene(simulationsViewParent);
+        VariableStorage.windowInit(actionEvent, simulationsView);
+
+    }
+
+    /**
+     * @author APills 1.0
+     * StartStop is a button which when the simulation is selected and stopped/not running displays "Start" however
+     * when a simulation is selected and running is displays "Stop."
+     *
+     * When the button is pressed it displays a confirmation box and if it is cancelled nothing happens.
+     * If the simulation is started it runs the runner thread, changes the button to stop.
+     *
+     * @param actionEvent Uses the button press, this is unused but is required for a button to function properly
+     */
+    public void StartStop(ActionEvent actionEvent) {
+        this.actionEvent = actionEvent;
+        gpsListIndex = 0;
+        counter = 0;
+        if (StartStop.getText().equals("Start") && !running){
+            AtomicBoolean runWarn = new AtomicBoolean(false);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Start Simulation", ButtonType.YES, ButtonType.NO);
+            alert.setGraphic(null);
+            alert.setContentText("Are you sure you want to start this simulation?");
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.initOwner(StartStop.getScene().getWindow());
+            alert.setOnShown((e) -> VariableStorage.maximize(actionEvent));
+            alert.showAndWait().ifPresent((result) ->{if (result == ButtonType.YES) runWarn.set(true);});
+            VariableStorage.maximize(actionEvent);
+            if(runWarn.get()) {
+                millisecondsTimeout = 0.2;
+                running = true;
+                StartStop.setText("Stop");
+                Platform.runLater(StartStopImageSwitch);
+                Thread runnerThread = new Thread(runner);
+                executor.execute(runnerThread);
+                running = false;
+            }
+            else{}
+        }
+        else {
+            millisecondsTimeout = 0.001;
+            StartStop.setText("Start");
+            Platform.runLater(StartStopImageSwitch);
+            running = false;
+            timeRunning = false;
+            Platform.runLater(StartStopImageSwitch);
+        }
+    }
+
+    public void gpsListClicked(MouseEvent mouseEvent) {
+
+    }
+}
