@@ -1,13 +1,3 @@
-/**
- * <h1>NMEA 0183 GPS Simulator</h1>
- * This GPS Simulator outputs NMEA 0183 data over a serial connection using Fazecast's jSerialComm
- *    <GPS NMEA 0183 Simulator for Raspberry Pi>
- *    Copyright (C) <2020>  <Andrew Pillsbury>
- * @author  Andrew Pillsbury
- * @version 2.0.0
- * @since   2020-03-13
- */
-
 
 package GPS_Simulator;
 

@@ -1,20 +1,4 @@
-/*
- *  <GPS NMEA 0183 Simulator for Raspberry Pi>
- *  Copyright (C) <2020>  <Andrew Pillsbury>
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
+
 package GPS_Simulator;
 
 import javafx.animation.PauseTransition;
@@ -44,7 +28,6 @@ public class Splash {
      *  between when the AeroTrainSplash window disappears and when the primary window appears the transition is less
      *  jumpy compared to when they change at the same time.
      *
-     * @throws IOException FXMLLoader throws an IOException when loading a Parent
      */
     public void initialize(){
         Parent primaryViewParent = null;
@@ -57,7 +40,7 @@ public class Splash {
         Scene primaryView = new Scene(primaryViewParent);
         Stage window = new Stage();
 
-        if(primaryView == null) // Just in case something happens and the FXMLLoader can't load the Primary correctly
+        if(primaryView == null) // Just in case something happens and the FXMLLoader can't load the Primary correctly somehow
             System.out.println("VIEW NULL");
         window.centerOnScreen();
         VariableStorage.maximize(window);

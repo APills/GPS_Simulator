@@ -1,8 +1,4 @@
-/*
- *   <GPS NMEA 0183 Simulator for Raspberry Pi>
- *   Copyright (C) <2020>  <Andrew Pillsbury>
- *
- */
+
 package GPS_Simulator;
 
 import javafx.animation.PauseTransition;
