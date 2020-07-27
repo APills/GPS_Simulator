@@ -1,4 +1,3 @@
-
 package GPS_Simulator;
 
 import javafx.animation.PauseTransition;
@@ -11,26 +10,21 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-
 public class Main extends Application {
-
     static Stage originStage;
 
     public static void main(String[] args) throws FileNotFoundException {
-        File file = new File("/home/pi/Desktop/Debug/ConfigurationFiles/SimulationConfig");
+        File file = new File("/home/pi/Desktop/Debug/ConfigurationFiles/Passwords");
         Scanner scanner = new Scanner(file);
         String pass = "";
         try {pass = String.valueOf(scanner.next());}
-        catch (NoSuchElementException e){
-            VariableStorage.Password = "";
-        }
+        catch (NoSuchElementException e){VariableStorage.Password = "";}
         VariableStorage.Password = pass;
         launch(args);
     }
@@ -65,6 +59,4 @@ public class Main extends Application {
         delay.play();
         originStage.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, Event::consume);
     }
-
-
 }

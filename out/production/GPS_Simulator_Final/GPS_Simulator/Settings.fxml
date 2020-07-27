@@ -34,12 +34,12 @@
                               <PasswordField fx:id="passwordText" maxWidth="410.0" onMouseClicked="#passwordSwitch" prefHeight="26.0" prefWidth="200.0" />
                               <HBox alignment="CENTER" maxWidth="410.0" minHeight="65.0" prefHeight="70.0" prefWidth="410.0" style="-fx-background-color: e0e0e0;">
                                  <children>
-                                    <Button fx:id="PasswordButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#testpass" prefHeight="65.0" prefWidth="200.0">
+                                    <Button fx:id="PasswordButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#testpass" prefHeight="50.0" prefWidth="125.0">
                                        <HBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </HBox.margin>
                                        <graphic>
-                                          <ImageView fitHeight="65.0" fitWidth="200.0" pickOnBounds="true">
+                                          <ImageView fitHeight="50.0" fitWidth="125.0" pickOnBounds="true">
                                              <image>
                                                 <Image url="@../assets/Buttons/setting/setting_enter_pass.png" />
                                              </image>
@@ -48,7 +48,7 @@
                                        <padding>
                                           <Insets top="-1.0" />
                                        </padding></Button>
-                                    <Button fx:id="passwordChange" alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#changepass" prefHeight="65.0" prefWidth="200.0">
+                                    <Button fx:id="passwordChange" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#changepass" prefHeight="50.0" prefWidth="1.0" visible="false">
                                        <HBox.margin>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </HBox.margin>
@@ -56,7 +56,7 @@
                                           <Insets top="-1.0" />
                                        </padding>
                                        <graphic>
-                                          <ImageView fitHeight="65.0" fitWidth="200.0" pickOnBounds="true">
+                                          <ImageView disable="true" fitHeight="50.0" fitWidth="1.0" pickOnBounds="true" visible="false">
                                              <image>
                                                 <Image url="@../assets/Buttons/setting/setting_enter_new_pass.png" />
                                              </image>
@@ -255,14 +255,14 @@
                         </VBox>
                           <VBox alignment="CENTER" minWidth="285.0" prefHeight="277.0" prefWidth="285.0" style="-fx-background-color: e0e0e0;">
                               <children>
-                              <Label prefHeight="40.0" prefWidth="134.0" text="Input Keypad">
+                              <Label prefHeight="25.0" prefWidth="136.0" text="Input Keypad">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
                                   <HBox alignment="BOTTOM_CENTER" minHeight="60.0" minWidth="280.0" prefHeight="88.0" prefWidth="285.0" style="-fx-background-color: f0f0f0;" VBox.vgrow="ALWAYS">
                                       <children>
-                                          <Button fx:id="seven" maxHeight="-Infinity" maxWidth="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#seven" prefHeight="55.0" prefWidth="55.0">
+                                          <Button fx:id="seven" maxHeight="-Infinity" maxWidth="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#seven" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 11.697;">
                                               <font>
                                                   <Font size="18.0" />
                                               </font>
@@ -283,7 +283,7 @@
                                           </ImageView>
                                        </graphic>
                                           </Button>
-                                          <Button fx:id="eight" maxHeight="-Infinity" maxWidth="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#eight" prefHeight="55.0" prefWidth="55.0">
+                                          <Button fx:id="eight" maxHeight="-Infinity" maxWidth="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#eight" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 11.697;">
                                               <font>
                                                   <Font size="18.0" />
                                               </font>
@@ -304,7 +304,7 @@
                                           </ImageView>
                                        </graphic>
                                           </Button>
-                                          <Button fx:id="nine" maxHeight="-Infinity" maxWidth="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#nine" prefHeight="55.0" prefWidth="55.0">
+                                          <Button fx:id="nine" maxHeight="-Infinity" maxWidth="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#nine" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 11.697;">
                                               <font>
                                                   <Font size="18.0" />
                                               </font>
@@ -332,7 +332,7 @@
                                   </HBox>
                               <HBox alignment="CENTER" minHeight="69.0" minWidth="280.0" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: f0f0f0;">
                                  <children>
-                                    <Button fx:id="four" maxHeight="-Infinity" maxWidth="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#four" prefHeight="55.0" prefWidth="55.0">
+                                    <Button fx:id="four" maxHeight="-Infinity" maxWidth="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#four" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 11.697;">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -353,7 +353,7 @@
                                           </ImageView>
                                        </graphic>
                                     </Button>
-                                    <Button fx:id="five" maxHeight="-Infinity" maxWidth="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#five" prefHeight="55.0" prefWidth="55.0">
+                                    <Button fx:id="five" maxHeight="-Infinity" maxWidth="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#five" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 11.697;">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -374,7 +374,7 @@
                                           </ImageView>
                                        </graphic>
                                     </Button>
-                                    <Button fx:id="six" maxHeight="-Infinity" maxWidth="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#six" prefHeight="55.0" prefWidth="55.0">
+                                    <Button fx:id="six" maxHeight="-Infinity" maxWidth="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#six" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 11.697;">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -402,7 +402,7 @@
                               </HBox>
                               <HBox alignment="CENTER" minWidth="280.0" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: f0f0f0;">
                                  <children>
-                                    <Button fx:id="one" maxHeight="-Infinity" maxWidth="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#one" prefHeight="55.0" prefWidth="55.0">
+                                    <Button fx:id="one" maxHeight="-Infinity" maxWidth="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#one" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 11.697;">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -423,7 +423,7 @@
                                           </ImageView>
                                        </graphic>
                                     </Button>
-                                    <Button fx:id="two" maxHeight="-Infinity" maxWidth="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#two" prefHeight="55.0" prefWidth="55.0">
+                                    <Button fx:id="two" maxHeight="-Infinity" maxWidth="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#two" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 11.697;">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -444,7 +444,7 @@
                                           </ImageView>
                                        </graphic>
                                     </Button>
-                                    <Button fx:id="three" maxHeight="-Infinity" maxWidth="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#three" prefHeight="55.0" prefWidth="55.0">
+                                    <Button fx:id="three" maxHeight="-Infinity" maxWidth="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#three" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 11.697;">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -472,7 +472,7 @@
                               </HBox>
                               <HBox alignment="CENTER" minHeight="69.0" minWidth="280.0" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: f0f0f0;">
                                  <children>
-                                    <Button fx:id="returnTo" maxWidth="0.0" minHeight="55.0" minWidth="110.0" mnemonicParsing="false" onAction="#returnTo" prefHeight="55.0" prefWidth="110.0" HBox.hgrow="ALWAYS">
+                                    <Button fx:id="returnTo" maxWidth="0.0" minHeight="55.0" minWidth="55.0" mnemonicParsing="false" onAction="#returnTo" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 11.697;" HBox.hgrow="ALWAYS">
                                        <font>
                                           <Font size="16.0" />
                                        </font>
@@ -483,7 +483,7 @@
                                           <Insets bottom="4.0" top="4.0" />
                                        </VBox.margin>
                                        <graphic>
-                                          <ImageView fitHeight="55.0" fitWidth="110.0" pickOnBounds="true">
+                                          <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true">
                                              <image>
                                                 <Image url="@../assets/Buttons/setting/setting_back.png" />
                                              </image>
@@ -493,7 +493,7 @@
                                           <Insets top="-1.0" />
                                        </padding>
                                     </Button>
-                                    <Button fx:id="zero" maxHeight="-Infinity" maxWidth="0.0" minHeight="55.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#zero" prefHeight="55.0" prefWidth="55.0">
+                                    <Button fx:id="zero" maxHeight="-Infinity" maxWidth="0.0" minHeight="55.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#zero" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 11.697;">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -514,7 +514,7 @@
                                           </ImageView>
                                        </graphic>
                                     </Button>
-                                    <Button fx:id="backspace" maxHeight="-Infinity" maxWidth="0.0" minHeight="55.0" minWidth="110.0" mnemonicParsing="false" onAction="#backspace" prefHeight="55.0" prefWidth="110.0">
+                                    <Button fx:id="backspace" maxHeight="-Infinity" maxWidth="0.0" minHeight="55.0" minWidth="55.0" mnemonicParsing="false" onAction="#backspace" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 11.697;">
                                        <font>
                                           <Font size="16.0" />
                                        </font>
@@ -525,7 +525,7 @@
                                           <Insets bottom="4.0" top="4.0" />
                                        </VBox.margin>
                                        <graphic>
-                                          <ImageView fitHeight="55.0" fitWidth="110.0" pickOnBounds="true">
+                                          <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true">
                                              <image>
                                                 <Image url="@../assets/Buttons/setting/setting_delete.png" />
                                              </image>

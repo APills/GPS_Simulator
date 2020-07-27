@@ -1,4 +1,3 @@
-
 package GPS_Simulator;
 
 import javafx.animation.PauseTransition;
@@ -12,15 +11,12 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.util.Objects;
 
 public class Splash {
     @FXML public Label label;
     @FXML public javafx.scene.layout.AnchorPane AnchorPane;
-
-
 
     /**
      * @author APills 1.0
@@ -29,19 +25,10 @@ public class Splash {
      *  jumpy compared to when they change at the same time.
      *
      */
-    public void initialize(){
-        Parent primaryViewParent = null;
-        try {
-            primaryViewParent = FXMLLoader.load(getClass().getResource("Simulations.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        assert primaryViewParent != null;
+    public void initialize() throws IOException {
+        Parent primaryViewParent = FXMLLoader.load(getClass().getResource("Simulations.fxml"));
         Scene primaryView = new Scene(primaryViewParent);
         Stage window = new Stage();
-
-        if(primaryView == null) // Just in case something happens and the FXMLLoader can't load the Primary correctly somehow
-            System.out.println("VIEW NULL");
         window.centerOnScreen();
         VariableStorage.maximize(window);
         Objects.requireNonNull(window).setScene(primaryView);
@@ -51,7 +38,5 @@ public class Splash {
         delay.setOnFinished(event -> window.show());
         delay.play();
         window.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, Event::consume);
-
     }
-
 }

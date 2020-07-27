@@ -1,4 +1,3 @@
-
 package GPS_Simulator;
 
 import com.fazecast.jSerialComm.SerialPort;
@@ -13,9 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -57,10 +54,13 @@ public class Runner{
     public String time;
     public static String parityType;
 
+    public CheckBox nmeaShowDataCheckbox;
+
     public static int counter = 0;
     public static int endCount = 0;
     public int gpsListIndex = 0;
 
+    boolean halt = false;
 
     public double timeTaken = 0.0;
     public double millisecondsTimeout = 0.0;
@@ -87,6 +87,7 @@ public class Runner{
     @FXML Label startTimeLabel;
     @FXML Label endTimeLabel;
     @FXML ImageView StartStopImage;
+    @FXML ImageView pausePlayBack;
     @FXML Label estTimeLeftLabel;
     @FXML Label lineCountLabel;
 
@@ -149,6 +150,7 @@ public class Runner{
         }
     };
 
+
     /**
      * The StartStopTextSwitch Runnable is called to Platform.runLater when it is necessary to update the state of the
      * Start/Stop button without triggering any other runnables or methods
@@ -157,7 +159,7 @@ public class Runner{
         if(StartStop.getText().equals("Stop")) {
             StartStop.setText("Start");
         }
-        else if(StartStop.getText().equals("Start")) {
+        else{
             StartStop.setText("Stop");
         }
     };
@@ -180,7 +182,9 @@ public class Runner{
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        while(reader.hasNext() && counter < 10000){
+        while(true){
+            assert reader != null;
+            if (!(reader.hasNext() && counter < 10000)) break;
             String nexLn = reader.nextLine();
             gpsList.add(gpsListIndex, nexLn);
             gpsListIndex++;
@@ -236,39 +240,49 @@ public class Runner{
      */
     Runnable nmea = () -> {
         while (gpsList.size()-1 >= gpsListIndex &&(millisecondsTimeout>.01)) {
-            new NMEA();
-            if (timeTaken > 750){
-                System.out.println(timeTaken);
-                timeTaken -= 1000;
-                System.out.println(timeTaken);
-                setData(NMEA.position.latitude, NMEA.position.longitude, NMEA.position.altitude, NMEA.position.velocity);
-                Platform.runLater(data);
+            if (!halt) {
+                //noinspection InstantiationOfUtilityClass
+                new NMEA();
+                if (timeTaken > 750) {
+//                    System.out.println(timeTaken);
+                    timeTaken -= 1000;
+//                    System.out.println(timeTaken);
+                    setData(NMEA.position.latitude, NMEA.position.longitude, NMEA.position.altitude, NMEA.position.velocity);
+                    Platform.runLater(data);
+                }
+                gpsShow.scrollTo(gpsListIndex);
+                gpsShow.getSelectionModel().select(gpsListIndex);                                                           // -APills 1.1          Shows which line is currently being used, helpful for last lines that do not scroll
+                String nexLn = gpsList.get(gpsListIndex);
+                gpsListIndex++;
+//                System.out.println(nexLn);
+                NMEA.parse(nexLn);
+                // -APills 1.0 Serial Write
+                try {
+                    out.write(nexLn.getBytes());
+                    out.write("\n".getBytes());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                double speed = NMEA.position.velocity;
+                millisecondsTimeout = getApproxTime(speed);
+                if (millisecondsTimeout > 250)
+                    millisecondsTimeout = 250;
+                try {
+                    Thread.sleep((long) (millisecondsTimeout));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                publicMillisecondsTimeout = millisecondsTimeout;
+                timeTaken += millisecondsTimeout;
+                counter++;
             }
-            gpsShow.scrollTo(gpsListIndex);
-            gpsShow.getSelectionModel().select(gpsListIndex);                                                           // -APills 1.1          Shows which line is currently being used, helpful for last lines that do not scroll
-            String nexLn = gpsList.get(gpsListIndex);
-            gpsListIndex++;
-            System.out.println(nexLn);
-            NMEA.parse(nexLn);
-            // -APills 1.0 Serial Write
-            try {
-                out.write(nexLn.getBytes());
-                out.write("\n".getBytes());
-            } catch (IOException e) {
-                e.printStackTrace();
+            else{
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-            double speed = NMEA.position.velocity;
-            millisecondsTimeout = getApproxTime(speed);
-            if (millisecondsTimeout > 250)
-                millisecondsTimeout = 250;
-            try {
-                Thread.sleep((long) (millisecondsTimeout));
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            publicMillisecondsTimeout = millisecondsTimeout;
-            timeTaken += millisecondsTimeout;
-            counter++;
         }
         setData(NMEA.position.latitude, NMEA.position.longitude, NMEA.position.altitude, NMEA.position.velocity);
         Platform.runLater(dataReset);
@@ -277,6 +291,7 @@ public class Runner{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }finally {
+            running = false;
             timeRunning = false;
             Platform.runLater(StartStopTextSwitch);
             Platform.runLater(data);
@@ -294,7 +309,7 @@ public class Runner{
      * reinstated the runner thread stays. While runner is redundant it stays alive longer than the nmea thread and if
      * the program is left for long enough the nmea thread might die, but the runner thread could still make a new one.
      */
-    Runnable runner = () -> {
+    private final Runnable runner = () -> {
         Thread nmeaThread = new Thread(nmea);
         executor.execute(nmeaThread);
         try {
@@ -414,6 +429,7 @@ public class Runner{
      * initialize() also sets the labels for the simulation.
      */
     public void initialize(){
+        Platform.runLater(PausePlayBackImageSwitch);
         if (VariableStorage.selected) {
             StartStop.setText("Start");
             fullPath = PATH + getSimulation();
@@ -436,19 +452,35 @@ public class Runner{
      * The SelectSimulation method opens the window to select a simulation.
      *
      * @param actionEvent Uses the button press, this is unused but is required for a button to function properly
-     * @throws  IOException FXMLLoader throws an IOException when loading a parent
      */
-    public void SelectSimulation(ActionEvent actionEvent) throws IOException {
+    public void SelectSimulation(ActionEvent actionEvent){
         // serialPort.closePort();
-        if(millisecondsTimeout > 0) {
-            StartStop(actionEvent);
+        if(running)
+        {
+            halt = !halt;
         }
-        Parent simulationsViewParent = FXMLLoader.load(getClass().getResource("Simulations.fxml"));
-        Scene simulationsView = new Scene(simulationsViewParent);
-        VariableStorage.windowInit(actionEvent, simulationsView);
-
+        else {
+            Parent simulationsViewParent = null;
+            try {
+                simulationsViewParent = FXMLLoader.load(getClass().getResource("Simulations.fxml"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            assert simulationsViewParent != null;
+            Scene simulationsView = new Scene(simulationsViewParent);
+            VariableStorage.windowInit(actionEvent, simulationsView);
+        }
     }
-
+    Runnable PausePlayBackImageSwitch = () -> {
+        Image pausePlayBtn = new Image(String.valueOf(this.getClass().getResource("/assets/Buttons/runner/runner_pausePlay.png")));
+        Image backBtn = new Image(String.valueOf(this.getClass().getResource("/assets/Buttons/runner/runner_back.png")));
+        if(running) {
+            pausePlayBack.setImage(pausePlayBtn);
+        }
+        else {
+            pausePlayBack.setImage(backBtn);
+        }
+    };
     /**
      * @author APills 1.0
      * StartStop is a button which when the simulation is selected and stopped/not running displays "Start" however
@@ -476,25 +508,34 @@ public class Runner{
             if(runWarn.get()) {
                 millisecondsTimeout = 0.2;
                 running = true;
-                StartStop.setText("Stop");
+                Platform.runLater(StartStopTextSwitch);
                 Platform.runLater(StartStopImageSwitch);
+                Platform.runLater(PausePlayBackImageSwitch);
                 Thread runnerThread = new Thread(runner);
                 executor.execute(runnerThread);
-                running = false;
             }
-            else{}
         }
         else {
-            millisecondsTimeout = 0.001;
-            StartStop.setText("Start");
-            Platform.runLater(StartStopImageSwitch);
-            running = false;
+            millisecondsTimeout = 0.0;
             timeRunning = false;
+            running = false;
+            Platform.runLater(PausePlayBackImageSwitch);
+            Platform.runLater(StartStopTextSwitch);
             Platform.runLater(StartStopImageSwitch);
         }
     }
 
-    public void gpsListClicked(MouseEvent mouseEvent) {
-
+    Runnable showHideGpsList = () -> {
+        if(gpsShow.isVisible()){
+            gpsShow.setPrefWidth(0);
+            gpsShow.setVisible(false);
+        }
+        else {
+            gpsShow.setPrefWidth(741);
+            gpsShow.setVisible(true);
+        }
+    };
+    public void nmeaShowData(ActionEvent actionEvent) {
+        Platform.runLater(showHideGpsList);
     }
 }

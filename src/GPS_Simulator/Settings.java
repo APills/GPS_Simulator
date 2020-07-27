@@ -1,4 +1,3 @@
-
 package GPS_Simulator;
 
 import javafx.application.Platform;
@@ -14,22 +13,17 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-
 import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-
 import static GPS_Simulator.VariableStorage.countdown;
 
-
 public class Settings {
-    final  String filePath = "/home/pi/Desktop/Debug/ConfigurationFiles/SimulationConfig.txt";
-    static int simSelection;
     public static ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
-
     private Boolean DataOrBaud = null;
+
     @FXML public Label passHint;
     @FXML public VBox dataBitsBox;
     @FXML public VBox parityBox;
@@ -111,7 +105,7 @@ public class Settings {
         else if (DataOrBaud) {
             dataBits.appendText(character);
         }
-        else if (!DataOrBaud) {
+        else {
             baudRate.appendText(character);
         }
     }
@@ -130,7 +124,7 @@ public class Settings {
         else if (DataOrBaud) {
             dataBits.setText(backspaceLogic(dataBits.getText()));
         }
-        else if (!DataOrBaud) {
+        else {
             baudRate.setText(backspaceLogic(baudRate.getText()));
         }
     }
@@ -211,33 +205,15 @@ public class Settings {
     public void baudRateSwitch(ActionEvent actionEvent) {
         VariableStorage.BaudRateVar = Integer.parseInt(baudRate.getText());
     }
-    public void dataBitSwitch(ActionEvent actionEvent) {
-        VariableStorage.DataBitsVar = Integer.parseInt(dataBits.getText());
-    }
-    public void paritySwitch0(ActionEvent actionEvent) {
-        VariableStorage.ParityModeVar = 0;
-    }
-    public void paritySwitch1(ActionEvent actionEvent) {
-        VariableStorage.ParityModeVar = 1;
-    }
-    public void paritySwitch2(ActionEvent actionEvent) {
-        VariableStorage.ParityModeVar = 2;
-    }
-    public void paritySwitch3(ActionEvent actionEvent) {
-        VariableStorage.ParityModeVar = 3;
-    }
-    public void paritySwitch4(ActionEvent actionEvent) {
-        VariableStorage.ParityModeVar = 4;
-    }
-    public void stopBitSwitch1(ActionEvent actionEvent) {
-        VariableStorage.StopBitsVar = 1;
-    }
-    public void stopBitSwitch2(ActionEvent actionEvent) {
-        VariableStorage.StopBitsVar = 2;
-    }
-    public void stopBitSwitch3(ActionEvent actionEvent) {
-        VariableStorage.StopBitsVar = 3;
-    }
+    public void dataBitSwitch(ActionEvent actionEvent) {VariableStorage.DataBitsVar = Integer.parseInt(dataBits.getText());}
+    public void paritySwitch0(ActionEvent actionEvent) {VariableStorage.ParityModeVar = 0;}
+    public void paritySwitch1(ActionEvent actionEvent) {VariableStorage.ParityModeVar = 1;}
+    public void paritySwitch2(ActionEvent actionEvent) {VariableStorage.ParityModeVar = 2;}
+    public void paritySwitch3(ActionEvent actionEvent) {VariableStorage.ParityModeVar = 3;}
+    public void paritySwitch4(ActionEvent actionEvent) {VariableStorage.ParityModeVar = 4;}
+    public void stopBitSwitch1(ActionEvent actionEvent) {VariableStorage.StopBitsVar = 1;}
+    public void stopBitSwitch2(ActionEvent actionEvent) {VariableStorage.StopBitsVar = 2;}
+    public void stopBitSwitch3(ActionEvent actionEvent) {VariableStorage.StopBitsVar = 3;}
 
     /**
      * @author APills 1.0
@@ -245,7 +221,7 @@ public class Settings {
      *
      *@param mouseEvent Uses the button press, this is unused but is required for a button to function properly
      */
-    public void baudClicked(MouseEvent mouseEvent) { DataOrBaud = false; }
+    public void baudClicked(MouseEvent mouseEvent) {DataOrBaud = false;}
 
     /**
      * @author APills 1.0
@@ -253,14 +229,14 @@ public class Settings {
      *
      * @param mouseEvent Uses the button press, this is unused but is required for a button to function properly
      */
-    public void dataBitsClicked(MouseEvent mouseEvent) { DataOrBaud = true; }
+    public void dataBitsClicked(MouseEvent mouseEvent) {DataOrBaud = true;}
     /**
      * @author APills 1.0
      * Sets Data Bits or Baud Rate Boolean to Password Field
      *
      * @param mouseEvent Uses the button press, this is unused but is required for a button to function properly
      */
-    public void passwordSwitch(MouseEvent mouseEvent) { DataOrBaud = null;}
+    public void passwordSwitch(MouseEvent mouseEvent) {DataOrBaud = null;}
 
     Runnable TimeoutMessage = () -> {
         if(countdown > 0)
@@ -305,9 +281,7 @@ public class Settings {
 
     };
 
-    private void enableWithPassword() {
-        Platform.runLater(enable);
-    }
+    private void enableWithPassword() {Platform.runLater(enable);}
 
     public void testpass(ActionEvent actionEvent) {
         String getPass = passwordText.getText();

@@ -6,13 +6,29 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-
+import javafx.scene.text.Text;
 import java.io.File;
 import java.io.IOException;
-
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.stream.Stream;
 import static java.util.Objects.requireNonNull;
 
 public class Simulations {
+    private static final String filePath = "/home/pi/Desktop/Debug/ConfigurationFiles/LocationsTexts";
+
+    @FXML public Text sim1Text;
+    @FXML public Text sim2Text;
+    @FXML public Text sim3Text;
+    @FXML public Text sim4Text;
+    @FXML public Text sim5Text;
+    @FXML public Text sim6Text;
+    @FXML Button hiddenTR;
+    @FXML Button hiddenBR;
+    @FXML Button hiddenBL;
     @FXML Button Simulation1;
     @FXML Button Simulation2;
     @FXML Button Simulation3;
@@ -20,13 +36,17 @@ public class Simulations {
     @FXML Button Simulation5;
     @FXML Button Simulation6;
 
+    public static ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
     final static String pathToSimulations = "/home/pi/Desktop/Simulations";
     static int directoryListLength = requireNonNull(new File(pathToSimulations).listFiles()).length;
 
     public void initialize() {
+        getTexts();
+        setTexts();
         VariableStorage.getLastScreen = "Simulations";
         directoryListLength = requireNonNull(new File(pathToSimulations).listFiles()).length;
         buttonUpdate();
+        VariableStorage.setLocations(sim1Text,sim2Text,sim3Text,sim4Text,sim5Text,sim6Text);
     }
     /**
      * @author APills        buttonUpdate() disables and enables buttons based on the number of files in the simulation directory, if 6 or
@@ -56,6 +76,26 @@ public class Simulations {
                 Simulation6.setDisable(true);
             }
         }
+    }
+
+    public static String[] simSelection;
+    public static void getTexts(){
+        StringBuilder textsContent = new StringBuilder();
+        try (Stream<String> stream = Files.lines(Paths.get(filePath), StandardCharsets.UTF_8)) {
+            stream.forEach(s -> textsContent.append(s).append("\n"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String textsFileString = textsContent.toString();
+        simSelection = textsFileString.split("%");
+    }
+    public static void setTexts(){
+        VariableStorage.sim1 = simSelection[0];
+        VariableStorage.sim2 = simSelection[1];
+        VariableStorage.sim3 = simSelection[2];
+        VariableStorage.sim4 = simSelection[3];
+        VariableStorage.sim5 = simSelection[4];
+        VariableStorage.sim6 = simSelection[5];
     }
 
     /**
@@ -172,11 +212,61 @@ public class Simulations {
     }
 
     public void Settings(ActionEvent actionEvent) throws IOException {
-        Parent settingsViewParent = FXMLLoader.load(getClass().getResource("Settings.fxml"));
-        windowInit(actionEvent, settingsViewParent);
+        if(VariableStorage.HiddenSettingsButton == 0 && VariableStorage.HiddenSettingsButtonLock == 4){
+            VariableStorage.HiddenSettingsButton = 13;
+            VariableStorage.HiddenSettingsButtonLock = 0;
+            Parent settingsViewParent = FXMLLoader.load(getClass().getResource("Settings.fxml"));
+            windowInit(actionEvent, settingsViewParent);
+        }
+        else{
+            VariableStorage.HiddenSettingsButton += 4;
+            VariableStorage.HiddenSettingsButtonLock++;
+        }
     }
 
     public void ExternalSimulations(ActionEvent actionEvent) {
         System.exit(0);
+    }
+
+    Runnable timeLimit = () -> {
+        int x = 0;
+        while (x < 10){
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            x++;
+            System.out.println(VariableStorage.HiddenSettingsButton + " " + x);
+        }
+        VariableStorage.HiddenSettingsButton = 13;
+        VariableStorage.HiddenSettingsButtonLock = 0;
+
+    };
+
+    public void hiddenTR(ActionEvent actionEvent) {
+        if(VariableStorage.HiddenSettingsButtonLock == 1) {
+            VariableStorage.HiddenSettingsButton /= 2;
+            System.out.println(VariableStorage.HiddenSettingsButton);
+            VariableStorage.HiddenSettingsButtonLock++;
+
+        }
+    }
+
+    public void hiddenBR(ActionEvent actionEvent) {
+        if(VariableStorage.HiddenSettingsButtonLock == 3) {
+            VariableStorage.HiddenSettingsButton -= 9;
+            System.out.println(VariableStorage.HiddenSettingsButton);
+            VariableStorage.HiddenSettingsButtonLock++;
+        }
+    }
+
+    public void hiddenBL(ActionEvent actionEvent) {
+        if(VariableStorage.HiddenSettingsButtonLock == 0) {
+            executor.execute(timeLimit);
+            VariableStorage.HiddenSettingsButton -= 3;
+            System.out.println(VariableStorage.HiddenSettingsButton);
+            VariableStorage.HiddenSettingsButtonLock++;
+        }
     }
 }
