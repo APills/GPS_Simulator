@@ -220,7 +220,7 @@
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="800.0">
                <children>
                   <Region prefHeight="0.0" prefWidth="200.0" />
-                  <Button fx:id="externalsimulations" mnemonicParsing="false" onAction="#ExternalSimulations" prefHeight="80.0" prefWidth="305.0" HBox.hgrow="ALWAYS">
+                  <Button fx:id="externalsimulations" mnemonicParsing="false" onAction="#ExternalSimulations" prefHeight="80.0" prefWidth="175.0" style="-fx-background-radius: 40;" HBox.hgrow="ALWAYS">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -231,7 +231,7 @@
                         <Insets top="-1.0" />
                      </padding>
                      <graphic>
-                        <ImageView fitHeight="80.0" fitWidth="305.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="80.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../assets/Buttons/simulation/simulation_custom.png" />
                            </image>

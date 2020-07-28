@@ -3,10 +3,13 @@ package GPS_Simulator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -64,16 +67,11 @@ public class Simulations {
                                 if (dirLen < 1) {
                                     GPS_Simulator.WarningBox.warn("No Simulations", "There are no simulations");
                                     Simulation1.setDisable(true);
-                                }
-//                                Simulation2.setDisable(true);
-                            }
-                            Simulation3.setDisable(true);
-                        }
-                        Simulation4.setDisable(true);
-                    }
-                    Simulation5.setDisable(true);
-                }
-                Simulation6.setDisable(true);
+                                }Simulation2.setDisable(true);
+                            }Simulation3.setDisable(true);
+                        }Simulation4.setDisable(true);
+                    }Simulation5.setDisable(true);
+                }Simulation6.setDisable(true);
             }
         }
     }
@@ -151,6 +149,7 @@ public class Simulations {
     public void Simulation2(ActionEvent actionEvent) throws IOException {
         //
         int SimNum = 2;
+        System.exit(0);
         setSelected(SimNum);
         SimulationSelected(actionEvent, SimNum);
     }
@@ -225,7 +224,10 @@ public class Simulations {
     }
 
     public void ExternalSimulations(ActionEvent actionEvent) {
-        System.exit(0);
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Simulation File");
+        fileChooser.setInitialDirectory(new File("/media/pi/"));
+        fileChooser.showOpenDialog(((Node)actionEvent.getTarget()).getScene().getWindow());
     }
 
     Runnable timeLimit = () -> {

@@ -472,7 +472,7 @@ public class Runner{
         }
     }
     Runnable PausePlayBackImageSwitch = () -> {
-        Image pausePlayBtn = new Image(String.valueOf(this.getClass().getResource("/assets/Buttons/runner/runner_pausePlay.png")));
+        Image pausePlayBtn = new Image(String.valueOf(this.getClass().getResource("/assets/Buttons/runner/runner_backt.png")));
         Image backBtn = new Image(String.valueOf(this.getClass().getResource("/assets/Buttons/runner/runner_back.png")));
         if(running) {
             pausePlayBack.setImage(pausePlayBtn);
@@ -519,6 +519,7 @@ public class Runner{
             millisecondsTimeout = 0.0;
             timeRunning = false;
             running = false;
+            halt = !halt;
             Platform.runLater(PausePlayBackImageSwitch);
             Platform.runLater(StartStopTextSwitch);
             Platform.runLater(StartStopImageSwitch);
