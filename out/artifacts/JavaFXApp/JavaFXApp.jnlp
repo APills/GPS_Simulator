@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="JavaFXApp.jar" size="656521" download="eager" />
+    <jar href="JavaFXApp.jar" size="690681" download="eager" />
   </resources>
   <jfx:javafx-desc  width="800" height="480" main-class="GPS_Simulator.Main"  name="JavaFXApp" />
   <update check="background"/>

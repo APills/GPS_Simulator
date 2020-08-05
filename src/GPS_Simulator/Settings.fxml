@@ -9,556 +9,652 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="800.0" style="-fx-background-color: f0f0f0;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GPS_Simulator.Settings">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="800.0" style="-fx-background-color: #ccddff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GPS_Simulator.Settings">
     <center>
-        <VBox prefHeight="0.0" prefWidth="680.0" style="-fx-background-color: e0e0e0;" BorderPane.alignment="CENTER">
-            <children>
-            <HBox alignment="TOP_CENTER" minHeight="130.0" prefHeight="140.0" prefWidth="790.0">
-               <children>
-                  <VBox alignment="CENTER" prefHeight="155.0" prefWidth="792.0">
-                     <children>
-                        <Label fx:id="passHint" alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="480.0" text="Enter Password to Lock/Unlock Settings" VBox.vgrow="ALWAYS">
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
-                           <font>
-                              <Font size="16.0" />
-                           </font></Label>
-                        <VBox alignment="CENTER" minHeight="125.0" prefHeight="90.0" prefWidth="450.0">
-                           <children>
-                              <PasswordField fx:id="passwordText" maxWidth="410.0" onMouseClicked="#passwordSwitch" prefHeight="26.0" prefWidth="200.0" />
-                              <HBox alignment="CENTER" maxWidth="410.0" minHeight="65.0" prefHeight="70.0" prefWidth="410.0" style="-fx-background-color: e0e0e0;">
-                                 <children>
-                                    <Button fx:id="PasswordButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#testpass" prefHeight="50.0" prefWidth="125.0">
-                                       <HBox.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </HBox.margin>
-                                       <graphic>
-                                          <ImageView fitHeight="50.0" fitWidth="125.0" pickOnBounds="true">
-                                             <image>
-                                                <Image url="@../assets/Buttons/setting/setting_enter_pass.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                       <padding>
-                                          <Insets top="-1.0" />
-                                       </padding></Button>
-                                    <Button fx:id="passwordChange" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#changepass" prefHeight="50.0" prefWidth="1.0" visible="false">
-                                       <HBox.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </HBox.margin>
-                                       <padding>
-                                          <Insets top="-1.0" />
-                                       </padding>
-                                       <graphic>
-                                          <ImageView disable="true" fitHeight="50.0" fitWidth="1.0" pickOnBounds="true" visible="false">
-                                             <image>
-                                                <Image url="@../assets/Buttons/setting/setting_enter_new_pass.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic></Button>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets top="5.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <Label fx:id="warnings" contentDisplay="CENTER">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" top="5.0" />
-                                 </VBox.margin>
-                              </Label>
-                           </children>
-                        </VBox>
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-                <VBox alignment="CENTER" prefHeight="300.0" prefWidth="790.0" style="-fx-background-color: e0e0e0;">
-                    <children>
-                        <HBox alignment="CENTER" prefWidth="680.0" style="-fx-background-color: e0e0e0;">
-                            <children>
-                        <VBox alignment="CENTER" prefHeight="295.0" prefWidth="439.0" style="-fx-background-color: e0e0e0;">
-                           <children>
-                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" text="RS232 Settings" textAlignment="CENTER">
+        <VBox prefHeight="0.0" prefWidth="680.0" style="-fx-background-color: #ccddff;" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets left="5.0" right="5.0" top="5.0"/>
+            </padding>
+            <HBox alignment="CENTER" minHeight="130.0" prefHeight="140.0" prefWidth="790.0">
+                <children>
+                    <VBox alignment="CENTER" prefHeight="155.0" prefWidth="792.0">
+                        <children>
+                            <Label fx:id="passHint" alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0"
+                                   prefWidth="480.0" text="Enter Password to Lock/Unlock Settings" VBox.vgrow="ALWAYS">
+                                <VBox.margin>
+                                    <Insets top="10.0"/>
+                                </VBox.margin>
+                                <font>
+                                    <Font size="16.0"/>
+                                </font>
+                            </Label>
+                            <VBox alignment="CENTER" minHeight="125.0" prefHeight="90.0" prefWidth="450.0">
+                                <children>
+                                    <PasswordField fx:id="passwordText" alignment="CENTER" maxWidth="139.0"
+                                                   onMouseClicked="#passwordSwitch" prefHeight="60.0"
+                                                   prefWidth="135.0"/>
+                                    <HBox alignment="CENTER" maxWidth="410.0" minHeight="65.0" prefHeight="70.0"
+                                          prefWidth="243.0" style="-fx-background-color: #ccddff;">
+                                        <children>
+                                            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                                <children>
+                                                    <Button fx:id="PasswordButton" alignment="CENTER"
+                                                            contentDisplay="CENTER" layoutX="38.0" layoutY="8.0"
+                                                            mnemonicParsing="false" onAction="#testpass"
+                                                            prefHeight="50.0" prefWidth="135.0"
+                                                            style="-fx-background-radius: 22;">
+                                                        <padding>
+                                                            <Insets top="-1.0"/>
+                                                        </padding>
+                                                        <graphic>
+                                                            <ImageView fitHeight="50.0" fitWidth="140.0"
+                                                                       pickOnBounds="true">
+                                                                <image>
+                                                                    <Image url="@../assets/Buttons/setting/setting_enter_password.png"/>
+                                                                </image>
+                                                            </ImageView>
+                                                        </graphic>
+                                                    </Button>
+                                                </children>
+                                            </AnchorPane>
+                                            <Button fx:id="passwordChange" alignment="CENTER" contentDisplay="CENTER"
+                                                    disable="true" layoutX="10.0" layoutY="10.0" mnemonicParsing="false"
+                                                    onAction="#changepass" prefHeight="50.0" prefWidth="1.0"
+                                                    visible="false">
+                                                <HBox.margin>
+                                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                                </HBox.margin>
+                                                <padding>
+                                                    <Insets top="-1.0"/>
+                                                </padding>
+                                                <graphic>
+                                                    <ImageView disable="true" fitHeight="50.0" fitWidth="1.0"
+                                                               pickOnBounds="true" visible="false">
+                                                        <image>
+                                                            <Image url="@../assets/Buttons/setting/setting_enter_new_pass.png"/>
+                                                        </image>
+                                                    </ImageView>
+                                                </graphic>
+                                            </Button>
+                                        </children>
+                                        <VBox.margin>
+                                            <Insets top="5.0"/>
+                                        </VBox.margin>
+                                    </HBox>
+                                    <Label fx:id="warnings" contentDisplay="CENTER">
                                         <font>
-                                            <Font size="20.0" />
+                                            <Font size="16.0"/>
+                                        </font>
+                                        <VBox.margin>
+                                            <Insets bottom="5.0" top="5.0"/>
+                                        </VBox.margin>
+                                    </Label>
+                                </children>
+                            </VBox>
+                        </children>
+                    </VBox>
+                </children>
+            </HBox>
+            <VBox alignment="CENTER" prefHeight="300.0" prefWidth="790.0" style="-fx-background-color: #ccddff;">
+                <children>
+                    <HBox alignment="CENTER" prefWidth="680.0" style="-fx-background-color: #ccddff;">
+                        <children>
+                            <VBox alignment="CENTER" prefHeight="295.0" prefWidth="439.0"
+                                  style="-fx-background-color: #ccddff;">
+                                <children>
+                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0"
+                                       text="RS232 Settings" textAlignment="CENTER">
+                                    <font>
+                                        <Font size="20.0"/>
+                                    </font>
+                                </Label>
+                                    <HBox alignment="TOP_CENTER" prefHeight="100.0"
+                                          style="-fx-background-color: #ccddff;">
+                                        <children>
+                                        <VBox fx:id="dataBitsBox" alignment="TOP_CENTER" prefHeight="150.0"
+                                              prefWidth="200.0" style="-fx-background-color: f0f0f0;">
+                                            <children>
+                                                <Label text="Data Bits">
+                                                    <font>
+                                                        <Font size="16.0"/>
+                                                    </font>
+                                                </Label>
+                                                <TextField fx:id="dataBits" alignment="CENTER"
+                                                           onAction="#dataBitSwitch"
+                                                           onMouseClicked="#dataBitsClicked" prefHeight="39.0"
+                                                           prefWidth="100.0" text="8">
+                                                    <font>
+                                                        <Font size="16.0"/>
+                                                    </font>
+                                                </TextField>
+                                            </children>
+                                            <opaqueInsets>
+                                                <Insets/>
+                                            </opaqueInsets>
+                                            <padding>
+                                                <Insets left="10.0" right="10.0" top="10.0"/>
+                                            </padding>
+                                            <HBox.margin>
+                                                <Insets left="5.0" right="5.0"/>
+                                            </HBox.margin>
+                                        </VBox>
+                                        <VBox fx:id="parityBox" prefHeight="150.0" prefWidth="200.0"
+                                              style="-fx-background-color: f0f0f0;">
+                                            <children>
+                                                <RadioButton fx:id="noParity" mnemonicParsing="false"
+                                                             onAction="#paritySwitch0" selected="true"
+                                                             text="No Parity">
+                                                    <toggleGroup>
+                                                        <ToggleGroup fx:id="Parity"/>
+                                                    </toggleGroup>
+                                                    <font>
+                                                        <Font size="16.0"/>
+                                                    </font>
+                                                    <VBox.margin>
+                                                        <Insets bottom="5.0"/>
+                                                    </VBox.margin>
+                                                </RadioButton>
+                                                <RadioButton fx:id="oddParity" mnemonicParsing="false"
+                                                             onAction="#paritySwitch1" text="Odd Parity"
+                                                             toggleGroup="$Parity">
+                                                    <font>
+                                                        <Font size="16.0"/>
+                                                    </font>
+                                                    <VBox.margin>
+                                                        <Insets bottom="5.0"/>
+                                                    </VBox.margin>
+                                                </RadioButton>
+                                                <RadioButton fx:id="evenParity" mnemonicParsing="false"
+                                                             onAction="#paritySwitch2" text="Even Parity"
+                                                             toggleGroup="$Parity">
+                                                    <font>
+                                                        <Font size="16.0"/>
+                                                    </font>
+                                                    <VBox.margin>
+                                                        <Insets bottom="5.0"/>
+                                                    </VBox.margin>
+                                                </RadioButton>
+                                                <RadioButton fx:id="markParity" mnemonicParsing="false"
+                                                             onAction="#paritySwitch3" text="Mark Parity"
+                                                             toggleGroup="$Parity">
+                                                    <font>
+                                                        <Font size="16.0"/>
+                                                    </font>
+                                                    <VBox.margin>
+                                                        <Insets bottom="5.0"/>
+                                                    </VBox.margin>
+                                                </RadioButton>
+                                                <RadioButton fx:id="spaceParity" mnemonicParsing="false"
+                                                             onAction="#paritySwitch4" text="Space Parity"
+                                                             toggleGroup="$Parity">
+                                                    <font>
+                                                        <Font size="16.0"/>
+                                                    </font>
+                                                    <VBox.margin>
+                                                        <Insets bottom="5.0"/>
+                                                    </VBox.margin>
+                                                </RadioButton>
+                                            </children>
+                                            <opaqueInsets>
+                                                <Insets/>
+                                            </opaqueInsets>
+                                            <padding>
+                                                <Insets left="10.0" right="10.0" top="10.0"/>
+                                            </padding>
+                                            <HBox.margin>
+                                                <Insets left="5.0" right="5.0"/>
+                                            </HBox.margin>
+                                        </VBox>
+                                        </children>
+                                        <VBox.margin>
+                                            <Insets bottom="5.0" top="5.0"/>
+                                        </VBox.margin>
+                                    </HBox>
+                                    <HBox alignment="TOP_CENTER" prefHeight="100.0"
+                                          style="-fx-background-color: #ccddff;">
+                                        <children>
+                                        <VBox fx:id="baudRateBox" alignment="TOP_CENTER" prefHeight="200.0"
+                                              prefWidth="200.0" style="-fx-background-color: f0f0f0;">
+                                            <children>
+                                                <Label text="Baud Rate">
+                                                    <font>
+                                                        <Font size="16.0"/>
+                                                    </font>
+                                                </Label>
+                                                <TextField fx:id="baudRate" alignment="CENTER"
+                                                           onAction="#baudRateSwitch" onMouseClicked="#baudClicked"
+                                                           prefHeight="39.0" prefWidth="100.0" text="4800">
+                                                    <font>
+                                                        <Font size="16.0"/>
+                                                    </font>
+                                                </TextField>
+                                            </children>
+                                            <opaqueInsets>
+                                                <Insets/>
+                                            </opaqueInsets>
+                                            <padding>
+                                                <Insets left="10.0" right="10.0" top="10.0"/>
+                                            </padding>
+                                            <HBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0"/>
+                                            </HBox.margin>
+                                        </VBox>
+                                        <VBox fx:id="bitSelectionBox" prefHeight="150.0" prefWidth="200.0"
+                                              style="-fx-background-color: f0f0f0;">
+                                            <children>
+                                                <RadioButton fx:id="oneBit" mnemonicParsing="false"
+                                                             onAction="#stopBitSwitch1" selected="true"
+                                                             text="1 Bit">
+                                                    <toggleGroup>
+                                                        <ToggleGroup fx:id="Bits"/>
+                                                    </toggleGroup>
+                                                    <font>
+                                                        <Font size="16.0"/>
+                                                    </font>
+                                                    <padding>
+                                                        <Insets bottom="5.0"/>
+                                                    </padding>
+                                                </RadioButton>
+                                                <RadioButton fx:id="onePointFiveBits" mnemonicParsing="false"
+                                                             onAction="#stopBitSwitch2" text="1.5 Bits"
+                                                             toggleGroup="$Bits">
+                                                    <font>
+                                                        <Font size="18.0"/>
+                                                    </font>
+                                                    <padding>
+                                                        <Insets bottom="5.0"/>
+                                                    </padding>
+                                                </RadioButton>
+                                                <RadioButton fx:id="twoBits" mnemonicParsing="false"
+                                                             onAction="#stopBitSwitch3" text="2 Bits"
+                                                             toggleGroup="$Bits">
+                                                    <font>
+                                                        <Font size="16.0"/>
+                                                    </font>
+                                                    <padding>
+                                                        <Insets bottom="5.0"/>
+                                                    </padding>
+                                                </RadioButton>
+                                            </children>
+                                            <opaqueInsets>
+                                                <Insets/>
+                                            </opaqueInsets>
+                                            <padding>
+                                                <Insets left="10.0" right="10.0" top="10.0"/>
+                                            </padding>
+                                            <HBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0"/>
+                                            </HBox.margin>
+                                        </VBox>
+                                        </children>
+                                        <VBox.margin>
+                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                        </VBox.margin>
+                                    </HBox>
+                                </children>
+                                <HBox.margin>
+                                    <Insets/>
+                                </HBox.margin>
+                            </VBox>
+                            <VBox alignment="CENTER" minWidth="285.0" prefHeight="277.0" prefWidth="285.0"
+                                  style="-fx-background-color: #ccddff;">
+                                <children>
+                                    <Label prefHeight="25.0" prefWidth="136.0" text="Input Keypad">
+                                        <font>
+                                            <Font size="20.0"/>
                                         </font>
                                     </Label>
-                              <HBox alignment="TOP_CENTER" prefHeight="100.0" style="-fx-background-color: e0e0e0;">
-                                 <children>
-                                            <VBox fx:id="dataBitsBox" alignment="TOP_CENTER" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: f0f0f0;">
-                                                <children>
-                                                    <Label text="Data Bits">
-                                                        <font>
-                                                            <Font size="16.0" />
-                                                        </font>
-                                                    </Label>
-                                                    <TextField fx:id="dataBits" alignment="CENTER" onAction="#dataBitSwitch" onMouseClicked="#dataBitsClicked" prefHeight="39.0" prefWidth="100.0" text="8">
-                                                        <font>
-                                                            <Font size="16.0" />
-                                                        </font>
-                                          </TextField>
-                                                </children>
-                                                <opaqueInsets>
-                                                    <Insets />
-                                                </opaqueInsets>
+                                    <HBox alignment="BOTTOM_CENTER" minHeight="60.0" minWidth="280.0" prefHeight="60.0"
+                                          prefWidth="232.0" style="-fx-background-color: f0f0f0;" VBox.vgrow="ALWAYS">
+                                        <children>
+                                            <Button fx:id="seven" maxHeight="-Infinity" maxWidth="0.0"
+                                                    minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
+                                                    onAction="#seven" prefHeight="55.0" prefWidth="55.0"
+                                                    style="-fx-background-radius: 11.697;">
+                                                <font>
+                                                    <Font size="18.0"/>
+                                                </font>
+                                                <HBox.margin>
+                                                    <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                                                </HBox.margin>
+                                                <VBox.margin>
+                                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                                                </VBox.margin>
                                                 <padding>
-                                                    <Insets left="10.0" right="10.0" top="10.0" />
+                                                    <Insets top="-1.0"/>
                                                 </padding>
-                                       <HBox.margin>
-                                          <Insets left="5.0" right="5.0" />
-                                       </HBox.margin>
-                                            </VBox>
-                                            <VBox fx:id="parityBox" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: f0f0f0;">
-                                                <children>
-                                                    <RadioButton fx:id="noParity" mnemonicParsing="false" onAction="#paritySwitch0" selected="true" text="No Parity">
-                                                        <toggleGroup>
-                                                            <ToggleGroup fx:id="Parity" />
-                                                        </toggleGroup>
-                                                        <font>
-                                                            <Font size="16.0" />
-                                                        </font>
-                                                        <VBox.margin>
-                                                            <Insets bottom="5.0" />
-                                                        </VBox.margin>
-                                                    </RadioButton>
-                                                    <RadioButton fx:id="oddParity" mnemonicParsing="false" onAction="#paritySwitch1" text="Odd Parity" toggleGroup="$Parity">
-                                                        <font>
-                                                            <Font size="16.0" />
-                                                        </font>
-                                                        <VBox.margin>
-                                                            <Insets bottom="5.0" />
-                                                        </VBox.margin>
-                                                    </RadioButton>
-                                                    <RadioButton fx:id="evenParity" mnemonicParsing="false" onAction="#paritySwitch2" text="Even Parity" toggleGroup="$Parity">
-                                                        <font>
-                                                            <Font size="16.0" />
-                                                        </font>
-                                                        <VBox.margin>
-                                                            <Insets bottom="5.0" />
-                                                        </VBox.margin>
-                                                    </RadioButton>
-                                                    <RadioButton fx:id="markParity" mnemonicParsing="false" onAction="#paritySwitch3" text="Mark Parity" toggleGroup="$Parity">
-                                                        <font>
-                                                            <Font size="16.0" />
-                                                        </font>
-                                                        <VBox.margin>
-                                                            <Insets bottom="5.0" />
-                                                        </VBox.margin>
-                                                    </RadioButton>
-                                                    <RadioButton fx:id="spaceParity" mnemonicParsing="false" onAction="#paritySwitch4" text="Space Parity" toggleGroup="$Parity">
-                                                        <font>
-                                                            <Font size="16.0" />
-                                                        </font>
-                                                        <VBox.margin>
-                                                            <Insets bottom="5.0" />
-                                                        </VBox.margin>
-                                                    </RadioButton>
-                                                </children>
-                                                <opaqueInsets>
-                                                    <Insets />
-                                                </opaqueInsets>
+                                                <graphic>
+                                                    <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true"
+                                                               preserveRatio="true">
+                                                        <image>
+                                                            <Image url="@../assets/Buttons/setting/setting_7.png"/>
+                                                        </image>
+                                                    </ImageView>
+                                                </graphic>
+                                            </Button>
+                                            <Button fx:id="eight" maxHeight="-Infinity" maxWidth="0.0"
+                                                    minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
+                                                    onAction="#eight" prefHeight="55.0" prefWidth="55.0"
+                                                    style="-fx-background-radius: 11.697;">
+                                                <font>
+                                                    <Font size="18.0"/>
+                                                </font>
+                                                <HBox.margin>
+                                                    <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                                                </HBox.margin>
+                                                <VBox.margin>
+                                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                                                </VBox.margin>
                                                 <padding>
-                                                    <Insets left="10.0" right="10.0" top="10.0" />
+                                                    <Insets top="-1.0"/>
                                                 </padding>
-                                       <HBox.margin>
-                                          <Insets left="5.0" right="5.0" />
-                                       </HBox.margin>
-                                            </VBox>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" top="5.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox alignment="TOP_CENTER" prefHeight="100.0" style="-fx-background-color: e0e0e0;">
-                                 <children>
-                                            <VBox fx:id="baudRateBox" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: f0f0f0;">
-                                                <children>
-                                                    <Label text="Baud Rate">
-                                                        <font>
-                                                            <Font size="16.0" />
-                                                        </font>
-                                                    </Label>
-                                                    <TextField fx:id="baudRate" alignment="CENTER" onAction="#baudRateSwitch" onMouseClicked="#baudClicked" prefHeight="39.0" prefWidth="100.0" text="4800">
-                                                        <font>
-                                                            <Font size="16.0" />
-                                                        </font>
-                                          </TextField>
-                                                </children>
-                                                <opaqueInsets>
-                                                    <Insets />
-                                                </opaqueInsets>
+                                                <graphic>
+                                                    <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true"
+                                                               preserveRatio="true">
+                                                        <image>
+                                                            <Image url="@../assets/Buttons/setting/setting_8.png"/>
+                                                        </image>
+                                                    </ImageView>
+                                                </graphic>
+                                            </Button>
+                                            <Button fx:id="nine" maxHeight="-Infinity" maxWidth="0.0"
+                                                    minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
+                                                    onAction="#nine" prefHeight="55.0" prefWidth="55.0"
+                                                    style="-fx-background-radius: 11.697;">
+                                                <font>
+                                                    <Font size="18.0"/>
+                                                </font>
+                                                <HBox.margin>
+                                                    <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                                                </HBox.margin>
+                                                <VBox.margin>
+                                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                                                </VBox.margin>
                                                 <padding>
-                                                    <Insets left="10.0" right="10.0" top="10.0" />
+                                                    <Insets top="-1.0"/>
                                                 </padding>
-                                       <HBox.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" />
-                                       </HBox.margin>
-                                            </VBox>
-                                            <VBox fx:id="bitSelectionBox" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: f0f0f0;">
-                                                <children>
-                                                    <RadioButton fx:id="oneBit" mnemonicParsing="false" onAction="#stopBitSwitch1" selected="true" text="1 Bit">
-                                                        <toggleGroup>
-                                                            <ToggleGroup fx:id="Bits" />
-                                                        </toggleGroup>
-                                                        <font>
-                                                            <Font size="16.0" />
-                                                        </font>
-                                                        <padding>
-                                                            <Insets bottom="5.0" />
-                                                        </padding>
-                                                    </RadioButton>
-                                                    <RadioButton fx:id="onePointFiveBits" mnemonicParsing="false" onAction="#stopBitSwitch2" text="1.5 Bits" toggleGroup="$Bits">
-                                                        <font>
-                                                            <Font size="18.0" />
-                                                        </font>
-                                                        <padding>
-                                                            <Insets bottom="5.0" />
-                                                        </padding>
-                                                    </RadioButton>
-                                                    <RadioButton fx:id="twoBits" mnemonicParsing="false" onAction="#stopBitSwitch3" text="2 Bits" toggleGroup="$Bits">
-                                                        <font>
-                                                            <Font size="16.0" />
-                                                        </font>
-                                                        <padding>
-                                                            <Insets bottom="5.0" />
-                                                        </padding>
-                                                    </RadioButton>
-                                                </children>
-                                                <opaqueInsets>
-                                                    <Insets />
-                                                </opaqueInsets>
+                                                <graphic>
+                                                    <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true"
+                                                               preserveRatio="true">
+                                                        <image>
+                                                            <Image url="@../assets/Buttons/setting/setting_9.png"/>
+                                                        </image>
+                                                    </ImageView>
+                                                </graphic>
+                                            </Button>
+                                        </children>
+                                        <VBox.margin>
+                                            <Insets top="5.0"/>
+                                        </VBox.margin>
+                                    </HBox>
+                                    <HBox alignment="CENTER" minHeight="69.0" minWidth="280.0" prefHeight="40.0"
+                                          prefWidth="200.0" style="-fx-background-color: f0f0f0;">
+                                        <children>
+                                            <Button fx:id="four" maxHeight="-Infinity" maxWidth="0.0"
+                                                    minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
+                                                    onAction="#four" prefHeight="55.0" prefWidth="55.0"
+                                                    style="-fx-background-radius: 11.697;">
+                                                <font>
+                                                    <Font size="18.0"/>
+                                                </font>
+                                                <HBox.margin>
+                                                    <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                                                </HBox.margin>
+                                                <VBox.margin>
+                                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                                                </VBox.margin>
                                                 <padding>
-                                                    <Insets left="10.0" right="10.0" top="10.0" />
+                                                    <Insets top="-1.0"/>
                                                 </padding>
-                                       <HBox.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" />
-                                       </HBox.margin>
-                                            </VBox>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </VBox.margin>
-                              </HBox>
-                           </children>
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </VBox>
-                          <VBox alignment="CENTER" minWidth="285.0" prefHeight="277.0" prefWidth="285.0" style="-fx-background-color: e0e0e0;">
-                              <children>
-                              <Label prefHeight="25.0" prefWidth="136.0" text="Input Keypad">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                                  <HBox alignment="BOTTOM_CENTER" minHeight="60.0" minWidth="280.0" prefHeight="88.0" prefWidth="285.0" style="-fx-background-color: f0f0f0;" VBox.vgrow="ALWAYS">
-                                      <children>
-                                          <Button fx:id="seven" maxHeight="-Infinity" maxWidth="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#seven" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 11.697;">
-                                              <font>
-                                                  <Font size="18.0" />
-                                              </font>
-                                       <HBox.margin>
-                                          <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                                       </HBox.margin>
-                                       <VBox.margin>
-                                          <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                                       </VBox.margin>
-                                       <padding>
-                                          <Insets top="-1.0" />
-                                       </padding>
-                                       <graphic>
-                                          <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../assets/Buttons/setting/setting_7.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                          </Button>
-                                          <Button fx:id="eight" maxHeight="-Infinity" maxWidth="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#eight" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 11.697;">
-                                              <font>
-                                                  <Font size="18.0" />
-                                              </font>
-                                       <HBox.margin>
-                                          <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                                       </HBox.margin>
-                                       <VBox.margin>
-                                          <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                                       </VBox.margin>
-                                       <padding>
-                                          <Insets top="-1.0" />
-                                       </padding>
-                                       <graphic>
-                                          <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../assets/Buttons/setting/setting_8.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                          </Button>
-                                          <Button fx:id="nine" maxHeight="-Infinity" maxWidth="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#nine" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 11.697;">
-                                              <font>
-                                                  <Font size="18.0" />
-                                              </font>
-                                       <HBox.margin>
-                                          <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                                       </HBox.margin>
-                                       <VBox.margin>
-                                          <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                                       </VBox.margin>
-                                       <padding>
-                                          <Insets top="-1.0" />
-                                       </padding>
-                                       <graphic>
-                                          <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../assets/Buttons/setting/setting_9.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                          </Button>
-                                      </children>
-                                 <VBox.margin>
-                                    <Insets top="5.0" />
-                                 </VBox.margin>
-                                  </HBox>
-                              <HBox alignment="CENTER" minHeight="69.0" minWidth="280.0" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: f0f0f0;">
-                                 <children>
-                                    <Button fx:id="four" maxHeight="-Infinity" maxWidth="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#four" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 11.697;">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                       <HBox.margin>
-                                          <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                                       </HBox.margin>
-                                       <VBox.margin>
-                                          <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                                       </VBox.margin>
-                                       <padding>
-                                          <Insets top="-1.0" />
-                                       </padding>
-                                       <graphic>
-                                          <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../assets/Buttons/setting/setting_4.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </Button>
-                                    <Button fx:id="five" maxHeight="-Infinity" maxWidth="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#five" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 11.697;">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                       <HBox.margin>
-                                          <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                                       </HBox.margin>
-                                       <VBox.margin>
-                                          <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                                       </VBox.margin>
-                                       <padding>
-                                          <Insets top="-1.0" />
-                                       </padding>
-                                       <graphic>
-                                          <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../assets/Buttons/setting/setting_5.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </Button>
-                                    <Button fx:id="six" maxHeight="-Infinity" maxWidth="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#six" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 11.697;">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                       <HBox.margin>
-                                          <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                                       </HBox.margin>
-                                       <VBox.margin>
-                                          <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                                       </VBox.margin>
-                                       <padding>
-                                          <Insets top="-1.0" />
-                                       </padding>
-                                       <graphic>
-                                          <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../assets/Buttons/setting/setting_6.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </Button>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox alignment="CENTER" minWidth="280.0" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: f0f0f0;">
-                                 <children>
-                                    <Button fx:id="one" maxHeight="-Infinity" maxWidth="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#one" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 11.697;">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                       <HBox.margin>
-                                          <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                                       </HBox.margin>
-                                       <VBox.margin>
-                                          <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                                       </VBox.margin>
-                                       <padding>
-                                          <Insets top="-1.0" />
-                                       </padding>
-                                       <graphic>
-                                          <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../assets/Buttons/setting/setting_1.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </Button>
-                                    <Button fx:id="two" maxHeight="-Infinity" maxWidth="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#two" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 11.697;">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                       <HBox.margin>
-                                          <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                                       </HBox.margin>
-                                       <VBox.margin>
-                                          <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                                       </VBox.margin>
-                                       <padding>
-                                          <Insets top="-1.0" />
-                                       </padding>
-                                       <graphic>
-                                          <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../assets/Buttons/setting/setting_2.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </Button>
-                                    <Button fx:id="three" maxHeight="-Infinity" maxWidth="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#three" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 11.697;">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                       <HBox.margin>
-                                          <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                                       </HBox.margin>
-                                       <VBox.margin>
-                                          <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                                       </VBox.margin>
-                                       <padding>
-                                          <Insets top="-1.0" />
-                                       </padding>
-                                       <graphic>
-                                          <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../assets/Buttons/setting/setting_3.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </Button>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox alignment="CENTER" minHeight="69.0" minWidth="280.0" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: f0f0f0;">
-                                 <children>
-                                    <Button fx:id="returnTo" maxWidth="0.0" minHeight="55.0" minWidth="55.0" mnemonicParsing="false" onAction="#returnTo" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 11.697;" HBox.hgrow="ALWAYS">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                       <HBox.margin>
-                                          <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                                       </HBox.margin>
-                                       <VBox.margin>
-                                          <Insets bottom="4.0" top="4.0" />
-                                       </VBox.margin>
-                                       <graphic>
-                                          <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true">
-                                             <image>
-                                                <Image url="@../assets/Buttons/setting/setting_back.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                       <padding>
-                                          <Insets top="-1.0" />
-                                       </padding>
-                                    </Button>
-                                    <Button fx:id="zero" maxHeight="-Infinity" maxWidth="0.0" minHeight="55.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#zero" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 11.697;">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                       <HBox.margin>
-                                          <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                                       </HBox.margin>
-                                       <VBox.margin>
-                                          <Insets bottom="4.0" left="2.0" right="2.0" top="4.0" />
-                                       </VBox.margin>
-                                       <padding>
-                                          <Insets top="-1.0" />
-                                       </padding>
-                                       <graphic>
-                                          <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../assets/Buttons/setting/setting_0.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </Button>
-                                    <Button fx:id="backspace" maxHeight="-Infinity" maxWidth="0.0" minHeight="55.0" minWidth="55.0" mnemonicParsing="false" onAction="#backspace" prefHeight="55.0" prefWidth="55.0" style="-fx-background-radius: 11.697;">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                       <HBox.margin>
-                                          <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                                       </HBox.margin>
-                                       <VBox.margin>
-                                          <Insets bottom="4.0" top="4.0" />
-                                       </VBox.margin>
-                                       <graphic>
-                                          <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true">
-                                             <image>
-                                                <Image url="@../assets/Buttons/setting/setting_delete.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                       <padding>
-                                          <Insets top="-1.0" />
-                                       </padding>
-                                    </Button>
-                                 </children>
-                                 <opaqueInsets>
-                                    <Insets bottom="10.0" />
-                                 </opaqueInsets>
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              </children>
-                           <opaqueInsets>
-                              <Insets bottom="5.0" />
-                           </opaqueInsets>
-                          </VBox>
-                            </children>
-                        </HBox>
-                    </children>
-                    <VBox.margin>
-                        <Insets top="10.0" />
-                    </VBox.margin>
-                </VBox>
-            </children>
-            <padding>
-                <Insets left="5.0" right="5.0" top="5.0" />
-            </padding>
+                                                <graphic>
+                                                    <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true"
+                                                               preserveRatio="true">
+                                                        <image>
+                                                            <Image url="@../assets/Buttons/setting/setting_4.png"/>
+                                                        </image>
+                                                    </ImageView>
+                                                </graphic>
+                                            </Button>
+                                            <Button fx:id="five" maxHeight="-Infinity" maxWidth="0.0"
+                                                    minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
+                                                    onAction="#five" prefHeight="55.0" prefWidth="55.0"
+                                                    style="-fx-background-radius: 11.697;">
+                                                <font>
+                                                    <Font size="18.0"/>
+                                                </font>
+                                                <HBox.margin>
+                                                    <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                                                </HBox.margin>
+                                                <VBox.margin>
+                                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                                                </VBox.margin>
+                                                <padding>
+                                                    <Insets top="-1.0"/>
+                                                </padding>
+                                                <graphic>
+                                                    <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true"
+                                                               preserveRatio="true">
+                                                        <image>
+                                                            <Image url="@../assets/Buttons/setting/setting_5.png"/>
+                                                        </image>
+                                                    </ImageView>
+                                                </graphic>
+                                            </Button>
+                                            <Button fx:id="six" maxHeight="-Infinity" maxWidth="0.0"
+                                                    minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
+                                                    onAction="#six" prefHeight="55.0" prefWidth="55.0"
+                                                    style="-fx-background-radius: 11.697;">
+                                                <font>
+                                                    <Font size="18.0"/>
+                                                </font>
+                                                <HBox.margin>
+                                                    <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                                                </HBox.margin>
+                                                <VBox.margin>
+                                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                                                </VBox.margin>
+                                                <padding>
+                                                    <Insets top="-1.0"/>
+                                                </padding>
+                                                <graphic>
+                                                    <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true"
+                                                               preserveRatio="true">
+                                                        <image>
+                                                            <Image url="@../assets/Buttons/setting/setting_6.png"/>
+                                                        </image>
+                                                    </ImageView>
+                                                </graphic>
+                                            </Button>
+                                        </children>
+                                        <VBox.margin>
+                                            <Insets bottom="-1.0"/>
+                                        </VBox.margin>
+                                    </HBox>
+                                    <HBox alignment="CENTER" minWidth="280.0" prefHeight="40.0" prefWidth="200.0"
+                                          style="-fx-background-color: f0f0f0;">
+                                        <children>
+                                            <Button fx:id="one" maxHeight="-Infinity" maxWidth="0.0"
+                                                    minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
+                                                    onAction="#one" prefHeight="55.0" prefWidth="55.0"
+                                                    style="-fx-background-radius: 11.697;">
+                                                <font>
+                                                    <Font size="18.0"/>
+                                                </font>
+                                                <HBox.margin>
+                                                    <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                                                </HBox.margin>
+                                                <VBox.margin>
+                                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                                                </VBox.margin>
+                                                <padding>
+                                                    <Insets top="-1.0"/>
+                                                </padding>
+                                                <graphic>
+                                                    <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true"
+                                                               preserveRatio="true">
+                                                        <image>
+                                                            <Image url="@../assets/Buttons/setting/setting_1.png"/>
+                                                        </image>
+                                                    </ImageView>
+                                                </graphic>
+                                            </Button>
+                                            <Button fx:id="two" maxHeight="-Infinity" maxWidth="0.0"
+                                                    minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
+                                                    onAction="#two" prefHeight="55.0" prefWidth="55.0"
+                                                    style="-fx-background-radius: 11.697;">
+                                                <font>
+                                                    <Font size="18.0"/>
+                                                </font>
+                                                <HBox.margin>
+                                                    <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                                                </HBox.margin>
+                                                <VBox.margin>
+                                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                                                </VBox.margin>
+                                                <padding>
+                                                    <Insets top="-1.0"/>
+                                                </padding>
+                                                <graphic>
+                                                    <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true"
+                                                               preserveRatio="true">
+                                                        <image>
+                                                            <Image url="@../assets/Buttons/setting/setting_2.png"/>
+                                                        </image>
+                                                    </ImageView>
+                                                </graphic>
+                                            </Button>
+                                            <Button fx:id="three" maxHeight="-Infinity" maxWidth="0.0"
+                                                    minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
+                                                    onAction="#three" prefHeight="55.0" prefWidth="55.0"
+                                                    style="-fx-background-radius: 11.697;">
+                                                <font>
+                                                    <Font size="18.0"/>
+                                                </font>
+                                                <HBox.margin>
+                                                    <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                                                </HBox.margin>
+                                                <VBox.margin>
+                                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                                                </VBox.margin>
+                                                <padding>
+                                                    <Insets top="-1.0"/>
+                                                </padding>
+                                                <graphic>
+                                                    <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true"
+                                                               preserveRatio="true">
+                                                        <image>
+                                                            <Image url="@../assets/Buttons/setting/setting_3.png"/>
+                                                        </image>
+                                                    </ImageView>
+                                                </graphic>
+                                            </Button>
+                                        </children>
+                                        <VBox.margin>
+                                            <Insets/>
+                                        </VBox.margin>
+                                    </HBox>
+                                    <HBox alignment="CENTER" minHeight="69.0" minWidth="280.0" prefHeight="40.0"
+                                          prefWidth="200.0" style="-fx-background-color: f0f0f0;">
+                                        <children>
+                                            <Button fx:id="returnTo" maxWidth="0.0" minHeight="55.0" minWidth="55.0"
+                                                    mnemonicParsing="false" onAction="#returnTo" prefHeight="55.0"
+                                                    prefWidth="55.0" style="-fx-background-radius: 11.697;"
+                                                    HBox.hgrow="ALWAYS">
+                                                <font>
+                                                    <Font size="16.0"/>
+                                                </font>
+                                                <HBox.margin>
+                                                    <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                                                </HBox.margin>
+                                                <VBox.margin>
+                                                    <Insets bottom="4.0" top="4.0"/>
+                                                </VBox.margin>
+                                                <graphic>
+                                                    <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true">
+                                                        <image>
+                                                            <Image url="@../assets/Buttons/setting/setting_back.png"/>
+                                                        </image>
+                                                    </ImageView>
+                                                </graphic>
+                                                <padding>
+                                                    <Insets top="-1.0"/>
+                                                </padding>
+                                            </Button>
+                                            <Button fx:id="zero" maxHeight="-Infinity" maxWidth="0.0" minHeight="55.0"
+                                                    minWidth="-Infinity" mnemonicParsing="false" onAction="#zero"
+                                                    prefHeight="55.0" prefWidth="55.0"
+                                                    style="-fx-background-radius: 11.697;">
+                                                <font>
+                                                    <Font size="18.0"/>
+                                                </font>
+                                                <HBox.margin>
+                                                    <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                                                </HBox.margin>
+                                                <VBox.margin>
+                                                    <Insets bottom="4.0" left="2.0" right="2.0" top="4.0"/>
+                                                </VBox.margin>
+                                                <padding>
+                                                    <Insets top="-1.0"/>
+                                                </padding>
+                                                <graphic>
+                                                    <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true"
+                                                               preserveRatio="true">
+                                                        <image>
+                                                            <Image url="@../assets/Buttons/setting/setting_0.png"/>
+                                                        </image>
+                                                    </ImageView>
+                                                </graphic>
+                                            </Button>
+                                            <Button fx:id="backspace" maxHeight="-Infinity" maxWidth="0.0"
+                                                    minHeight="55.0" minWidth="55.0" mnemonicParsing="false"
+                                                    onAction="#backspace" prefHeight="55.0" prefWidth="55.0"
+                                                    style="-fx-background-radius: 11.697;">
+                                                <font>
+                                                    <Font size="16.0"/>
+                                                </font>
+                                                <HBox.margin>
+                                                    <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                                                </HBox.margin>
+                                                <VBox.margin>
+                                                    <Insets bottom="4.0" top="4.0"/>
+                                                </VBox.margin>
+                                                <graphic>
+                                                    <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true">
+                                                        <image>
+                                                            <Image url="@../assets/Buttons/setting/setting_delete.png"/>
+                                                        </image>
+                                                    </ImageView>
+                                                </graphic>
+                                                <padding>
+                                                    <Insets top="-1.0"/>
+                                                </padding>
+                                            </Button>
+                                        </children>
+                                        <opaqueInsets>
+                                            <Insets bottom="10.0"/>
+                                        </opaqueInsets>
+                                        <VBox.margin>
+                                            <Insets bottom="10.0"/>
+                                        </VBox.margin>
+                                    </HBox>
+                                </children>
+                                <opaqueInsets>
+                                    <Insets bottom="5.0"/>
+                                </opaqueInsets>
+                            </VBox>
+                        </children>
+                    </HBox>
+                </children>
+                <VBox.margin>
+                    <Insets top="10.0"/>
+                </VBox.margin>
+            </VBox>
         </VBox>
     </center>
 </BorderPane>

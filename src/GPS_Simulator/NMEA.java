@@ -1,5 +1,6 @@
 /*
- * This parser can be found at https://gist.github.com/javisantana/1326141 and is licensed under the MIT Open Source license
+ * This NMEA 0183 parser without any modifications can be found at https://gist.github.com/javisantana/1326141 and is
+ * licensed under the MIT Open Source license.
  *
  * Copyright <2013> <Javi Santana>
  *
@@ -22,7 +23,7 @@ import java.util.Map;
 public class NMEA {
 
     interface SentenceParser {
-        boolean parse(String[] tokens, GPSPosition position);
+        void parse(String[] tokens, GPSPosition position);
     }
 
     static float Latitude2Decimal(String latitude, String NS) {
@@ -43,48 +44,43 @@ public class NMEA {
         return med;
     }
 
-    class GPGGA implements SentenceParser {
-        public boolean parse(String [] tokens, GPSPosition position) {
+    static class GPGGA implements SentenceParser {
+        public void parse(String [] tokens, GPSPosition position) {
             position.time = Float.parseFloat(tokens[1]);
             position.latitude = Latitude2Decimal(tokens[2], tokens[3]);
             position.longitude = Longitude2Decimal(tokens[4], tokens[5]);
             position.quality = Integer.parseInt(tokens[6]);
             position.altitude = Float.parseFloat(tokens[9]);
-            return true;
         }
     }
 
-    class GPGGL implements SentenceParser {
-        public boolean parse(String [] tokens, GPSPosition position) {
+    static class GPGGL implements SentenceParser {
+        public void parse(String [] tokens, GPSPosition position) {
             position.latitude = Latitude2Decimal(tokens[1], tokens[2]);
             position.longitude = Longitude2Decimal(tokens[3], tokens[4]);
             position.time = Float.parseFloat(tokens[5]);
-            return true;
         }
     }
 
-    class GPRMC implements SentenceParser {
-        public boolean parse(String [] tokens, GPSPosition position) {
+    static class GPRMC implements SentenceParser {
+        public void parse(String [] tokens, GPSPosition position) {
             position.time = Float.parseFloat(tokens[1]);
             position.latitude = Latitude2Decimal(tokens[3], tokens[4]);
             position.longitude = Longitude2Decimal(tokens[5], tokens[6]);
             position.velocity = Float.parseFloat(tokens[7]);
             position.dir = Float.parseFloat(tokens[8]);
-            return true;
         }
     }
 
-    class GPVTG implements SentenceParser {
-        public boolean parse(String [] tokens, GPSPosition position) {
+    static class GPVTG implements SentenceParser {
+        public void parse(String [] tokens, GPSPosition position) {
             position.dir = Float.parseFloat(tokens[3]);
-            return true;
         }
     }
 
-    class GPRMZ implements SentenceParser {
-        public boolean parse(String [] tokens, GPSPosition position) {
+    static class GPRMZ implements SentenceParser {
+        public void parse(String [] tokens, GPSPosition position) {
             position.altitude = Float.parseFloat(tokens[1]);
-            return true;
         }
     }
 
@@ -109,7 +105,7 @@ public class NMEA {
 
     static GPSPosition position = new GPSPosition();
 
-    private static final Map<String, SentenceParser> sentenceParsers = new HashMap<String, SentenceParser>();
+    private static final Map<String, SentenceParser> sentenceParsers = new HashMap<>();
 
     public NMEA() {
         sentenceParsers.put("GPGGA", new GPGGA());
@@ -119,7 +115,7 @@ public class NMEA {
         sentenceParsers.put("GPVTG", new GPVTG());
     }
 
-    public static GPSPosition parse(String line) {
+    public static void parse(String line) {
 
         if(line.startsWith("$")) {
             String nmea = line.substring(1);
@@ -131,6 +127,5 @@ public class NMEA {
             position.updatefix();
         }
 
-        return position;
     }
 }

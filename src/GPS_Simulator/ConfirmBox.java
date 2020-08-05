@@ -13,31 +13,30 @@ import javafx.stage.Stage;
 public class ConfirmBox {
 
     static boolean answer;
+
     /**
-    * @author APills 1.0
-     * Unlike the other windows this is not using FXML. If it was more complicated then this would be better off as an
-    *  FXML, for the purpose of a confirmation box however that is unnecessary.
-    *
-    *  The confirm method takes a method call with 4 strings title, message, accept, decline
-    *
-    *  title is the name of the box
-    *  message is the box's message
-    *  accept is the text displayed on the confirm button
-    *  decline is the text displayed on the back button
-     *
-     *
-     * @param accept Allows the specific call to the ConfirmBox to have it's own Accept dialogue
+     * @param accept  Allows the specific call to the ConfirmBox to have it's own Accept dialogue
      * @param decline Allows the specific call to the ConfirmBox to have it's own Decline dialogue
      * @param message Allows the specific call to the ConfirmBox to have it's own Message dialogue
-     * @param title Allows the specific call to the ConfirmBox to have it's own Title
+     * @param title   Allows the specific call to the ConfirmBox to have it's own Title
      * @return answer returns whether accept or decline was chosen
-    */
-    public static boolean confirm(String title, String message, String accept, String decline)
-    {
+     * @author APills 1.0
+     * Unlike the other windows this is not using FXML. If it was more complicated then this would be better off as an
+     * FXML, for the purpose of a confirmation box however that is unnecessary.
+     * <p>
+     * The confirm method takes a method call with 4 strings title, message, accept, decline
+     * <p>
+     * title is the name of the box
+     * message is the box's message
+     * accept is the text displayed on the confirm button
+     * decline is the text displayed on the back button
+     */
+    public static boolean confirm(String title, String message, String accept, String decline) {
 
         Stage window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
+        window.centerOnScreen();
         window.setTitle(title);
         window.setMinWidth(600);
         window.setMinHeight(250);
@@ -68,8 +67,8 @@ public class ConfirmBox {
         });
         HBox hlayout = new HBox(10);
         VBox vlayout = new VBox(10);
-        hlayout.getChildren().addAll(confirmButton,backButton);
-        vlayout.getChildren().addAll(label,hlayout);
+        hlayout.getChildren().addAll(confirmButton, backButton);
+        vlayout.getChildren().addAll(label, hlayout);
         vlayout.setAlignment(Pos.CENTER);
         hlayout.setAlignment(Pos.CENTER);
         Scene scene = new Scene(vlayout);
