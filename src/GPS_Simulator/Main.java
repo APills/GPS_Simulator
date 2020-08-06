@@ -29,21 +29,23 @@ public class Main extends Application {
         launch(args);
     }
     /**
-     * @author APills 1.0
-     *  Due to limitations with Java's Serial Communications only 1 instance of a serial port can be open at once and
-     *  they do not close correctly when a program is closed, if you close the application with the serial port open it
-     *  will stay in use permanently. Opening a new instance of the application will not allow you to instantiate that
-     *  previous port correctly or properly close it, however data can still be sent to it if you reinstantiate it as if
-     *  it was never opened.
+     *  Due to how Serial Ports work, only 1 instance of a serial port can be open at once and due to either my own
+     *  error or otheriwse they do not close correctly when a program is closed, if you close the application with the
+     *  serial port open it will stay in use permanently. Opening a new instance of the application will not allow you
+     *  to instantiate that previous port to correctly or properly close it, however data can still be sent to it if you
+     *  reinstantiate it as if it was never opened.
      *
-     *  To counteract this issue I have made it so that the application can not be closed normally. When the user
-     *  requests to exit the program the request is directly thrown away and not acknowledged instead the program can
-     *  still be minimized to the task bar. If the program is closed using task manager or a similar application it will
-     *  immediately close.
+     *  To counteract this issue I have made it so that the application can not be closed normally and to make the
+     *  application nicer upon boot the windows are undecorated which conveniently adds to the inability to close it.
+     *  If the user requests to exit the program the request is consumed and not acknowledged the program can
+     *  still be minimized to the task bar or moved should you find a way to undecorate window. If the program is
+     *  closed using task manager or a similar application it will immediately close as normal and cause the issue with
+     *  the serial port.
      *
      *
-     *  The start method is run on startup similarly to how initialize, this start method calls the Splash class
-     *  and shows it for 4.5 seconds before closing it, in that time Splash's initialize method can run.
+     *  The start method is run on startup similarly to initialize when the JavaFX thread is launched, this start
+     *  method calls the Splash class and shows it for 4.5 seconds before closing it, in that time Splash's initialize
+     *  method can run.
      */
     @Override public void start(Stage primaryStage) throws IOException {
 

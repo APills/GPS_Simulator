@@ -15,21 +15,16 @@ public class ConfirmBox {
     static boolean answer;
 
     /**
-     * @param accept  Allows the specific call to the ConfirmBox to have it's own Accept dialogue
-     * @param decline Allows the specific call to the ConfirmBox to have it's own Decline dialogue
-     * @param message Allows the specific call to the ConfirmBox to have it's own Message dialogue
-     * @param title   Allows the specific call to the ConfirmBox to have it's own Title
-     * @return answer returns whether accept or decline was chosen
-     * @author APills 1.0
-     * Unlike the other windows this is not using FXML. If it was more complicated then this would be better off as an
-     * FXML, for the purpose of a confirmation box however that is unnecessary.
-     * <p>
-     * The confirm method takes a method call with 4 strings title, message, accept, decline
-     * <p>
-     * title is the name of the box
-     * message is the box's message
-     * accept is the text displayed on the confirm button
-     * decline is the text displayed on the back button
+     *
+     * @param title Is the title for the Warning dialogue
+     * @param message Is the message the user receives to make sure they understand what the Warning is about
+     * @param accept Is the text that appears for the "Accept" prompt
+     * @param decline Is the text that appears for the "Decline" prompt
+     * @return Returns a boolean value of true for acceptance, or false for declination
+     *
+     * Similarly to WarningBox, ConfirmBox does not use FXML because of its simplicity and that is it easier to
+     * implement a Confirmation/Warning by popping it up on the same screen because you cannot share variables between
+     * multiple FXML scenes without globali(z/s)ing them.
      */
     public static boolean confirm(String title, String message, String accept, String decline) {
 

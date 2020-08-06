@@ -57,6 +57,9 @@ public class Settings {
     @FXML TextField baudRate;
     @FXML PasswordField passwordText;
     @FXML Label warnings;
+    /**
+     * Inverts the disable state of the Serial settings options
+     */
     final Runnable enable = () -> {
         baudRateBox.setDisable(!baudRateBox.isDisabled());
         bitSelectionBox.setDisable(!bitSelectionBox.isDisabled());
@@ -64,12 +67,18 @@ public class Settings {
         parityBox.setDisable(!parityBox.isDisabled());
         passwordChange.setDisable(!passwordChange.isDisabled());
     };
+    /**
+     * Shows a message to tell the user that password entrance is blocked
+     */
     final Runnable TimeoutMessage = () -> {
         if (countdown > 0)
             passHint.setText("You have incorrectly entered your password too many times.");
         else
             passHint.setText("Enter Password to Lock/Unlock Settings");
     };
+    /**
+     * Handles the password timeout counter that the user sees
+     */
     final Runnable countdownTimer = () -> {
         Platform.runLater(TimeoutMessage);
         if (countdown > 60) {
@@ -81,6 +90,9 @@ public class Settings {
             warnings.setText("");
         }
     };
+    /**
+     * Handles the actual countdown for the timeout
+     */
     final Runnable timeout = () -> {
         countdown = VariableStorage.Timeout;
         PasswordButton.setDisable(true);
@@ -103,7 +115,13 @@ public class Settings {
         }
 
     };
+    /**
+     * Changes the text of the password change button to its original text
+     */
     final Runnable PassChangeRevert = () -> passwordChange.setText("Enter New Password");
+    /**
+     * Countdown to allow showing the pass change success text
+     */
     final Runnable PassChangeRevertWait = () -> {
         int i = 5;
         while (i > 0) {
@@ -116,86 +134,112 @@ public class Settings {
         }
         Platform.runLater(PassChangeRevert);
     };
+    /**
+     * Changes the password change button text to Password Saved" then starts a timer to revert it
+     */
     final Runnable PassChangeSuccess = () -> {
         passwordChange.setText("Password Saved");
         executor.execute(PassChangeRevertWait);
     };
+    /**
+     * Changes the password change button text to show that the password was not saved
+     */
     final Runnable PassChangeFail = () -> passwordChange.setText("Password Not Saved");
     private Boolean DataOrBaud = null;
 
-    @FXML public void one(ActionEvent event) {
-        charSend("1");
-        serialSetting();
-        event.consume();
-    }
-
-    @FXML public void two(ActionEvent event) {
-        charSend("2");
-        serialSetting();
-        event.consume();
-    }
-
-    @FXML public void three(ActionEvent event) {
-        charSend("3");
-        serialSetting();
-        event.consume();
-    }
-
-    @FXML public void four(ActionEvent event) {
-        charSend("4");
-        serialSetting();
-        event.consume();
-    }
-
-    @FXML public void five(ActionEvent event) {
-        charSend("5");
-        serialSetting();
-        event.consume();
-    }
-
-    @FXML public void six(ActionEvent event) {
-        charSend("6");
-        serialSetting();
-        event.consume();
-    }
-
-    @FXML public void seven(ActionEvent event) {
-        charSend("7");
-        serialSetting();
-        event.consume();
-    }
-
-    @FXML public void eight(ActionEvent event) {
-        charSend("8");
-        serialSetting();
-        event.consume();
-    }
-
-    @FXML public void nine(ActionEvent event) {
-        charSend("9");
-        serialSetting();
-        event.consume();
-    }
-
-    @FXML public void zero(ActionEvent event) {
-        charSend("0");
-        serialSetting();
-        event.consume();
-    }
-
     /**
-     * /**
-     *
-     * @author APills 1.0        charSend sends the character to inputTo
-     * pressed.
+     * @param event The action of pressing the button, it is unused and consumed
      */
-    void charSend(String character) {
-        inputTo(character);
+    @FXML public void one(ActionEvent event) {
+        inputTo("1");
+        serialSetting();
+        event.consume();
+    }
+    
+    /**
+     * @param event The action of pressing the button, it is unused and consumed
+     */
+    @FXML public void two(ActionEvent event) {
+        inputTo("2");
+        serialSetting();
+        event.consume();
     }
 
     /**
-     * @author APills 1.0   The inputTo() method deals with where to append characters that are input via the onscreen keypad using a Boolean
-     * Password, Data Bits, or Baud Rate
+     * @param event The action of pressing the button, it is unused and consumed
+     */
+    @FXML public void three(ActionEvent event) {
+        inputTo("3");
+        serialSetting();
+        event.consume();
+    }
+
+    /**
+     * @param event The action of pressing the button, it is unused and consumed
+     */
+    @FXML public void four(ActionEvent event) {
+        inputTo("4");
+        serialSetting();
+        event.consume();
+    }
+
+    /**
+     * @param event The action of pressing the button, it is unused and consumed
+     */
+    @FXML public void five(ActionEvent event) {
+        inputTo("5");
+        serialSetting();
+        event.consume();
+    }
+
+    /**
+     * @param event The action of pressing the button, it is unused and consumed
+     */
+    @FXML public void six(ActionEvent event) {
+        inputTo("6");
+        serialSetting();
+        event.consume();
+    }
+
+    /**
+     * @param event The action of pressing the button, it is unused and consumed
+     */
+    @FXML public void seven(ActionEvent event) {
+        inputTo("7");
+        serialSetting();
+        event.consume();
+    }
+
+    /**
+     * @param event The action of pressing the button, it is unused and consumed
+     */
+    @FXML public void eight(ActionEvent event) {
+        inputTo("8");
+        serialSetting();
+        event.consume();
+    }
+
+    /**
+     * @param event The action of pressing the button, it is unused and consumed
+     */
+    @FXML public void nine(ActionEvent event) {
+        inputTo("9");
+        serialSetting();
+        event.consume();
+    }
+
+    /**
+     * @param event The action of pressing the button, it is unused and consumed
+     */
+    @FXML public void zero(ActionEvent event) {
+        inputTo("0");
+        serialSetting();
+        event.consume();
+    }
+
+    /**
+     * @param character The character controlled by the button pressed
+     * Based on the Boolean the character can be sent to 3 different text fields
      */
     void inputTo(String character) {
         if (DataOrBaud == null) {
@@ -208,11 +252,7 @@ public class Settings {
     }
 
     /**
-     * @param actionEvent Uses the button press, this is unused but is required for a button to function properly
-     * @author APills 1.0
-     * The backspace button deals with where to remove characters that are in the 4 different textfields using 3 Booleans
-     * Simulation Settings or Serial Settings, New Simulation Name or File Description, Data Bits or Baud Rate
-     * then it calls the backspaceLogic() method
+     * @param actionEvent The action of pressing the button, it is unused and consumed
      */
     @FXML void backspace(ActionEvent actionEvent) {
         if (DataOrBaud == null) {
@@ -226,11 +266,8 @@ public class Settings {
     }
 
     /**
-     * @param str Takes an input string of the currently selected textfield
-     * @return str returns the string with the last character removed
-     * @author APills 1.0
-     * The backspaceLogic() method is a convenience tool that allows backspace to work without having to repeat the
-     * code block multiple times.
+     * @param str Gets an input string of the currently selected textfield
+     * @return str Returns the original string with the last character removed
      */
     String backspaceLogic(String str) {
         if (str != null && str.length() > 0) {
@@ -241,19 +278,17 @@ public class Settings {
     }
 
     /**
-     * @author APills 1.0
-     * The initialize() method calls the configSetup() method as soon as the window loads.
+     * Sets the timeout and password failures to 0 then disables the serial settings
      */
-    public void initialize() {
+      public void initialize() {
         VariableStorage.Timeout = 0;
         VariableStorage.PassFails = 0;
         Platform.runLater(enable);
     }
 
     /**
-     * @param actionEvent Uses the button press, this is used to get the current window
-     * @throws IOException FXMLLoader throws an IOException when loading a Parent
-     * @author APills 1.0
+     * @param actionEvent The action of a button press
+     * @throws IOException FXMLLoader throws an IOException when loading a Parent from a Resource
      * Returns the user to the Primary Window
      */
     @FXML void returnTo(ActionEvent actionEvent) throws IOException {
@@ -270,8 +305,7 @@ public class Settings {
     }
 
     /**
-     * @author APills 1.0        The method serialSetting() gets all of the settings that have been input and then sets variables that are called
-     * by the Primary window on initialization to update the serial settings.
+     * Quick and easy way to set all the globali(z/s)ed variables for serial settings
      */
     void serialSetting() {
         VariableStorage.BaudRateVar = Integer.parseInt(baudRate.getText());
@@ -302,60 +336,99 @@ public class Settings {
         }
     }
 
+    /**
+     * @param actionEvent The action of pressing the button, it is unused and consumed
+     * Sets the global variable for BaudRate
+     */
     @FXML void baudRateSwitch(ActionEvent actionEvent) {
         VariableStorage.BaudRateVar = Integer.parseInt(baudRate.getText());
         actionEvent.consume();
     }
 
+    /**
+     * @param actionEvent The action of pressing the button, it is unused and consumed
+     * Sets the global variable for Data Bits
+     */
     @FXML void dataBitSwitch(ActionEvent actionEvent) {
         VariableStorage.DataBitsVar = Integer.parseInt(dataBits.getText());
         actionEvent.consume();
     }
 
+    /**
+     * @param actionEvent The action of pressing the button, it is unused and consumed
+     * Sets the global variable for Parity
+     */
     @FXML void paritySwitch0(ActionEvent actionEvent) {
         VariableStorage.ParityModeVar = 0;
         actionEvent.consume();
     }
 
+    /**
+     * @param actionEvent The action of pressing the button, it is unused and consumed
+     * Sets the global variable for Parity
+     */
     @FXML void paritySwitch1(ActionEvent actionEvent) {
         VariableStorage.ParityModeVar = 1;
         actionEvent.consume();
     }
 
+    /**
+     * @param actionEvent The action of pressing the button, it is unused and consumed
+     * Sets the global variable for Parity
+     */
     @FXML void paritySwitch2(ActionEvent actionEvent) {
         VariableStorage.ParityModeVar = 2;
         actionEvent.consume();
     }
 
+    /**
+     * @param actionEvent The action of pressing the button, it is unused and consumed
+     * Sets the global variable for Parity
+     */
     @FXML void paritySwitch3(ActionEvent actionEvent) {
         VariableStorage.ParityModeVar = 3;
         actionEvent.consume();
     }
 
+    /**
+     * @param actionEvent The action of pressing the button, it is unused and consumed
+     * Sets the global variable for Parity
+     */
     @FXML void paritySwitch4(ActionEvent actionEvent) {
         VariableStorage.ParityModeVar = 4;
         actionEvent.consume();
     }
 
+    /**
+     * @param actionEvent The action of pressing the button, it is unused and consumed
+     * Sets the global variable for Stop Bits
+     */
     @FXML void stopBitSwitch1(ActionEvent actionEvent) {
         VariableStorage.StopBitsVar = 1;
         actionEvent.consume();
     }
 
+    /**
+     * @param actionEvent The action of pressing the button, it is unused and consumed
+     * Sets the global variable for Stop Bits
+     */
     @FXML void stopBitSwitch2(ActionEvent actionEvent) {
         VariableStorage.StopBitsVar = 2;
         actionEvent.consume();
     }
 
+    /**
+     * @param actionEvent The action of pressing the button, it is unused and consumed
+     * Sets the global variable for Stop Bits
+     */
     @FXML void stopBitSwitch3(ActionEvent actionEvent) {
         VariableStorage.StopBitsVar = 3;
         actionEvent.consume();
     }
 
     /**
-     * @param mouseEvent Uses the button press, this is unused but is required for a button to function properly
-     * @author APills 1.0
-     * Sets Data Bits or Baud Rate Boolean to Baud Rate
+     * @param mouseEvent The action of pressing the button, it is unused and consumed
+     * Sets baud rate as the text field to be used
      */
     @FXML void baudClicked(MouseEvent mouseEvent) {
         DataOrBaud = false;
@@ -363,9 +436,8 @@ public class Settings {
     }
 
     /**
-     * @param mouseEvent Uses the button press, this is unused but is required for a button to function properly
-     * @author APills 1.0
-     * Sets Data Bits or Baud Rate Boolean to Data Bits
+     * @param mouseEvent The action of pressing the button, it is unused and consumed
+     * Sets Data Bits as the text field to be used
      */
     @FXML void dataBitsClicked(MouseEvent mouseEvent) {
         DataOrBaud = true;
@@ -373,19 +445,25 @@ public class Settings {
     }
 
     /**
-     * @param mouseEvent Uses the button press, this is unused but is required for a button to function properly
-     * @author APills 1.0
-     * Sets Data Bits or Baud Rate Boolean to Password Field
+     * @param mouseEvent The action of pressing the button, it is unused and consumed
+     * Sets password as the text field to be used
      */
     @FXML void passwordSwitch(MouseEvent mouseEvent) {
         DataOrBaud = null;
         mouseEvent.consume();
     }
 
+    /**
+     * Runs the enable inversion
+     */
     private void enableWithPassword() {
         Platform.runLater(enable);
     }
 
+    /**
+     * @param actionEvent The action of pressing the button, it is unused and consumed
+     * Tests the password in the password field and if it is correct enables the serial settings, otherwise counts up the failures and locks out password attempts
+     */
     @FXML void testpass(ActionEvent actionEvent) {
         String getPass = passwordText.getText();
         if (getPass.equals(VariableStorage.Password)) {
@@ -408,6 +486,10 @@ public class Settings {
         actionEvent.consume();
     }
 
+    /**
+     * @param actionEvent The action of pressing the button, it is unused and consumed
+     * @throws IOException Throws Exception due to the File Writer
+     */
     @FXML void changepass(ActionEvent actionEvent) throws IOException {
         boolean testSuccess = VariableStorage.storePass(passwordText.getText());
         if (testSuccess) {

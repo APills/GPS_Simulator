@@ -40,17 +40,15 @@ import java.util.stream.Stream;
 
 public class Runner {
     /**
-     * A cached threadpool is used in favor of a fixed threadpool because I use many smaller short lived runnable tasks,
-     * if the program were to only be using the nmea thread then a fixed thread pool would be better suited to the task
-     * of a long lived thread, instead I may need 3 at a given time or I only need 1, should the JVM ever decide to do
-     * something incorrectly and close a thread the cached pool will allow the program to run again because it doesn't
-     * have to try to reallocate the dead thread
+     * A cached threadpool is used in favor of a fixed threadpool because the simulator uses many smaller short lived
+     * runnable tasks, if the program were to only be using the nmea thread then a fixed thread pool would be better
+     * suited to the task of a long lived thread, instead I may need 3 at a given time or I only need 1, should the JVM
+     * ever decide to do something incorrectly and close a thread the cached pool will allow the program to run again
+     * because it doesn't have to try to reallocate the dead thread
      */
     static final ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
 
-    /**
-     * The PATH and FILEPATH
-     */
+
     final static String PATH = "/home/pi/Desktop/Simulations/";
     final static String FILEPATH = "/home/pi/Desktop/Debug/ConfigurationFiles/SimulationConfiguration";
 
@@ -69,6 +67,9 @@ public class Runner {
     static final List<String> gpsReplacementList = new ArrayList<>();
     static final List<String> gpsGarbageCollection = new ArrayList<>();
 
+    /**
+     * Sets a single list item to a blank string
+     */
     static void setGpsGarbageCollection() {
         gpsGarbageCollection.add("");
     }
@@ -124,6 +125,9 @@ public class Runner {
     @FXML Label estTimeLeftLabel;
     @FXML Label lineCountLabel;
 
+    /**
+     * Changes the header depending on whether the simulation is running, paused, or not running
+     */
     final Runnable header = () -> {
         if (halt) {
             runningLabel.setText("Simulation Paused");
@@ -165,8 +169,7 @@ public class Runner {
     };
 
     /**
-     * When the Runnable dataReset is run it will clear out the labels. This should only occur after the nmea thread
-     * finishes or the stop button is pressed.
+     * When the Runnable dataReset is run it will clear out the labels.
      */
     final Runnable dataReset = () -> {
         latitudeLabel.setText("");
@@ -248,6 +251,9 @@ public class Runner {
         gpsListIndex = 0;
     };
 
+    /**
+     * Inverts the visibility and size of the RS232 Serial data, either hiding and shrinking it to nothing or making it full size
+     */
     final Runnable hideRS232 = () -> {
         rs232data.setVisible(!rs232data.isVisible());
         rs232labels.setVisible(!rs232labels.isVisible());
@@ -423,7 +429,7 @@ public class Runner {
     /**
      * The runner thread originally did a countdown to the start of the simulation, should that functionality need to be
      * reinstated the runner thread stays. While runner is redundant it stays alive longer than the nmea thread and if
-     * the program is left for long enough the nmea thread might die, but the runner thread could still make a new one.
+     * the program is left for long enough the nmea thread might die, but the runner thread could still make a new one in that event.
      */
     private final Runnable runner = () -> {
         Thread nmeaThread = new Thread(nmea);
@@ -436,6 +442,9 @@ public class Runner {
 
     };
 
+    /**
+     * Inverts the visibility and collapses the width of the GPS List to 0 or if it is then it sets it back to its original size and visible
+     */
     final Runnable showHideGpsList = () -> {
         if (gpsShow.isVisible()) {
             gpsShow.setPrefWidth(0);
@@ -455,8 +464,6 @@ public class Runner {
      * @param stop   Takes the stop bits from Secondary to be set to the port
      * @author APills 1.0
      * The setSerialSettings method is called at initialization and sets the port information from the Settings window
-     * (known as the Path_Selection window in the package due to feature changes but the name not being updated)
-     * the initialization of the serialPort is in initialize() and is explained there.
      */
     static void setSerialSettings(int baud, int parity, int stop, int data) {
         serialPort.setBaudRate(baud);
@@ -483,8 +490,7 @@ public class Runner {
     }
 
     /**
-     * @return simSelection returns the simulation number
-     * @author APills 1.0
+     * @return Returns the simulation
      * The getSimulation() method returns the file name of the selected simulation.
      */
     static String getSimulation() {
@@ -505,11 +511,10 @@ public class Runner {
     }
 
     /**
-     * @param altitude  Takes parsed altitude data from the nmea runnable
-     * @param latitude  Takes parsed latitude data from the nmea runnable
-     * @param longitude Takes parsed longitude data from the nmea runnable
-     * @param velocity  Takes parsed velocity data from the nmea runnable
-     * @author APills 1.0
+     * @param altitude  The parsed altitude data from the nmea runnable
+     * @param latitude  The parsed latitude data from the nmea runnable
+     * @param longitude The parsed longitude data from the nmea runnable
+     * @param velocity  The parsed velocity data from the nmea runnable
      * The setData() method sets a variable for all of the NMEA data so that it can be passed from the nmea
      * runnable to the data runnable.
      */
@@ -524,7 +529,6 @@ public class Runner {
     /**
      * @param input takes the velocity that is in the GPS data
      * @return output sends back the millisecond timeout to wait before the next sentence is sent
-     * @author APills 1.0
      * The getApproxTime() method is how the simulator makes a variable delay in sending the sentences, if it sent at a
      * consistent speed 1 mile at 1 knot and 1 mile at 1000 knots would take the same time.
      * <p>
@@ -556,7 +560,6 @@ public class Runner {
     }
 
     /**
-     * @author APills 1.0
      * The initialize() method will always run when the window loads. Its first operation is to check if there is a
      * simulation selected, then if there is set the full path, update the start/stop button and put the data into the
      * list view.
@@ -591,7 +594,7 @@ public class Runner {
     }
 
     /**
-     * @param actionEvent Uses the button press, this is unused but is required for a button to function properly
+     * @param actionEvent The action of a button
      * @author APills 1.0
      * The SelectSimulation method opens the window to select a simulation.
      */
@@ -613,8 +616,7 @@ public class Runner {
     }
 
     /**
-     * @param actionEvent Uses the button press, this is unused but is required for a button to function properly
-     * @author APills 1.0
+     * @param actionEvent The action of a button
      * StartStop is a button which when the simulation is selected and stopped/not running displays "Start" however
      * when a simulation is selected and running is displays "Stop."
      * <p>
@@ -647,11 +649,19 @@ public class Runner {
         }
     }
 
+    /**
+     * @param actionEvent The action of a button, it is unused and consumed
+     * Hides the GPS List
+     */
     @FXML void nmeaShowData(ActionEvent actionEvent) {
         Platform.runLater(showHideGpsList);
         actionEvent.consume();
     }
 
+    /**
+     * @param actionEvent The action of a button, it is unused and consumed
+     * Hides the RS232 Serial Data
+     */
     @FXML void rs232ShowData(ActionEvent actionEvent) {
         Platform.runLater(hideRS232);
         actionEvent.consume();

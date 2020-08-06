@@ -37,6 +37,14 @@ public class VariableStorage {
     static String sim5 = "";
     static String sim6 = "";
 
+    /**
+     * @param sim1Text The text of the first delimited item in the LocationsText file
+     * @param sim2Text The text of the second delimited item in the LocationsText file
+     * @param sim3Text The text of the third delimited item in the LocationsText file
+     * @param sim4Text The text of the fourth delimited item in the LocationsText file
+     * @param sim5Text The text of the fifth delimited item in the LocationsText file
+     * @param sim6Text The text of the sixth delimited item in the LocationsText file
+     */
     static void setLocations(Text sim1Text, Text sim2Text, Text sim3Text, Text sim4Text, Text sim5Text, Text sim6Text) {
         sim1Text.setText(sim1);
         sim2Text.setText(sim2);
@@ -46,6 +54,11 @@ public class VariableStorage {
         sim6Text.setText(sim6);
     }
 
+    /**
+     * @param pass The password that is to be stored
+     * @return Returns a boolean if when it checks the password it has been successfully changed returns true, otherwise it will return false
+     * @throws IOException Throws an Exception due to FileOutputStream being capable of throwing IO or FileNotFound Exceptions
+     */
     static boolean storePass(String pass) throws IOException {
 
         FileWriter fileWriter = new FileWriter(passFile, false);
@@ -54,13 +67,21 @@ public class VariableStorage {
         return checkPass(pass);
     }
 
+    /**
+     * @param pass The password that is to be checked against the password in the Passwords file
+     * @return Returns a boolean if when it checks the password it has been successfully changed returns true, otherwise it will return false
+     * @throws IOException Throws and Exception due to FileReader being capable of throwing IO or FileNotFound Exceptions
+     */
     private static boolean checkPass(String pass) throws IOException {
         BufferedReader fileReader = new BufferedReader(new FileReader(passFile));
         String checkPass = (fileReader.readLine());
         fileReader.close();
-        return Objects.equals(checkPass, pass) || Objects.equals(checkPass, "5252");
+        return Objects.equals(checkPass, pass);
     }
 
+    /**
+     * @param window The current window that is to be set
+     */
     static void maximize(Window window) {
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getBounds();
@@ -70,6 +91,10 @@ public class VariableStorage {
         window.setHeight(bounds.getHeight());
     }
 
+    /**
+     * @param actionEvent The action of a button press
+     * @param view The scene of the Parent FXML to be set
+     */
     static void windowInit(ActionEvent actionEvent, Scene view) {
         Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         requireNonNull(window).setScene(view);

@@ -20,10 +20,9 @@ public class Splash {
     @FXML javafx.scene.layout.AnchorPane AnchorPane;
 
     /**
-     * @author APills 1.0
-     * The initialize method opens the primary window and shows it after 2 seconds, because of the .5 second difference
-     * between when the AeroTrainSplash window disappears and when the primary window appears the transition is less
-     * jumpy compared to when they change at the same time.
+     * The initialize method opens the Simulations FXML and shows it after 4 seconds, because of the .5 second
+     * difference between when the Splash FXML disappears and when the Simulations FXML appears the transition is
+     * covered by both FXML windows being open at the same time never showing the Desktop.
      */
     public void initialize() throws IOException {
         Parent primaryViewParent = FXMLLoader.load(getClass().getResource("Simulations.fxml"));

@@ -48,6 +48,9 @@ public class Simulations {
     @FXML Button Simulation5;
     @FXML Button Simulation6;
 
+    /**
+     * The timeLimit sets a timer to reset the Hidden buttons values
+     */
     final Runnable timeLimit = () -> {
         int x = 0;
         while (x < 8) {
@@ -65,6 +68,9 @@ public class Simulations {
 
     };
 
+    /**
+     * Gets the delimited Locations from the LocationsText file and splits them off to be used in the simulation buttons
+     */
     static void getTexts() {
         StringBuilder textsContent = new StringBuilder();
         try (Stream<String> stream = Files.lines(Paths.get(filePath), StandardCharsets.UTF_8)) {
@@ -76,6 +82,9 @@ public class Simulations {
         simSelection = textsFileString.split("%");
     }
 
+    /**
+     * Sets the globali(z/s)ed variables that hold onto the Locations texts for each simulation button
+     */
     static void setTexts() {
         VariableStorage.sim1 = simSelection[0];
         VariableStorage.sim2 = simSelection[1];
@@ -85,7 +94,15 @@ public class Simulations {
         VariableStorage.sim6 = simSelection[5];
     }
 
+    /**
+     * Sets selected to false
+     * Gets, then Sets the Location Texts
+     * Sets the Last Screen to the current screen
+     * Enables buttons based on how many files are in the Simulations folder, then updates the buttons to be en/disabled
+     * Sets the Simulation buttons' Location text
+     */
     public void initialize() {
+        VariableStorage.selected = false;
         getTexts();
         setTexts();
         VariableStorage.getLastScreen = "Simulations";
@@ -95,9 +112,7 @@ public class Simulations {
     }
 
     /**
-     * @author APills        buttonUpdate() disables and enables buttons based on the number of files in the simulation directory, if 6 or
-     * more files are present all 6 will be enabled if less than 6 are present an amount of buttons equal to the number
-     * of files that exist will be enabled.
+     * Enables buttons based on how many files are in the Simulations folder
      */
     void buttonUpdate() {
         int dirLen = directoryListLength;
@@ -125,14 +140,10 @@ public class Simulations {
     }
 
     /**
-     * @param actionEvent Uses the button press, this is unused but is required for a button to function properly
-     * @param SimNum      Gets the simulation number from the selection
-     * @throws IOException FXMLLoader throws an IOException when loading a Parent
-     * @author APills
-     * Takes the user back to Primary once a simulation is selected, selection is set to the SimNum and
-     * selectionPlusOneForConvenience is set to 1 more than the SimNum because people don't usually list things
-     * starting at 0 and it allows the program to set the simulation number in the Primary window easier than casting
-     * the variable back and forth to add 1 to it.
+     * @param actionEvent The action of a button press
+     * @param SimNum Gets the simulation number from the selection
+     * @throws IOException FXMLLoader throws an IOException when loading a Parent from a Resource
+     * Takes the user to the Runner once a simulation is selected
      */
     void SimulationSelected(ActionEvent actionEvent, int SimNum) throws IOException {
         VariableStorage.selection = SimNum;
@@ -141,20 +152,27 @@ public class Simulations {
 
     }
 
+    /**
+     *
+     * @param actionEvent The action of a button press
+     * @param scene The scene of the current window
+     */
     private void windowInit(ActionEvent actionEvent, Parent scene) {
         Scene view = new Scene(scene);
         VariableStorage.windowInit(actionEvent, view);
     }
 
+    /**
+     * Inverts the selected variable.
+     */
     private void setSelected() {
-        VariableStorage.selected = true;
+        VariableStorage.selected = !VariableStorage.selected;
     }
 
     /**
-     * @param actionEvent Uses the button press, this is unused but is required for a button to function properly
+     * @param actionEvent The action of a button press
      * @throws IOException Throws SimulationSelected's IOException
-     * @author APills
-     * Runs SimulationSelected() with the simulation's SimNum variable
+     * Sets the selected variable to true and the Last Screen to Standard Simulation to discriminate between Standard and Custom
      */
     @FXML void Simulation1(ActionEvent actionEvent) throws IOException {
         int SimNum = 1;
@@ -164,10 +182,9 @@ public class Simulations {
     }
 
     /**
-     * @param actionEvent Uses the button press, this is unused but is required for a button to function properly
+     * @param actionEvent The action of a button press
      * @throws IOException Throws SimulationSelected's IOException
-     * @author APills
-     * Runs SimulationSelected() with the simulation's SimNum variable
+     * Sets the selected variable to true and the Last Screen to Standard Simulation to discriminate between Standard and Custom
      */
     @FXML void Simulation2(ActionEvent actionEvent) throws IOException {
         int SimNum = 2;
@@ -177,10 +194,9 @@ public class Simulations {
     }
 
     /**
-     * @param actionEvent Uses the button press, this is unused but is required for a button to function properly
+     * @param actionEvent The action of a button press
      * @throws IOException Throws SimulationSelected's IOException
-     * @author APills
-     * Runs SimulationSelected() with the simulation's SimNum variable
+     * Sets the selected variable to true and the Last Screen to Standard Simulation to discriminate between Standard and Custom
      */
     @FXML void Simulation3(ActionEvent actionEvent) throws IOException {
         int SimNum = 3;
@@ -190,10 +206,9 @@ public class Simulations {
     }
 
     /**
-     * @param actionEvent Uses the button press, this is unused but is required for a button to function properly
+     * @param actionEvent The action of a button press
      * @throws IOException Throws SimulationSelected's IOException
-     * @author APills
-     * Runs SimulationSelected() with the simulation's SimNum variable
+     * Sets the selected variable to true and the Last Screen to Standard Simulation to discriminate between Standard and Custom
      */
     @FXML void Simulation4(ActionEvent actionEvent) throws IOException {
         int SimNum = 4;
@@ -203,10 +218,9 @@ public class Simulations {
     }
 
     /**
-     * @param actionEvent Uses the button press, this is unused but is required for a button to function properly
+     * @param actionEvent The action of a button press
      * @throws IOException Throws SimulationSelected's IOException
-     * @author APills
-     * Runs SimulationSelected() with the simulation's SimNum variable
+     * Sets the selected variable to true and the Last Screen to Standard Simulation to discriminate between Standard and Custom
      */
     @FXML void Simulation5(ActionEvent actionEvent) throws IOException {
         int SimNum = 5;
@@ -216,10 +230,9 @@ public class Simulations {
     }
 
     /**
-     * @param actionEvent Uses the button press, this is unused but is required for a button to function properly
+     * @param actionEvent The action of a button press
      * @throws IOException Throws SimulationSelected's IOException
-     * @author APills
-     * Runs SimulationSelected() with the simulation's SimNum variable
+     * Sets the selected variable to true and the Last Screen to Standard Simulation to discriminate between Standard and Custom
      */
     @FXML void Simulation6(ActionEvent actionEvent) throws IOException {
         int SimNum = 6;
@@ -228,6 +241,11 @@ public class Simulations {
         SimulationSelected(actionEvent, SimNum);
     }
 
+    /**
+     * @param actionEvent The action of a button press
+     * @throws IOException FXMLLoader throws an IOException when loading a Parent from a Resource
+     * This button is hidden and allows the opening of the Settings if the hidden settings value is correct otherwise it operates on it
+     */
     @FXML void Settings(ActionEvent actionEvent) throws IOException {
         if (VariableStorage.HiddenSettingsButton == 0 && VariableStorage.HiddenSettingsButtonLock == 4) {
             VariableStorage.HiddenSettingsButton = 13;
@@ -240,6 +258,10 @@ public class Simulations {
         }
     }
 
+    /**
+     * @param actionEvent The action of a button press
+     * @throws IOException FileChooser and FXMLLoader throw an IOException when accessing a file, or loading a Parent from a Resource
+     */
     @FXML void ExternalSimulations(ActionEvent actionEvent) throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Simulation File");
@@ -255,6 +277,10 @@ public class Simulations {
 
     }
 
+    /**
+     * @param actionEvent The action of a button press
+     * Operates on the Hidden button values
+     */
     @FXML void hiddenTR(ActionEvent actionEvent) {
         if (VariableStorage.HiddenSettingsButtonLock == 1) {
             VariableStorage.HiddenSettingsButton /= 2;
@@ -267,6 +293,10 @@ public class Simulations {
         actionEvent.consume();
     }
 
+    /**
+     * @param actionEvent The action of a button press
+     * Operates on the Hidden button values and allows the closing of the Simulator
+     */
     @FXML void hiddenBR(ActionEvent actionEvent) {
         if (VariableStorage.HiddenSettingsButtonLock == 3) {
             VariableStorage.HiddenSettingsButton -= 9;
@@ -281,6 +311,10 @@ public class Simulations {
         actionEvent.consume();
     }
 
+    /**
+     * @param actionEvent The action of a button press
+     * Operates on the Hidden button values and starts the reset timer
+     */
     @FXML void hiddenBL(ActionEvent actionEvent) {
         if (VariableStorage.HiddenSettingsButtonLock == 0) {
             executor.execute(timeLimit);

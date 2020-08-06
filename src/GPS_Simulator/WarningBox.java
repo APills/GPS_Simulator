@@ -12,7 +12,14 @@ import javafx.stage.Stage;
 
 public class WarningBox {
 
-
+    /**
+     * @param title Is the title for the Warning dialogue
+     * @param message Is the message the user receives to make sure they understand what the Warning is about
+     *
+     * Similarly to WarningBox, ConfirmBox does not use FXML because of its simplicity and that is it easier to
+     * implement a Confirmation/Warning by popping it up on the same screen because you cannot share variables between
+     * multiple FXML scenes without globali(s/z)ing them.
+     */
     public static void warn(String title, String message) {
 
         Stage window = new Stage();
