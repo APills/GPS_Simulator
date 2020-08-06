@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
@@ -24,40 +25,30 @@ import static java.util.Objects.requireNonNull;
 public class Simulations {
     final static String pathToSimulations = "/home/pi/Desktop/Simulations";
     private static final String filePath = "/home/pi/Desktop/Debug/ConfigurationFiles/LocationsTexts";
-    public static ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
-    public static String[] simSelection;
+    static final ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
+    static String[] simSelection;
     static int directoryListLength = requireNonNull(new File(pathToSimulations).listFiles()).length;
-    @FXML
-    public Text sim1Text;
-    @FXML
-    public Text sim2Text;
-    @FXML
-    public Text sim3Text;
-    @FXML
-    public Text sim4Text;
-    @FXML
-    public Text sim5Text;
-    @FXML
-    public Text sim6Text;
-    @FXML
-    Button hiddenTR;
-    @FXML
-    Button hiddenBR;
-    @FXML
-    Button hiddenBL;
-    @FXML
-    Button Simulation1;
-    @FXML
-    Button Simulation2;
-    @FXML
-    Button Simulation3;
-    @FXML
-    Button Simulation4;
-    @FXML
-    Button Simulation5;
-    @FXML
-    Button Simulation6;
-    Runnable timeLimit = () -> {
+
+    @FXML Button settings;
+    @FXML ImageView imgs3;
+    @FXML Button externalsimulations;
+    @FXML Text sim1Text;
+    @FXML Text sim2Text;
+    @FXML Text sim3Text;
+    @FXML Text sim4Text;
+    @FXML Text sim5Text;
+    @FXML Text sim6Text;
+    @FXML Button hiddenTR;
+    @FXML Button hiddenBR;
+    @FXML Button hiddenBL;
+    @FXML Button Simulation1;
+    @FXML Button Simulation2;
+    @FXML Button Simulation3;
+    @FXML Button Simulation4;
+    @FXML Button Simulation5;
+    @FXML Button Simulation6;
+
+    final Runnable timeLimit = () -> {
         int x = 0;
         while (x < 8) {
             try {
@@ -74,7 +65,7 @@ public class Simulations {
 
     };
 
-    public static void getTexts() {
+    static void getTexts() {
         StringBuilder textsContent = new StringBuilder();
         try (Stream<String> stream = Files.lines(Paths.get(filePath), StandardCharsets.UTF_8)) {
             stream.forEach(s -> textsContent.append(s).append("\n"));
@@ -85,7 +76,7 @@ public class Simulations {
         simSelection = textsFileString.split("%");
     }
 
-    public static void setTexts() {
+    static void setTexts() {
         VariableStorage.sim1 = simSelection[0];
         VariableStorage.sim2 = simSelection[1];
         VariableStorage.sim3 = simSelection[2];
@@ -108,7 +99,7 @@ public class Simulations {
      * more files are present all 6 will be enabled if less than 6 are present an amount of buttons equal to the number
      * of files that exist will be enabled.
      */
-    public void buttonUpdate() {
+    void buttonUpdate() {
         int dirLen = directoryListLength;
         if (dirLen <= 6) {
             if (dirLen < 6) {
@@ -143,7 +134,7 @@ public class Simulations {
      * starting at 0 and it allows the program to set the simulation number in the Primary window easier than casting
      * the variable back and forth to add 1 to it.
      */
-    public void SimulationSelected(ActionEvent actionEvent, int SimNum) throws IOException {
+    void SimulationSelected(ActionEvent actionEvent, int SimNum) throws IOException {
         VariableStorage.selection = SimNum;
         Parent runnerViewParent = FXMLLoader.load(getClass().getResource("Runner.fxml"));
         windowInit(actionEvent, runnerViewParent);
@@ -155,9 +146,8 @@ public class Simulations {
         VariableStorage.windowInit(actionEvent, view);
     }
 
-    private void setSelected(int simNum) {
+    private void setSelected() {
         VariableStorage.selected = true;
-        VariableStorage.simNum = simNum;
     }
 
     /**
@@ -166,10 +156,9 @@ public class Simulations {
      * @author APills
      * Runs SimulationSelected() with the simulation's SimNum variable
      */
-    public void Simulation1(ActionEvent actionEvent) throws IOException {
-        //
+    @FXML void Simulation1(ActionEvent actionEvent) throws IOException {
         int SimNum = 1;
-        setSelected(SimNum);
+        setSelected();
         VariableStorage.getLastScreen = "Standard Simulation";
         SimulationSelected(actionEvent, SimNum);
     }
@@ -180,10 +169,9 @@ public class Simulations {
      * @author APills
      * Runs SimulationSelected() with the simulation's SimNum variable
      */
-    public void Simulation2(ActionEvent actionEvent) throws IOException {
-        //
+    @FXML void Simulation2(ActionEvent actionEvent) throws IOException {
         int SimNum = 2;
-        setSelected(SimNum);
+        setSelected();
         VariableStorage.getLastScreen = "Standard Simulation";
         SimulationSelected(actionEvent, SimNum);
     }
@@ -194,10 +182,9 @@ public class Simulations {
      * @author APills
      * Runs SimulationSelected() with the simulation's SimNum variable
      */
-    public void Simulation3(ActionEvent actionEvent) throws IOException {
-        //
+    @FXML void Simulation3(ActionEvent actionEvent) throws IOException {
         int SimNum = 3;
-        setSelected(SimNum);
+        setSelected();
         VariableStorage.getLastScreen = "Standard Simulation";
         SimulationSelected(actionEvent, SimNum);
     }
@@ -208,10 +195,9 @@ public class Simulations {
      * @author APills
      * Runs SimulationSelected() with the simulation's SimNum variable
      */
-    public void Simulation4(ActionEvent actionEvent) throws IOException {
-        //
+    @FXML void Simulation4(ActionEvent actionEvent) throws IOException {
         int SimNum = 4;
-        setSelected(SimNum);
+        setSelected();
         VariableStorage.getLastScreen = "Standard Simulation";
         SimulationSelected(actionEvent, SimNum);
     }
@@ -222,10 +208,9 @@ public class Simulations {
      * @author APills
      * Runs SimulationSelected() with the simulation's SimNum variable
      */
-    public void Simulation5(ActionEvent actionEvent) throws IOException {
-        //
+    @FXML void Simulation5(ActionEvent actionEvent) throws IOException {
         int SimNum = 5;
-        setSelected(SimNum);
+        setSelected();
         VariableStorage.getLastScreen = "Standard Simulation";
         SimulationSelected(actionEvent, SimNum);
     }
@@ -236,15 +221,14 @@ public class Simulations {
      * @author APills
      * Runs SimulationSelected() with the simulation's SimNum variable
      */
-    public void Simulation6(ActionEvent actionEvent) throws IOException {
-        //
+    @FXML void Simulation6(ActionEvent actionEvent) throws IOException {
         int SimNum = 6;
-        setSelected(SimNum);
+        setSelected();
         VariableStorage.getLastScreen = "Standard Simulation";
         SimulationSelected(actionEvent, SimNum);
     }
 
-    public void Settings(ActionEvent actionEvent) throws IOException {
+    @FXML void Settings(ActionEvent actionEvent) throws IOException {
         if (VariableStorage.HiddenSettingsButton == 0 && VariableStorage.HiddenSettingsButtonLock == 4) {
             VariableStorage.HiddenSettingsButton = 13;
             VariableStorage.HiddenSettingsButtonLock = 0;
@@ -256,7 +240,7 @@ public class Simulations {
         }
     }
 
-    public void ExternalSimulations(ActionEvent actionEvent) throws IOException {
+    @FXML void ExternalSimulations(ActionEvent actionEvent) throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Simulation File");
         fileChooser.setInitialDirectory(new File("/media/pi/"));
@@ -264,17 +248,16 @@ public class Simulations {
         if (file != null && ConfirmBox.confirm("File Confirmation", "Are you sure you would like to use:\n" + file, "Accept", "Cancel")) {
             VariableStorage.getLastScreen = "Custom Simulation";
             VariableStorage.customSim = file;
-            setSelected(7);
+            setSelected();
             Parent runnerViewParent = FXMLLoader.load(getClass().getResource("Runner.fxml"));
             windowInit(actionEvent, runnerViewParent);
         }
 
     }
 
-    public void hiddenTR(ActionEvent actionEvent) {
+    @FXML void hiddenTR(ActionEvent actionEvent) {
         if (VariableStorage.HiddenSettingsButtonLock == 1) {
             VariableStorage.HiddenSettingsButton /= 2;
-            //System.out.println(VariableStorage.HiddenSettingsButton);
             VariableStorage.HiddenSettingsButtonLock++;
         }
         if (VariableStorage.HiddenExitButton > 6) {
@@ -284,10 +267,9 @@ public class Simulations {
         actionEvent.consume();
     }
 
-    public void hiddenBR(ActionEvent actionEvent) {
+    @FXML void hiddenBR(ActionEvent actionEvent) {
         if (VariableStorage.HiddenSettingsButtonLock == 3) {
             VariableStorage.HiddenSettingsButton -= 9;
-            //System.out.println(VariableStorage.HiddenSettingsButton);
             VariableStorage.HiddenSettingsButtonLock++;
         }
         if (VariableStorage.HiddenExitButton == 1) {
@@ -299,13 +281,12 @@ public class Simulations {
         actionEvent.consume();
     }
 
-    public void hiddenBL(ActionEvent actionEvent) {
+    @FXML void hiddenBL(ActionEvent actionEvent) {
         if (VariableStorage.HiddenSettingsButtonLock == 0) {
             executor.execute(timeLimit);
             VariableStorage.HiddenExitButton -= 3;
             System.out.println(VariableStorage.HiddenExitButton);
             VariableStorage.HiddenSettingsButton -= 3;
-            //System.out.println(VariableStorage.HiddenSettingsButton);
             VariableStorage.HiddenSettingsButtonLock++;
         }
         if (VariableStorage.HiddenExitButton > 0) {

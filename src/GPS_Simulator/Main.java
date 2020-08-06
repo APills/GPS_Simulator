@@ -42,8 +42,8 @@ public class Main extends Application {
      *  immediately close.
      *
      *
-     *  The start method is run on startup similarly to how initialize, this start method calls the AeroTrainSplash class
-     *  and shows it for 2.5 seconds before closing it, in that time AeroTrainSplash's initialize method can run.
+     *  The start method is run on startup similarly to how initialize, this start method calls the Splash class
+     *  and shows it for 4.5 seconds before closing it, in that time Splash's initialize method can run.
      */
     @Override public void start(Stage primaryStage) throws IOException {
 

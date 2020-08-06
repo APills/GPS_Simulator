@@ -19,356 +19,346 @@
             <ListView fx:id="gpsShow" prefHeight="420.0" prefWidth="0.0" visible="false"/>
             <Region prefHeight="200.0"/>
             <VBox prefHeight="1040.0" prefWidth="879.0">
-                <children>
-                    <HBox fx:id="totalHBox" alignment="CENTER" prefHeight="368.0" prefWidth="798.0">
-                        <children>
-                            <VBox maxHeight="420.0" maxWidth="452.0" minHeight="320.0" minWidth="225.0"
-                                  prefHeight="354.0" prefWidth="225.0">
-                                <children>
-                                    <VBox fx:id="rs232labels" prefHeight="130.0" prefWidth="300.0">
-                                        <children>
-                                            <Label fx:id="rss" alignment="TOP_LEFT" prefHeight="20.0"
-                                                   text="RS232 Settings:">
-                                                <font>
-                                                    <Font name="System Bold" size="20.0"/>
-                                                </font>
-                                                <padding>
-                                                    <Insets left="5.0"/>
-                                                </padding>
-                                            </Label>
-                                            <Label fx:id="db" alignment="TOP_LEFT" prefHeight="20.0" text="Data Bits:">
-                                                <font>
-                                                    <Font name="System Bold" size="16.0"/>
-                                                </font>
-                                                <padding>
-                                                    <Insets left="5.0"/>
-                                                </padding>
-                                            </Label>
-                                            <Label fx:id="par" alignment="TOP_LEFT" prefHeight="20.0" text="Parity:">
-                                                <font>
-                                                    <Font name="System Bold" size="16.0"/>
-                                                </font>
-                                                <padding>
-                                                    <Insets left="5.0"/>
-                                                </padding>
-                                            </Label>
-                                            <Label fx:id="sb" alignment="TOP_LEFT" prefHeight="20.0" text="Stop Bits:">
-                                                <font>
-                                                    <Font name="System Bold" size="16.0"/>
-                                                </font>
-                                                <padding>
-                                                    <Insets left="5.0"/>
-                                                </padding>
-                                            </Label>
-                                            <Label fx:id="br" alignment="TOP_LEFT" prefHeight="20.0" text="Baud Rate:">
-                                                <font>
-                                                    <Font name="System Bold" size="16.0"/>
-                                                </font>
-                                                <padding>
-                                                    <Insets left="5.0"/>
-                                                </padding>
-                                            </Label>
-                                            <Region fx:id="lreg" prefHeight="20.0" prefWidth="290.0">
-                                                <padding>
-                                                    <Insets left="5.0"/>
-                                                </padding>
-                                            </Region>
-                                        </children>
-                                        <VBox.margin>
-                                            <Insets left="15.0" top="5.0"/>
-                                        </VBox.margin>
-                                    </VBox>
-                                    <Label alignment="TOP_LEFT" prefHeight="20.0" text="Current Data:">
-                                        <font>
-                                            <Font name="System Bold" size="20.0"/>
-                                        </font>
-                                        <VBox.margin>
-                                            <Insets left="10.0"/>
-                                        </VBox.margin>
-                                        <padding>
-                                            <Insets left="5.0"/>
-                                        </padding>
-                                    </Label>
-                                    <Label alignment="TOP_LEFT" prefHeight="20.0" text="Latitude: ">
-                                        <font>
-                                            <Font name="System Bold" size="16.0"/>
-                                        </font>
-                                        <VBox.margin>
-                                            <Insets left="10.0"/>
-                                        </VBox.margin>
-                                        <padding>
-                                            <Insets left="5.0"/>
-                                        </padding>
-                                    </Label>
-                                    <Label alignment="TOP_LEFT" prefHeight="20.0" text="Longitude:">
-                                        <font>
-                                            <Font name="System Bold" size="16.0"/>
-                                        </font>
-                                        <VBox.margin>
-                                            <Insets left="10.0"/>
-                                        </VBox.margin>
-                                        <padding>
-                                            <Insets left="5.0"/>
-                                        </padding>
-                                    </Label>
-                                    <Label alignment="TOP_LEFT" prefHeight="20.0" text="Velocity:">
-                                        <font>
-                                            <Font name="System Bold" size="16.0"/>
-                                        </font>
-                                        <VBox.margin>
-                                            <Insets left="10.0"/>
-                                        </VBox.margin>
-                                        <padding>
-                                            <Insets left="5.0"/>
-                                        </padding>
-                                    </Label>
-                                    <Label alignment="TOP_LEFT" prefHeight="20.0" text="Altitude">
-                                        <font>
-                                            <Font name="System Bold" size="16.0"/>
-                                        </font>
-                                        <VBox.margin>
-                                            <Insets left="10.0"/>
-                                        </VBox.margin>
-                                        <padding>
-                                            <Insets left="5.0"/>
-                                        </padding>
-                                    </Label>
-                                    <Label alignment="TOP_LEFT" prefHeight="20.0" text="Time (GMT):">
-                                        <font>
-                                            <Font name="System Bold" size="16.0"/>
-                                        </font>
-                                        <VBox.margin>
-                                            <Insets left="10.0"/>
-                                        </VBox.margin>
-                                        <padding>
-                                            <Insets left="5.0"/>
-                                        </padding>
-                                    </Label>
-                                    <Region prefHeight="20.0" prefWidth="200.0">
-                                        <padding>
-                                            <Insets left="5.0"/>
-                                        </padding>
-                                    </Region>
-                                    <Label alignment="TOP_LEFT" prefHeight="20.0" text="Start: ">
-                                        <font>
-                                            <Font name="System Bold" size="16.0"/>
-                                        </font>
-                                        <padding>
-                                            <Insets left="15.0"/>
-                                        </padding>
-                                    </Label>
-                                    <Label alignment="TOP_LEFT" prefHeight="20.0" text="End: ">
-                                        <font>
-                                            <Font name="System Bold" size="16.0"/>
-                                        </font>
-                                        <padding>
-                                            <Insets left="15.0"/>
-                                        </padding>
-                                    </Label>
-                                    <Label alignment="TOP_LEFT" prefHeight="20.0" text="Estimated Time Left:">
-                                        <font>
-                                            <Font name="System Bold" size="16.0"/>
-                                        </font>
-                                        <padding>
-                                            <Insets left="15.0"/>
-                                        </padding>
-                                    </Label>
-                                    <Label alignment="TOP_LEFT" prefHeight="20.0" text="Simulation Progress:">
-                                        <font>
-                                            <Font name="System Bold" size="16.0"/>
-                                        </font>
-                                        <padding>
-                                            <Insets left="15.0"/>
-                                        </padding>
-                                    </Label>
-                                </children>
-                            </VBox>
-                            <VBox prefHeight="354.0" prefWidth="300.0">
-                                <VBox fx:id="rs232data" prefHeight="145.0" prefWidth="152.0">
-                                    <children>
-                                        <Region prefHeight="28.0" prefWidth="0.0"/>
-                                        <Label fx:id="dataBitsLabel" prefHeight="20.0">
-                                            <font>
-                                                <Font name="System Bold" size="16.0"/>
-                                            </font>
-                                            <padding>
-                                                <Insets left="5.0"/>
-                                            </padding>
-                                        </Label>
-                                        <Label fx:id="parityLabel" prefHeight="20.0">
-                                            <font>
-                                                <Font name="System Bold" size="16.0"/>
-                                            </font>
-                                            <padding>
-                                                <Insets left="5.0"/>
-                                            </padding>
-                                        </Label>
-                                        <Label fx:id="stopBitsLabel" prefHeight="20.0">
-                                            <font>
-                                                <Font name="System Bold" size="16.0"/>
-                                            </font>
-                                            <padding>
-                                                <Insets left="5.0"/>
-                                            </padding>
-                                        </Label>
-                                        <Label fx:id="baudRateLabel" prefHeight="20.0">
-                                            <font>
-                                                <Font name="System Bold" size="16.0"/>
-                                            </font>
-                                            <padding>
-                                                <Insets left="5.0"/>
-                                            </padding>
-                                        </Label>
-                                    </children>
-                                </VBox>
-                                <Region fx:id="hideRegion" prefHeight="15.0" prefWidth="152.0">
-                                    <padding>
-                                        <Insets left="5.0"/>
-                                    </padding>
-                                </Region>
-                                <Label fx:id="latitudeLabel" prefHeight="20.0">
-                                    <font>
-                                        <Font name="System Bold" size="16.0"/>
-                                    </font>
-                                    <padding>
-                                        <Insets left="5.0"/>
-                                    </padding>
-                                </Label>
-                                <Label fx:id="longitudeLabel" prefHeight="20.0">
-                                    <font>
-                                        <Font name="System Bold" size="16.0"/>
-                                    </font>
-                                    <padding>
-                                        <Insets left="5.0"/>
-                                    </padding>
-                                </Label>
-                                <Label fx:id="velocityLabel" prefHeight="20.0">
-                                    <font>
-                                        <Font name="System Bold" size="16.0"/>
-                                    </font>
-                                    <padding>
-                                        <Insets left="5.0"/>
-                                    </padding>
-                                </Label>
-                                <Label fx:id="altitudeLabel" prefHeight="20.0">
-                                    <font>
-                                        <Font name="System Bold" size="16.0"/>
-                                    </font>
-                                    <padding>
-                                        <Insets left="5.0"/>
-                                    </padding>
-                                </Label>
-                                <Label fx:id="timeLabel" prefHeight="20.0">
-                                    <font>
-                                        <Font name="System Bold" size="16.0"/>
-                                    </font>
-                                    <padding>
-                                        <Insets left="5.0"/>
-                                    </padding>
-                                </Label>
-                                <Region prefHeight="20.0" prefWidth="0.0">
-                                    <padding>
-                                        <Insets left="5.0"/>
-                                    </padding>
-                                </Region>
-                                <Label fx:id="startTimeLabel" prefHeight="20.0">
-                                    <font>
-                                        <Font name="System Bold" size="16.0"/>
-                                    </font>
-                                    <padding>
-                                        <Insets left="5.0"/>
-                                    </padding>
-                                </Label>
-                                <Label fx:id="endTimeLabel" prefHeight="20.0">
-                                    <font>
-                                        <Font name="System Bold" size="16.0"/>
-                                    </font>
-                                    <padding>
-                                        <Insets left="5.0"/>
-                                    </padding>
-                                </Label>
-                                <Label fx:id="estTimeLeftLabel" prefHeight="20.0">
-                                    <font>
-                                        <Font name="System Bold" size="16.0"/>
-                                    </font>
-                                    <padding>
-                                        <Insets left="5.0"/>
-                                    </padding>
-                                </Label>
-                                <Label fx:id="lineCountLabel" prefHeight="20.0">
-                                    <font>
-                                        <Font name="System Bold" size="16.0"/>
-                                    </font>
-                                    <padding>
-                                        <Insets left="5.0"/>
-                                    </padding>
-                                </Label>
-                            </VBox>
-                        </children>
-                    </HBox>
-                    <HBox alignment="CENTER" prefHeight="60.0" prefWidth="680.0">
-                        <Region maxHeight="60.0" minHeight="60.0" prefHeight="60.0" HBox.hgrow="ALWAYS"/>
-                        <Button fx:id="SelectSimulation" contentDisplay="CENTER" mnemonicParsing="false"
-                                onAction="#SelectSimulation" prefHeight="60.0" prefWidth="240.0"
-                                style="-fx-background-radius: 15.87;" HBox.hgrow="ALWAYS">
+                <HBox fx:id="totalHBox" alignment="CENTER" prefHeight="368.0" prefWidth="798.0">
+                    <VBox maxHeight="420.0" maxWidth="452.0" minHeight="320.0" minWidth="225.0"
+                          prefHeight="354.0" prefWidth="225.0">
+                        <VBox fx:id="rs232labels" prefHeight="130.0" prefWidth="300.0">
+                            <VBox.margin>
+                                <Insets left="15.0" top="5.0"/>
+                            </VBox.margin>
+                            <Label fx:id="rss" alignment="TOP_LEFT" prefHeight="20.0"
+                                   text="RS232 Settings:">
+                                <font>
+                                    <Font name="System Bold" size="20.0"/>
+                                </font>
+                                <padding>
+                                    <Insets left="5.0"/>
+                                </padding>
+                            </Label>
+                            <Label fx:id="db" alignment="TOP_LEFT" prefHeight="20.0" text="Data Bits:">
+                                <font>
+                                    <Font name="System Bold" size="16.0"/>
+                                </font>
+                                <padding>
+                                    <Insets left="5.0"/>
+                                </padding>
+                            </Label>
+                            <Label fx:id="par" alignment="TOP_LEFT" prefHeight="20.0" text="Parity:">
+                                <font>
+                                    <Font name="System Bold" size="16.0"/>
+                                </font>
+                                <padding>
+                                    <Insets left="5.0"/>
+                                </padding>
+                            </Label>
+                            <Label fx:id="sb" alignment="TOP_LEFT" prefHeight="20.0" text="Stop Bits:">
+                                <font>
+                                    <Font name="System Bold" size="16.0"/>
+                                </font>
+                                <padding>
+                                    <Insets left="5.0"/>
+                                </padding>
+                            </Label>
+                            <Label fx:id="br" alignment="TOP_LEFT" prefHeight="20.0" text="Baud Rate:">
+                                <font>
+                                    <Font name="System Bold" size="16.0"/>
+                                </font>
+                                <padding>
+                                    <Insets left="5.0"/>
+                                </padding>
+                            </Label>
+                            <Region fx:id="lreg" prefHeight="20.0" prefWidth="290.0">
+                                <padding>
+                                    <Insets left="5.0"/>
+                                </padding>
+                            </Region>
+                        </VBox>
+                        <Label alignment="TOP_LEFT" prefHeight="20.0" text="Current Data:">
                             <font>
-                                <Font size="20.0"/>
+                                <Font name="System Bold" size="20.0"/>
                             </font>
-                            <graphic>
-                                <ImageView fx:id="pausePlayBack" fitHeight="60.0" fitWidth="240.0"
-                                           pickOnBounds="true" smooth="false">
-                                    <Image url="@../assets/Buttons/runner/runner_exit.png"/>
-                                </ImageView>
-                            </graphic>
+                            <VBox.margin>
+                                <Insets left="10.0"/>
+                            </VBox.margin>
                             <padding>
-                                <Insets top="-1.0"/>
-                            </padding>
-                            <HBox.margin>
-                                <Insets right="5.0"/>
-                            </HBox.margin>
-                        </Button>
-                        <Button fx:id="StartStop" contentDisplay="CENTER" mnemonicParsing="false"
-                                onAction="#StartStop" prefHeight="60.0" prefWidth="240.0"
-                                style="-fx-background-radius: 15.87;" text="Start/Stop" textAlignment="CENTER"
-                                textFill="TRANSPARENT" HBox.hgrow="ALWAYS">
-                            <font>
-                                <Font size="1.0"/>
-                            </font>
-                            <padding>
-                                <Insets top="-1.0"/>
-                            </padding>
-                            <HBox.margin>
                                 <Insets left="5.0"/>
-                            </HBox.margin>
-                            <graphic>
-                                <ImageView fx:id="StartStopImage" disable="true" fitHeight="60.0" fitWidth="240.0"
-                                           pickOnBounds="true">
-                                    <Image url="@../assets/Buttons/runner/runner_start.png"/>
-                                </ImageView>
-                            </graphic>
-                        </Button>
-                        <Region HBox.hgrow="ALWAYS"/>
-                    </HBox>
-                    <HBox alignment="CENTER" prefHeight="40.0" prefWidth="783.0">
-                        <VBox.margin>
-                            <Insets bottom="5.0" left="10.0" right="5.0" top="5.0"/>
-                        </VBox.margin>
-                        <Button fx:id="nmeaShowDataButton" mnemonicParsing="false" onAction="#nmeaShowData"
-                                text="Show NMEA Data">
+                            </padding>
+                        </Label>
+                        <Label alignment="TOP_LEFT" prefHeight="20.0" text="Latitude: ">
                             <font>
-                                <Font name="System Bold" size="13.0"/>
+                                <Font name="System Bold" size="16.0"/>
                             </font>
-                        </Button>
-                        <Region minWidth="-Infinity" prefHeight="34.0" HBox.hgrow="ALWAYS"/>
-                        <Button fx:id="rs232ShowDataButton" mnemonicParsing="false" onAction="#rs232ShowData"
-                                text="Show RS232 Data">
+                            <VBox.margin>
+                                <Insets left="10.0"/>
+                            </VBox.margin>
+                            <padding>
+                                <Insets left="5.0"/>
+                            </padding>
+                        </Label>
+                        <Label alignment="TOP_LEFT" prefHeight="20.0" text="Longitude:">
                             <font>
-                                <Font name="System Bold" size="13.0"/>
+                                <Font name="System Bold" size="16.0"/>
                             </font>
-                        </Button>
-                    </HBox>
+                            <VBox.margin>
+                                <Insets left="10.0"/>
+                            </VBox.margin>
+                            <padding>
+                                <Insets left="5.0"/>
+                            </padding>
+                        </Label>
+                        <Label alignment="TOP_LEFT" prefHeight="20.0" text="Velocity:">
+                            <font>
+                                <Font name="System Bold" size="16.0"/>
+                            </font>
+                            <VBox.margin>
+                                <Insets left="10.0"/>
+                            </VBox.margin>
+                            <padding>
+                                <Insets left="5.0"/>
+                            </padding>
+                        </Label>
+                        <Label alignment="TOP_LEFT" prefHeight="20.0" text="Altitude">
+                            <font>
+                                <Font name="System Bold" size="16.0"/>
+                            </font>
+                            <VBox.margin>
+                                <Insets left="10.0"/>
+                            </VBox.margin>
+                            <padding>
+                                <Insets left="5.0"/>
+                            </padding>
+                        </Label>
+                        <Label alignment="TOP_LEFT" prefHeight="20.0" text="Time (GMT):">
+                            <font>
+                                <Font name="System Bold" size="16.0"/>
+                            </font>
+                            <VBox.margin>
+                                <Insets left="10.0"/>
+                            </VBox.margin>
+                            <padding>
+                                <Insets left="5.0"/>
+                            </padding>
+                        </Label>
+                        <Region prefHeight="20.0" prefWidth="200.0">
+                            <padding>
+                                <Insets left="5.0"/>
+                            </padding>
+                        </Region>
+                        <Label alignment="TOP_LEFT" prefHeight="20.0" text="Start: ">
+                            <font>
+                                <Font name="System Bold" size="16.0"/>
+                            </font>
+                            <padding>
+                                <Insets left="15.0"/>
+                            </padding>
+                        </Label>
+                        <Label alignment="TOP_LEFT" prefHeight="20.0" text="End: ">
+                            <font>
+                                <Font name="System Bold" size="16.0"/>
+                            </font>
+                            <padding>
+                                <Insets left="15.0"/>
+                            </padding>
+                        </Label>
+                        <Label alignment="TOP_LEFT" prefHeight="20.0" text="Estimated Time Left:">
+                            <font>
+                                <Font name="System Bold" size="16.0"/>
+                            </font>
+                            <padding>
+                                <Insets left="15.0"/>
+                            </padding>
+                        </Label>
+                        <Label alignment="TOP_LEFT" prefHeight="20.0" text="Simulation Progress:">
+                            <font>
+                                <Font name="System Bold" size="16.0"/>
+                            </font>
+                            <padding>
+                                <Insets left="15.0"/>
+                            </padding>
+                        </Label>
+                    </VBox>
+                    <VBox prefHeight="354.0" prefWidth="300.0">
+                        <VBox fx:id="rs232data" prefHeight="145.0" prefWidth="152.0">
+                            <Region prefHeight="28.0" prefWidth="0.0"/>
+                            <Label fx:id="dataBitsLabel" prefHeight="20.0">
+                                <font>
+                                    <Font name="System Bold" size="16.0"/>
+                                </font>
+                                <padding>
+                                    <Insets left="5.0"/>
+                                </padding>
+                            </Label>
+                            <Label fx:id="parityLabel" prefHeight="20.0">
+                                <font>
+                                    <Font name="System Bold" size="16.0"/>
+                                </font>
+                                <padding>
+                                    <Insets left="5.0"/>
+                                </padding>
+                            </Label>
+                            <Label fx:id="stopBitsLabel" prefHeight="20.0">
+                                <font>
+                                    <Font name="System Bold" size="16.0"/>
+                                </font>
+                                <padding>
+                                    <Insets left="5.0"/>
+                                </padding>
+                            </Label>
+                            <Label fx:id="baudRateLabel" prefHeight="20.0">
+                                <font>
+                                    <Font name="System Bold" size="16.0"/>
+                                </font>
+                                <padding>
+                                    <Insets left="5.0"/>
+                                </padding>
+                            </Label>
+                        </VBox>
+                        <Region fx:id="hideRegion" prefHeight="15.0" prefWidth="152.0">
+                            <padding>
+                                <Insets left="5.0"/>
+                            </padding>
+                        </Region>
+                        <Label fx:id="latitudeLabel" prefHeight="20.0">
+                            <font>
+                                <Font name="System Bold" size="16.0"/>
+                            </font>
+                            <padding>
+                                <Insets left="5.0"/>
+                            </padding>
+                        </Label>
+                        <Label fx:id="longitudeLabel" prefHeight="20.0">
+                            <font>
+                                <Font name="System Bold" size="16.0"/>
+                            </font>
+                            <padding>
+                                <Insets left="5.0"/>
+                            </padding>
+                        </Label>
+                        <Label fx:id="velocityLabel" prefHeight="20.0">
+                            <font>
+                                <Font name="System Bold" size="16.0"/>
+                            </font>
+                            <padding>
+                                <Insets left="5.0"/>
+                            </padding>
+                        </Label>
+                        <Label fx:id="altitudeLabel" prefHeight="20.0">
+                            <font>
+                                <Font name="System Bold" size="16.0"/>
+                            </font>
+                            <padding>
+                                <Insets left="5.0"/>
+                            </padding>
+                        </Label>
+                        <Label fx:id="timeLabel" prefHeight="20.0">
+                            <font>
+                                <Font name="System Bold" size="16.0"/>
+                            </font>
+                            <padding>
+                                <Insets left="5.0"/>
+                            </padding>
+                        </Label>
+                        <Region prefHeight="20.0" prefWidth="0.0">
+                            <padding>
+                                <Insets left="5.0"/>
+                            </padding>
+                        </Region>
+                        <Label fx:id="startTimeLabel" prefHeight="20.0">
+                            <font>
+                                <Font name="System Bold" size="16.0"/>
+                            </font>
+                            <padding>
+                                <Insets left="5.0"/>
+                            </padding>
+                        </Label>
+                        <Label fx:id="endTimeLabel" prefHeight="20.0">
+                            <font>
+                                <Font name="System Bold" size="16.0"/>
+                            </font>
+                            <padding>
+                                <Insets left="5.0"/>
+                            </padding>
+                        </Label>
+                        <Label fx:id="estTimeLeftLabel" prefHeight="20.0">
+                            <font>
+                                <Font name="System Bold" size="16.0"/>
+                            </font>
+                            <padding>
+                                <Insets left="5.0"/>
+                            </padding>
+                        </Label>
+                        <Label fx:id="lineCountLabel" prefHeight="20.0">
+                            <font>
+                                <Font name="System Bold" size="16.0"/>
+                            </font>
+                            <padding>
+                                <Insets left="5.0"/>
+                            </padding>
+                        </Label>
+                    </VBox>
+                </HBox>
+                <HBox alignment="CENTER" prefHeight="60.0" prefWidth="680.0">
+                    <Region maxHeight="60.0" minHeight="60.0" prefHeight="60.0" HBox.hgrow="ALWAYS"/>
+                    <Button fx:id="SelectSimulation" contentDisplay="CENTER" mnemonicParsing="false"
+                            onAction="#SelectSimulation" prefHeight="60.0" prefWidth="240.0"
+                            style="-fx-background-radius: 15.87;" HBox.hgrow="ALWAYS">
+                        <font>
+                            <Font size="20.0"/>
+                        </font>
+                        <graphic>
+                            <ImageView fx:id="pausePlayBack" fitHeight="60.0" fitWidth="240.0"
+                                       pickOnBounds="true" smooth="false">
+                                <Image url="@../assets/Buttons/runner/runner_exit.png"/>
+                            </ImageView>
+                        </graphic>
+                        <padding>
+                            <Insets top="-1.0"/>
+                        </padding>
+                        <HBox.margin>
+                            <Insets right="5.0"/>
+                        </HBox.margin>
+                    </Button>
+                    <Button fx:id="StartStop" contentDisplay="CENTER" mnemonicParsing="false"
+                            onAction="#StartStop" prefHeight="60.0" prefWidth="240.0"
+                            style="-fx-background-radius: 15.87;" text="Start/Stop" textAlignment="CENTER"
+                            textFill="TRANSPARENT" HBox.hgrow="ALWAYS">
+                        <font>
+                            <Font size="1.0"/>
+                        </font>
+                        <padding>
+                            <Insets top="-1.0"/>
+                        </padding>
+                        <HBox.margin>
+                            <Insets left="5.0"/>
+                        </HBox.margin>
+                        <graphic>
+                            <ImageView fx:id="StartStopImage" disable="true" fitHeight="60.0" fitWidth="240.0"
+                                       pickOnBounds="true">
+                                <Image url="@../assets/Buttons/runner/runner_start.png"/>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                    <Region HBox.hgrow="ALWAYS"/>
+                </HBox>
+                <HBox alignment="CENTER" prefHeight="40.0" prefWidth="783.0">
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="10.0" right="5.0" top="5.0"/>
+                    </VBox.margin>
+                    <Button fx:id="nmeaShowDataButton" mnemonicParsing="false" onAction="#nmeaShowData"
+                            text="Show NMEA Data">
+                        <font>
+                            <Font name="System Bold" size="13.0"/>
+                        </font>
+                    </Button>
+                    <Region minWidth="-Infinity" prefHeight="34.0" HBox.hgrow="ALWAYS"/>
+                    <Button fx:id="rs232ShowDataButton" mnemonicParsing="false" onAction="#rs232ShowData"
+                            text="Show RS232 Data">
+                        <font>
+                            <Font name="System Bold" size="13.0"/>
+                        </font>
+                    </Button>
+                </HBox>
 
-                </children>
             </VBox>
         </HBox>
     </center>

@@ -12,10 +12,8 @@ import javafx.stage.Stage;
 
 public class WarningBox {
 
-    static boolean answer;
 
-    public static boolean warn(String title, String message)
-    {
+    public static void warn(String title, String message) {
 
         Stage window = new Stage();
 
@@ -31,21 +29,17 @@ public class WarningBox {
         backButton.minHeight(100);
         backButton.minWidth(200);
 
-        backButton.setOnAction(e -> {
-            answer = false;
-            window.close();
-        });
+        backButton.setOnAction(e -> window.close());
         HBox hlayout = new HBox(10);
         VBox vlayout = new VBox(10);
         hlayout.getChildren().addAll(backButton);
-        vlayout.getChildren().addAll(label,hlayout);
+        vlayout.getChildren().addAll(label, hlayout);
         vlayout.setAlignment(Pos.CENTER);
         hlayout.setAlignment(Pos.CENTER);
         Scene scene = new Scene(vlayout);
         window.setScene(scene);
         window.showAndWait();
 
-        return answer;
     }
 
 }

@@ -11,14 +11,13 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
+
 import java.io.IOException;
 import java.util.Objects;
 
 public class Splash {
-    @FXML
-    public Label label;
-    @FXML
-    public javafx.scene.layout.AnchorPane AnchorPane;
+    @FXML Label label;
+    @FXML javafx.scene.layout.AnchorPane AnchorPane;
 
     /**
      * @author APills 1.0

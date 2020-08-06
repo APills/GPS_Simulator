@@ -14,234 +14,232 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane alignment="CENTER" prefHeight="480.0" prefWidth="800.0" style="-fx-background-color: #ccddff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GPS_Simulator.Simulations">
+<GridPane alignment="CENTER" prefHeight="480.0" prefWidth="800.0" style="-fx-background-color: #ccddff;"
+          xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="GPS_Simulator.Simulations">
     <columnConstraints>
-        <ColumnConstraints />
+        <ColumnConstraints/>
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints />
+        <RowConstraints/>
     </rowConstraints>
-    <children>
-        <VBox alignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
-            <children>
-                <HBox alignment="BOTTOM_CENTER" minHeight="200.0" prefHeight="175.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
-                    <children>
-                  <Button fx:id="settings" mnemonicParsing="false" onAction="#Settings" opacity="0.0" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </Button>
-                        <Button fx:id="Simulation1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#Simulation1" prefHeight="175.0" prefWidth="175.0" style="-fx-background-radius: 13.472;" HBox.hgrow="ALWAYS">
-                            <HBox.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </HBox.margin>
-                            <padding>
-                                <Insets top="-1.0" />
-                            </padding>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <graphic>
-                        <StackPane prefHeight="175.0" prefWidth="175.0">
-                           <children>
-                                      <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true">
-                                          <image>
-                                              <Image url="@../assets/Buttons/simulation/simulation_1.png" />
-                                          </image>
-                                      </ImageView>
-                              <Text fx:id="sim1Text" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Unknown" textAlignment="CENTER" translateY="10.0">
-                                 <font>
-                                    <Font name="Arial Bold" size="22.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                           <padding>
-                              <Insets top="-1.0" />
-                           </padding>
-                        </StackPane>
-                     </graphic></Button>
-                        <Button fx:id="Simulation2" mnemonicParsing="false" onAction="#Simulation2" prefHeight="175.0" prefWidth="175.0" style="-fx-background-radius: 13.472;" HBox.hgrow="ALWAYS">
-                            <HBox.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </HBox.margin>
-                            <padding>
-                                <Insets top="-1.0" />
-                            </padding>
-                     <graphic>
-                        <StackPane prefHeight="150.0" prefWidth="200.0">
-                           <children>
-                                      <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true">
-                                          <image>
-                                              <Image url="@../assets/Buttons/simulation/simulation_2.png" />
-                                          </image>
-                                      </ImageView>
-                              <Text fx:id="sim2Text" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Unknown" translateY="10.0">
-                                 <font>
-                                    <Font name="Arial Bold" size="22.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                        </StackPane>
-                     </graphic></Button>
-                        <Button fx:id="Simulation3" mnemonicParsing="false" onAction="#Simulation3" prefHeight="175.0" prefWidth="175.0" style="-fx-background-radius: 13.472;" HBox.hgrow="ALWAYS">
-                            <HBox.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </HBox.margin>
-                            <padding>
-                                <Insets top="-1.0" />
-                            </padding>
-                     <graphic>
-                        <StackPane prefHeight="150.0" prefWidth="200.0">
-                           <children>
-                                      <ImageView fx:id="imgs3" fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true">
-                                          <image>
-                                              <Image url="@../assets/Buttons/simulation/simulation_3.png" />
-                                          </image>
-                                      </ImageView>
-                              <Text fx:id="sim3Text" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Unknown" translateY="10.0">
-                                 <font>
-                                    <Font name="Arial Bold" size="22.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                        </StackPane>
-                     </graphic></Button>
-                  <Button fx:id="hiddenTR" mnemonicParsing="false" onAction="#hiddenTR" opacity="0.0" prefHeight="200.0" prefWidth="200.0">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </Button>
-                    </children>
-                    <opaqueInsets>
-                        <Insets />
-                    </opaqueInsets>
-                </HBox>
-                <HBox alignment="TOP_CENTER" minHeight="186.0" prefHeight="186.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
-                    <children>
-                  <Button fx:id="hiddenBL" mnemonicParsing="false" onAction="#hiddenBL" opacity="0.0" prefHeight="200.0" prefWidth="200.0">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </Button>
-                        <Button fx:id="Simulation4" mnemonicParsing="false" onAction="#Simulation4" prefHeight="175.0" prefWidth="175.0" style="-fx-background-radius: 13.472;" HBox.hgrow="ALWAYS">
-                            <HBox.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </HBox.margin>
-                            <padding>
-                                <Insets top="-1.0" />
-                            </padding>
-                     <graphic>
-                        <StackPane prefHeight="150.0" prefWidth="200.0">
-                           <children>
-                                      <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true">
-                                          <image>
-                                              <Image url="@../assets/Buttons/simulation/simulation_4.png" />
-                                          </image>
-                                      </ImageView>
-                              <Text fx:id="sim4Text" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Unknown" translateY="10.0">
-                                 <font>
-                                    <Font name="Arial Bold" size="22.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                        </StackPane>
-                     </graphic></Button>
-                        <Button fx:id="Simulation5" mnemonicParsing="false" onAction="#Simulation5" prefHeight="175.0" prefWidth="175.0" style="-fx-background-radius: 13.472;" HBox.hgrow="ALWAYS">
-                            <HBox.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </HBox.margin>
-                            <padding>
-                                <Insets top="-1.0" />
-                            </padding>
-                     <graphic>
-                        <StackPane prefHeight="150.0" prefWidth="200.0">
-                           <children>
-                                      <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true">
-                                          <image>
-                                              <Image url="@../assets/Buttons/simulation/simulation_5.png" />
-                                          </image>
-                                      </ImageView>
-                              <Text fx:id="sim5Text" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Unknown" translateY="10.0">
-                                 <font>
-                                    <Font name="Arial Bold" size="22.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                        </StackPane>
-                     </graphic></Button>
-                        <Button fx:id="Simulation6" mnemonicParsing="false" onAction="#Simulation6" prefHeight="175.0" prefWidth="175.0" style="-fx-background-radius: 13.472;" HBox.hgrow="ALWAYS">
-                            <HBox.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </HBox.margin>
-                            <padding>
-                                <Insets top="-1.0" />
-                            </padding>
-                     <graphic>
-                        <StackPane prefHeight="150.0" prefWidth="200.0">
-                           <children>
-                                      <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true">
-                                          <image>
-                                              <Image url="@../assets/Buttons/simulation/simulation_6.png" />
-                                          </image>
-                                      </ImageView>
-                              <Text fx:id="sim6Text" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Unknown" translateY="25.0">
-                                 <font>
-                                    <Font name="Arial Bold" size="22.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                        </StackPane>
-                     </graphic></Button>
-                  <Button fx:id="hiddenBR" mnemonicParsing="false" onAction="#hiddenBR" opacity="0.0" prefHeight="200.0" prefWidth="200.0">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </Button>
-                    </children>
-                    <opaqueInsets>
-                        <Insets />
-                    </opaqueInsets>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-                </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="800.0">
-               <children>
-                  <Region prefHeight="0.0" prefWidth="200.0" />
-                  <Button fx:id="externalsimulations" mnemonicParsing="false" onAction="#ExternalSimulations" prefHeight="80.0" prefWidth="175.0" style="-fx-background-radius: 40;" HBox.hgrow="ALWAYS">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </HBox.margin>
-                     <padding>
-                        <Insets top="-1.0" />
-                     </padding>
-                     <graphic>
-                        <ImageView fitHeight="80.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../assets/Buttons/simulation/simulation_custom.png" />
-                           </image>
+    <VBox alignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+        <HBox alignment="BOTTOM_CENTER" minHeight="200.0" prefHeight="175.0" prefWidth="800.0"
+              VBox.vgrow="ALWAYS">
+            <opaqueInsets>
+                <Insets/>
+            </opaqueInsets>
+            <Button fx:id="settings" mnemonicParsing="false" onAction="#Settings" opacity="0.0"
+                    prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                <font>
+                    <Font size="18.0"/>
+                </font>
+                <HBox.margin>
+                    <Insets/>
+                </HBox.margin>
+            </Button>
+            <Button fx:id="Simulation1" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
+                    onAction="#Simulation1" prefHeight="175.0" prefWidth="175.0"
+                    style="-fx-background-radius: 13.472;" HBox.hgrow="ALWAYS">
+                <HBox.margin>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                </HBox.margin>
+                <padding>
+                    <Insets top="-1.0"/>
+                </padding>
+                <opaqueInsets>
+                    <Insets/>
+                </opaqueInsets>
+                <graphic>
+                    <StackPane prefHeight="175.0" prefWidth="175.0">
+                        <padding>
+                            <Insets top="-1.0"/>
+                        </padding>
+                        <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true">
+                            <Image url="@../assets/Buttons/simulation/simulation_1.png"/>
                         </ImageView>
-                     </graphic>
-                  </Button>
-                  <Region prefHeight="0.0" prefWidth="200.0" />
-               </children>
-            </HBox>
-            </children>
-        </VBox>
-    </children>
+                        <Text fx:id="sim1Text" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="Unknown"
+                              textAlignment="CENTER" translateY="10.0">
+                            <font>
+                                <Font name="Arial Bold" size="22.0"/>
+                            </font>
+                        </Text>
+                    </StackPane>
+                </graphic>
+            </Button>
+            <Button fx:id="Simulation2" mnemonicParsing="false" onAction="#Simulation2" prefHeight="175.0"
+                    prefWidth="175.0" style="-fx-background-radius: 13.472;" HBox.hgrow="ALWAYS">
+                <HBox.margin>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                </HBox.margin>
+                <padding>
+                    <Insets top="-1.0"/>
+                </padding>
+                <graphic>
+                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                        <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true">
+                            <Image url="@../assets/Buttons/simulation/simulation_2.png"/>
+                        </ImageView>
+                        <Text fx:id="sim2Text" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="Unknown"
+                              translateY="10.0">
+                            <font>
+                                <Font name="Arial Bold" size="22.0"/>
+                            </font>
+                        </Text>
+                    </StackPane>
+                </graphic>
+            </Button>
+            <Button fx:id="Simulation3" mnemonicParsing="false" onAction="#Simulation3" prefHeight="175.0"
+                    prefWidth="175.0" style="-fx-background-radius: 13.472;" HBox.hgrow="ALWAYS">
+                <HBox.margin>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                </HBox.margin>
+                <padding>
+                    <Insets top="-1.0"/>
+                </padding>
+                <graphic>
+                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                        <ImageView fx:id="imgs3" fitHeight="175.0" fitWidth="175.0" pickOnBounds="true"
+                                   preserveRatio="true">
+                            <Image url="@../assets/Buttons/simulation/simulation_3.png"/>
+                        </ImageView>
+                        <Text fx:id="sim3Text" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="Unknown"
+                              translateY="10.0">
+                            <font>
+                                <Font name="Arial Bold" size="22.0"/>
+                            </font>
+                        </Text>
+                    </StackPane>
+                </graphic>
+            </Button>
+            <Button fx:id="hiddenTR" mnemonicParsing="false" onAction="#hiddenTR" opacity="0.0"
+                    prefHeight="200.0" prefWidth="200.0">
+                <font>
+                    <Font size="18.0"/>
+                </font>
+                <HBox.margin>
+                    <Insets/>
+                </HBox.margin>
+            </Button>
+        </HBox>
+        <HBox alignment="TOP_CENTER" minHeight="186.0" prefHeight="186.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
+            <opaqueInsets>
+                <Insets/>
+            </opaqueInsets>
+            <VBox.margin>
+                <Insets/>
+            </VBox.margin>
+            <Button fx:id="hiddenBL" mnemonicParsing="false" onAction="#hiddenBL" opacity="0.0"
+                    prefHeight="200.0" prefWidth="200.0">
+                <font>
+                    <Font size="18.0"/>
+                </font>
+                <HBox.margin>
+                    <Insets/>
+                </HBox.margin>
+            </Button>
+            <Button fx:id="Simulation4" mnemonicParsing="false" onAction="#Simulation4" prefHeight="175.0"
+                    prefWidth="175.0" style="-fx-background-radius: 13.472;" HBox.hgrow="ALWAYS">
+                <HBox.margin>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                </HBox.margin>
+                <padding>
+                    <Insets top="-1.0"/>
+                </padding>
+                <graphic>
+                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                        <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true">
+                            <Image url="@../assets/Buttons/simulation/simulation_4.png"/>
+                        </ImageView>
+                        <Text fx:id="sim4Text" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="Unknown"
+                              translateY="10.0">
+                            <font>
+                                <Font name="Arial Bold" size="22.0"/>
+                            </font>
+                        </Text>
+                    </StackPane>
+                </graphic>
+            </Button>
+            <Button fx:id="Simulation5" mnemonicParsing="false" onAction="#Simulation5" prefHeight="175.0"
+                    prefWidth="175.0" style="-fx-background-radius: 13.472;" HBox.hgrow="ALWAYS">
+                <HBox.margin>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                </HBox.margin>
+                <padding>
+                    <Insets top="-1.0"/>
+                </padding>
+                <graphic>
+                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                        <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true">
+                            <Image url="@../assets/Buttons/simulation/simulation_5.png"/>
+                        </ImageView>
+                        <Text fx:id="sim5Text" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="Unknown"
+                              translateY="10.0">
+                            <font>
+                                <Font name="Arial Bold" size="22.0"/>
+                            </font>
+                        </Text>
+                    </StackPane>
+                </graphic>
+            </Button>
+            <Button fx:id="Simulation6" mnemonicParsing="false" onAction="#Simulation6" prefHeight="175.0"
+                    prefWidth="175.0" style="-fx-background-radius: 13.472;" HBox.hgrow="ALWAYS">
+                <HBox.margin>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                </HBox.margin>
+                <padding>
+                    <Insets top="-1.0"/>
+                </padding>
+                <graphic>
+                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                        <ImageView fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true">
+                            <Image url="@../assets/Buttons/simulation/simulation_6.png"/>
+                        </ImageView>
+                        <Text fx:id="sim6Text" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="Unknown"
+                              translateY="25.0">
+                            <font>
+                                <Font name="Arial Bold" size="22.0"/>
+                            </font>
+                        </Text>
+                    </StackPane>
+                </graphic>
+            </Button>
+            <Button fx:id="hiddenBR" mnemonicParsing="false" onAction="#hiddenBR" opacity="0.0"
+                    prefHeight="200.0" prefWidth="200.0">
+                <font>
+                    <Font size="18.0"/>
+                </font>
+                <HBox.margin>
+                    <Insets/>
+                </HBox.margin>
+            </Button>
+        </HBox>
+        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="800.0">
+            <Region prefHeight="0.0" prefWidth="200.0"/>
+            <Button fx:id="externalsimulations" mnemonicParsing="false" onAction="#ExternalSimulations"
+                    prefHeight="80.0" prefWidth="175.0" style="-fx-background-radius: 40;" HBox.hgrow="ALWAYS">
+                <font>
+                    <Font size="18.0"/>
+                </font>
+                <HBox.margin>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                </HBox.margin>
+                <padding>
+                    <Insets top="-1.0"/>
+                </padding>
+                <graphic>
+                    <ImageView fitHeight="80.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true">
+                        <Image url="@../assets/Buttons/simulation/simulation_custom.png"/>
+                    </ImageView>
+                </graphic>
+            </Button>
+            <Region prefHeight="0.0" prefWidth="200.0"/>
+        </HBox>
+    </VBox>
 </GridPane>

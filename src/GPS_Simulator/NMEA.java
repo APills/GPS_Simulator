@@ -88,6 +88,7 @@ public class NMEA {
         public float time = 0.0f;
         public float latitude = 0.0f;
         public float longitude = 0.0f;
+        @SuppressWarnings("unused")
         public boolean fixed = false;
         public int quality = 0;
         public float dir = 0.0f;
@@ -103,6 +104,7 @@ public class NMEA {
         }
     }
 
+    @SuppressWarnings("CanBeFinal")
     static GPSPosition position = new GPSPosition();
 
     private static final Map<String, SentenceParser> sentenceParsers = new HashMap<>();

@@ -18,6 +18,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -27,6 +28,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
@@ -43,27 +46,35 @@ public class Runner {
      * something incorrectly and close a thread the cached pool will allow the program to run again because it doesn't
      * have to try to reallocate the dead thread
      */
-    public static ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
+    static final ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
 
-    final public static String PATH = "/home/pi/Desktop/Simulations/";
-    final static String filePath = "/home/pi/Desktop/Debug/ConfigurationFiles/SimulationConfiguration";
+    /**
+     * The PATH and FILEPATH
+     */
+    final static String PATH = "/home/pi/Desktop/Simulations/";
+    final static String FILEPATH = "/home/pi/Desktop/Debug/ConfigurationFiles/SimulationConfiguration";
 
     final static SerialPort serialPort = SerialPort.getCommPort("/dev/ttyUSB0");
     static OutputStream out = null;
 
-    public ObservableList<String> gpsList = FXCollections.observableArrayList();
+    final ObservableList<String> gpsList = FXCollections.observableArrayList();
     static String fullPath;
-    public String latitude;
-    public String longitude;
-    public String altitude;
-    public String velocity;
-    public String time;
-    public static String parityType;
+    String latitude;
+    String longitude;
+    String altitude;
+    String velocity;
+    String time;
+    static String parityType;
 
+    static final List<String> gpsReplacementList = new ArrayList<>();
+    static final List<String> gpsGarbageCollection = new ArrayList<>();
 
-    public static int counter = 0;
-    public static int endCount = 0;
-    public int gpsListIndex = 0;
+    static void setGpsGarbageCollection() {
+        gpsGarbageCollection.add("");
+    }
+
+    static int counter = 0;
+    static int gpsListIndex = 0;
     @FXML Button nmeaShowDataButton;
     @FXML Button rs232ShowDataButton;
     @FXML HBox totalHBox;
@@ -77,22 +88,22 @@ public class Runner {
     @FXML Label br;
     @FXML Region lreg;
 
+    double timeTaken = 0.0;
+    double millisecondsTimeout = 0.0;
+    double publicMillisecondsTimeout;
 
-    public double timeTaken = 0.0;
-    public double millisecondsTimeout = 0.0;
-    public double publicMillisecondsTimeout;
-
-
-    AtomicBoolean runWarn = new AtomicBoolean(false);
+    final AtomicBoolean runWarn = new AtomicBoolean(false);
     boolean halt = false;
-    public boolean running = false;
-    public boolean timeRunning = false;
+    boolean running = false;
+    boolean timeRunning = false;
+    private boolean firstRun;
 
-    public Font rssFont;
-    public Font font;
+    Font rssFont;
+    Font font;
+
+    @SuppressWarnings("unused")
     ActionEvent actionEvent;
 
-    // -APills 1.0 FXML Tags are required otherwise the FX Loader can't inject the FXML data
     @FXML Region hideRegion;
     @FXML Label latitudeLabel;
     @FXML Label longitudeLabel;
@@ -113,8 +124,7 @@ public class Runner {
     @FXML Label estTimeLeftLabel;
     @FXML Label lineCountLabel;
 
-
-    public Runnable header = () -> {
+    final Runnable header = () -> {
         if (halt) {
             runningLabel.setText("Simulation Paused");
         } else if (running) {
@@ -135,7 +145,7 @@ public class Runner {
      * Platform.runLater and moving the changes to their own thread allows them to update the UI at a time when the JVM
      * finds it convenient to run the Runnable on the FX thread.
      */
-    public Runnable data = () -> {
+    final Runnable data = () -> {
         if (!timeRunning) {
             startTimeLabel.setText(time);
             timeRunning = true;
@@ -148,23 +158,25 @@ public class Runner {
         endTimeLabel.setText(time);
         double sTimeoutMinutes = (publicMillisecondsTimeout / 100);
 
-        estTimeLeftLabel.setText((int) Math.floor((endCount - counter) / (sTimeoutMinutes * 60)) + " minutes");
-        if (Math.floor((endCount - counter) / (sTimeoutMinutes * 60)) < 1)
-            estTimeLeftLabel.setText((int) Math.floor((endCount - counter) / (sTimeoutMinutes)) + " seconds");
-        lineCountLabel.setText(counter + "/" + endCount + " Data Sentences");
+        estTimeLeftLabel.setText((int) Math.floor((gpsList.size() - counter) / (sTimeoutMinutes * 60)) + " minutes");
+        if (Math.floor((gpsList.size() - counter) / (sTimeoutMinutes * 60)) < 1)
+            estTimeLeftLabel.setText((int) Math.floor((gpsList.size() - counter) / (sTimeoutMinutes)) + " seconds");
+        lineCountLabel.setText(counter + "/" + gpsList.size() + " Data Sentences");
     };
 
     /**
      * When the Runnable dataReset is run it will clear out the labels. This should only occur after the nmea thread
      * finishes or the stop button is pressed.
      */
-    public Runnable dataReset = () -> {
+    final Runnable dataReset = () -> {
         latitudeLabel.setText("");
         longitudeLabel.setText("");
         altitudeLabel.setText("");
         velocityLabel.setText("");
         timeLabel.setText("");
         estTimeLeftLabel.setText("");
+        gpsList.clear();
+        gpsList.addAll(gpsReplacementList);
     };
 
     /**
@@ -173,7 +185,7 @@ public class Runner {
      * never need to go back to the blue Start/Stop it initially is because it will always be able to either start or
      * stop GPS data flow.
      */
-    Runnable StartStopImageSwitch = () -> {
+    final Runnable StartStopImageSwitch = () -> {
 
         Image startBtn = new Image(String.valueOf(this.getClass().getResource("/assets/Buttons/runner/runner_start.png")));
         Image stopBtn = new Image(String.valueOf(this.getClass().getResource("/assets/Buttons/runner/runner_stop.png")));
@@ -185,19 +197,18 @@ public class Runner {
         }
     };
 
-
     /**
      * The StartStopTextSwitch Runnable is called to Platform.runLater when it is necessary to update the state of the
      * Start/Stop button without triggering any other runnables or methods
      */
-    Runnable StartStopTextSwitch = () -> {
+    final Runnable StartStopTextSwitch = () -> {
         if (StartStop.getText().equals("Stop")) {
             StartStop.setText("Start");
         } else {
             StartStop.setText("Stop");
         }
     };
-    Runnable PausePlayBackImageSwitch = () -> {
+    final Runnable PausePlayBackImageSwitch = () -> {
         Image pausePlayBtn = new Image(String.valueOf(this.getClass().getResource("/assets/Buttons/runner/runner_pauseplay.png")));
         Image backBtn = new Image(String.valueOf(this.getClass().getResource("/assets/Buttons/runner/runner_exit.png")));
         if (running) {
@@ -212,11 +223,10 @@ public class Runner {
      * protection against extremely large files which could cause Out of Memory exceptions or other problems so it is
      * limited to the first 10000 sentences which is about 3x longer than my longest test
      * <p>
-     * TODO: Add the ability to clear the simulation ListView when it has a few hundred sentences left and then clear
      * the list and add more data ex. if counter greater than 8000 clear 0-8000, 8001-10000 = 0-1998, counter = 0 reader.next
      * until counter + 1998 = 10000
      */
-    public Runnable gpsListing = () -> {
+    final Runnable gpsListing = () -> {
         counter = 0;
         File file = new File(fullPath);
         Scanner reader = null;
@@ -234,12 +244,11 @@ public class Runner {
             counter++;
         }
         gpsShow.setItems(gpsList);
-        endCount = counter;
         counter = 0;
         gpsListIndex = 0;
     };
 
-    public Runnable hideRS232 = () -> {
+    final Runnable hideRS232 = () -> {
         rs232data.setVisible(!rs232data.isVisible());
         rs232labels.setVisible(!rs232labels.isVisible());
         if (rs232labels.isVisible()) {
@@ -321,28 +330,41 @@ public class Runner {
      * loop, now it has been corrected, but in the event it doesn't stop correctly it would then run to the end of the
      * file as it did before debugging.
      */
-    Runnable nmea = () -> {
+    final Runnable nmea = () -> {
+        if (firstRun) {
+            gpsReplacementList.clear();
+            gpsReplacementList.addAll(gpsList);
+            firstRun = false;
+        }
         gpsListIndex = 0;
         runWarn.set(false);
         while (gpsList.size() - 1 >= gpsListIndex && (millisecondsTimeout > .01)) {
             if (!halt) {
+
+                // Infinite Recursion Block, Used for long testing to find errors caused by long running files,
+                // Runs a data reset to reset the GPS List and resets the index
+                /*
+                if(gpsListIndex > (gpsList.size() - 80))
+                {
+                    Platform.runLater(dataReset);
+                    gpsListIndex = 0;
+                }
+                 */
+
                 Platform.runLater(header);
                 //noinspection InstantiationOfUtilityClass
                 new NMEA();
                 if (timeTaken > 750) {
-//                    System.out.println(timeTaken);
                     timeTaken -= 1000;
-//                    System.out.println(timeTaken);
                     setData(NMEA.position.latitude, NMEA.position.longitude, NMEA.position.altitude, NMEA.position.velocity);
                     Platform.runLater(data);
                 }
                 gpsShow.scrollTo(gpsListIndex);
-                gpsShow.getSelectionModel().select(gpsListIndex);                                                           // -APills 1.1          Shows which line is currently being used, helpful for last lines that do not scroll
+                gpsShow.getSelectionModel().select(gpsListIndex);
                 String nexLn = gpsList.get(gpsListIndex);
                 gpsListIndex++;
-//                System.out.println(nexLn);
+                gpsList.set((gpsListIndex - 1), gpsGarbageCollection.get(0));
                 NMEA.parse(nexLn);
-                // -APills 1.0 Serial Write
                 try {
                     out.write(nexLn.getBytes());
                     out.write("\n".getBytes());
@@ -414,6 +436,17 @@ public class Runner {
 
     };
 
+    final Runnable showHideGpsList = () -> {
+        if (gpsShow.isVisible()) {
+            gpsShow.setPrefWidth(0);
+            gpsShow.setVisible(false);
+            nmeaShowDataButton.setText("Show NMEA Data");
+        } else {
+            gpsShow.setPrefWidth(741);
+            gpsShow.setVisible(true);
+            nmeaShowDataButton.setText("Hide NMEA Data");
+        }
+    };
 
     /**
      * @param baud   Takes the baudrate from Secondary to be set to the port
@@ -425,7 +458,7 @@ public class Runner {
      * (known as the Path_Selection window in the package due to feature changes but the name not being updated)
      * the initialization of the serialPort is in initialize() and is explained there.
      */
-    public static void setSerialSettings(int baud, int parity, int stop, int data) {
+    static void setSerialSettings(int baud, int parity, int stop, int data) {
         serialPort.setBaudRate(baud);
         serialPort.setParity(parity);
         serialPort.setNumStopBits(stop);
@@ -454,10 +487,10 @@ public class Runner {
      * @author APills 1.0
      * The getSimulation() method returns the file name of the selected simulation.
      */
-    public static String getSimulation() {
+    static String getSimulation() {
         if (Objects.equals(VariableStorage.getLastScreen, "Standard Simulation")) {
             StringBuilder fileContent = new StringBuilder();
-            try (Stream<String> stream = Files.lines(Paths.get(filePath), StandardCharsets.UTF_8)) {
+            try (Stream<String> stream = Files.lines(Paths.get(FILEPATH), StandardCharsets.UTF_8)) {
                 stream.forEach(s -> fileContent.append(s).append("\n"));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -477,10 +510,10 @@ public class Runner {
      * @param longitude Takes parsed longitude data from the nmea runnable
      * @param velocity  Takes parsed velocity data from the nmea runnable
      * @author APills 1.0
-     * The setData() method sets a public variable for all of the NMEA data so that it can be passed from the nmea
+     * The setData() method sets a variable for all of the NMEA data so that it can be passed from the nmea
      * runnable to the data runnable.
      */
-    public void setData(Float latitude, Float longitude, Float altitude, Float velocity) {
+    void setData(Float latitude, Float longitude, Float altitude, Float velocity) {
         this.latitude = String.valueOf(latitude);
         this.longitude = String.valueOf(longitude);
         this.altitude = String.valueOf(altitude);
@@ -510,7 +543,7 @@ public class Runner {
      * possible to sleep for a second delay rather than a millisecond delay, but rather than complicating the rest of
      * the program I chose to complicate 1 line of code.
      */
-    public double getApproxTime(double input) {
+    double getApproxTime(double input) {
         double output = 500;
         if (input < 1200 && input > 300) {
             output = ((1 / input) * 300000);
@@ -534,6 +567,8 @@ public class Runner {
      * initialize() also sets the labels for the simulation.
      */
     public void initialize() {
+        setGpsGarbageCollection();
+        firstRun = true;
         runWarn.set(true);
         Platform.runLater(hideRS232);
         rssFont = rss.getFont();
@@ -560,8 +595,7 @@ public class Runner {
      * @author APills 1.0
      * The SelectSimulation method opens the window to select a simulation.
      */
-    public void SelectSimulation(ActionEvent actionEvent) {
-        // serialPort.closePort();
+    @FXML void SelectSimulation(ActionEvent actionEvent) {
         if (running) {
             halt = !halt;
             Platform.runLater(header);
@@ -587,7 +621,7 @@ public class Runner {
      * When the button is pressed it displays a confirmation box and if it is cancelled nothing happens.
      * If the simulation is started it runs the runner thread, changes the button to stop.
      */
-    public void StartStop(ActionEvent actionEvent) {
+    @FXML void StartStop(ActionEvent actionEvent) {
         this.actionEvent = actionEvent;
         if (StartStop.getText().equals("Start") && !running) {
             gpsListIndex = 0;
@@ -613,24 +647,12 @@ public class Runner {
         }
     }
 
-    Runnable showHideGpsList = () -> {
-        if (gpsShow.isVisible()) {
-            gpsShow.setPrefWidth(0);
-            gpsShow.setVisible(false);
-            nmeaShowDataButton.setText("Show NMEA Data");
-        } else {
-            gpsShow.setPrefWidth(741);
-            gpsShow.setVisible(true);
-            nmeaShowDataButton.setText("Hide NMEA Data");
-        }
-    };
-
-    public void nmeaShowData(ActionEvent actionEvent) {
+    @FXML void nmeaShowData(ActionEvent actionEvent) {
         Platform.runLater(showHideGpsList);
         actionEvent.consume();
     }
 
-    public void rs232ShowData(ActionEvent actionEvent) {
+    @FXML void rs232ShowData(ActionEvent actionEvent) {
         Platform.runLater(hideRS232);
         actionEvent.consume();
     }

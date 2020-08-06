@@ -23,63 +23,54 @@ import java.util.concurrent.TimeUnit;
 import static GPS_Simulator.VariableStorage.countdown;
 
 public class Settings {
-    public static ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
-    @FXML
-    public Label passHint;
-    @FXML
-    public VBox dataBitsBox;
-    @FXML
-    public VBox parityBox;
-    @FXML
-    public VBox bitSelectionBox;
-    @FXML
-    public VBox baudRateBox;
-    @FXML
-    public ToggleGroup Parity;
-    @FXML
-    public ToggleGroup Bits;
-    @FXML
-    Button PasswordButton;
-    @FXML
-    Button passwordChange;
-    @FXML
-    RadioButton noParity;
-    @FXML
-    RadioButton oddParity;
-    @FXML
-    RadioButton evenParity;
-    @FXML
-    RadioButton markParity;
-    @FXML
-    RadioButton spaceParity;
-    @FXML
-    RadioButton oneBit;
-    @FXML
-    RadioButton onePointFiveBits;
-    @FXML
-    RadioButton twoBits;
-    @FXML
-    TextField dataBits;
-    @FXML
-    TextField baudRate;
-    @FXML
-    PasswordField passwordText;
-    @FXML
-    Label warnings;
-    Runnable enable = () -> {
+    static final ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
+    @FXML Button four;
+    @FXML Button seven;
+    @FXML Button eight;
+    @FXML Button nine;
+    @FXML Button five;
+    @FXML Button six;
+    @FXML Button one;
+    @FXML Button two;
+    @FXML Button three;
+    @FXML Button returnTo;
+    @FXML Button zero;
+    @FXML Button backspace;
+    @FXML Label passHint;
+    @FXML VBox dataBitsBox;
+    @FXML VBox parityBox;
+    @FXML VBox bitSelectionBox;
+    @FXML VBox baudRateBox;
+    @FXML ToggleGroup Parity;
+    @FXML ToggleGroup Bits;
+    @FXML Button PasswordButton;
+    @FXML Button passwordChange;
+    @FXML RadioButton noParity;
+    @FXML RadioButton oddParity;
+    @FXML RadioButton evenParity;
+    @FXML RadioButton markParity;
+    @FXML RadioButton spaceParity;
+    @FXML RadioButton oneBit;
+    @FXML RadioButton onePointFiveBits;
+    @FXML RadioButton twoBits;
+    @FXML TextField dataBits;
+    @FXML TextField baudRate;
+    @FXML PasswordField passwordText;
+    @FXML Label warnings;
+    final Runnable enable = () -> {
         baudRateBox.setDisable(!baudRateBox.isDisabled());
         bitSelectionBox.setDisable(!bitSelectionBox.isDisabled());
         dataBitsBox.setDisable(!parityBox.isDisabled());
         parityBox.setDisable(!parityBox.isDisabled());
         passwordChange.setDisable(!passwordChange.isDisabled());
     };
-    Runnable TimeoutMessage = () -> {
+    final Runnable TimeoutMessage = () -> {
         if (countdown > 0)
             passHint.setText("You have incorrectly entered your password too many times.");
         else
             passHint.setText("Enter Password to Lock/Unlock Settings");
     };
-    Runnable countdownTimer = () -> {
+    final Runnable countdownTimer = () -> {
         Platform.runLater(TimeoutMessage);
         if (countdown > 60) {
             warnings.setText((int) (Math.ceil(countdown / 60)) + " minutes Remaining");
@@ -90,7 +81,7 @@ public class Settings {
             warnings.setText("");
         }
     };
-    Runnable timeout = () -> {
+    final Runnable timeout = () -> {
         countdown = VariableStorage.Timeout;
         PasswordButton.setDisable(true);
         while (countdown > 0) {
@@ -112,8 +103,8 @@ public class Settings {
         }
 
     };
-    Runnable PassChangeRevert = () -> passwordChange.setText("Enter New Password");
-    Runnable PassChangeRevertWait = () -> {
+    final Runnable PassChangeRevert = () -> passwordChange.setText("Enter New Password");
+    final Runnable PassChangeRevertWait = () -> {
         int i = 5;
         while (i > 0) {
             i--;
@@ -125,79 +116,68 @@ public class Settings {
         }
         Platform.runLater(PassChangeRevert);
     };
-    Runnable PassChangeSuccess = () -> {
+    final Runnable PassChangeSuccess = () -> {
         passwordChange.setText("Password Saved");
         executor.execute(PassChangeRevertWait);
     };
-    Runnable PassChangeFail = () -> passwordChange.setText("Password Not Saved");
+    final Runnable PassChangeFail = () -> passwordChange.setText("Password Not Saved");
     private Boolean DataOrBaud = null;
 
-    // 1234567890
-    @FXML
-    public void one(ActionEvent event) {
+    @FXML public void one(ActionEvent event) {
         charSend("1");
         serialSetting();
         event.consume();
     }
 
-    @FXML
-    public void two(ActionEvent event) {
+    @FXML public void two(ActionEvent event) {
         charSend("2");
         serialSetting();
         event.consume();
     }
 
-    @FXML
-    public void three(ActionEvent event) {
+    @FXML public void three(ActionEvent event) {
         charSend("3");
         serialSetting();
         event.consume();
     }
 
-    @FXML
-    public void four(ActionEvent event) {
+    @FXML public void four(ActionEvent event) {
         charSend("4");
         serialSetting();
         event.consume();
     }
 
-    @FXML
-    public void five(ActionEvent event) {
+    @FXML public void five(ActionEvent event) {
         charSend("5");
         serialSetting();
         event.consume();
     }
 
-    @FXML
-    public void six(ActionEvent event) {
+    @FXML public void six(ActionEvent event) {
         charSend("6");
         serialSetting();
         event.consume();
     }
 
-    @FXML
-    public void seven(ActionEvent event) {
+    @FXML public void seven(ActionEvent event) {
         charSend("7");
         serialSetting();
         event.consume();
     }
 
-    @FXML
-    public void eight(ActionEvent event) {
+    @FXML public void eight(ActionEvent event) {
         charSend("8");
         serialSetting();
         event.consume();
     }
 
-    @FXML
-    public void nine(ActionEvent event) {
+    @FXML public void nine(ActionEvent event) {
         charSend("9");
         serialSetting();
         event.consume();
     }
 
-    @FXML
-    public void zero(ActionEvent event) {
+    @FXML public void zero(ActionEvent event) {
         charSend("0");
         serialSetting();
         event.consume();
@@ -214,7 +194,7 @@ public class Settings {
     }
 
     /**
-     * @author APills 1.0        The inputTo() method deals with where to append characters that are input via the onscreen keypad using a Boolean
+     * @author APills 1.0   The inputTo() method deals with where to append characters that are input via the onscreen keypad using a Boolean
      * Password, Data Bits, or Baud Rate
      */
     void inputTo(String character) {
@@ -234,8 +214,7 @@ public class Settings {
      * Simulation Settings or Serial Settings, New Simulation Name or File Description, Data Bits or Baud Rate
      * then it calls the backspaceLogic() method
      */
-    @FXML
-    public void backspace(ActionEvent actionEvent) {
+    @FXML void backspace(ActionEvent actionEvent) {
         if (DataOrBaud == null) {
             passwordText.setText(backspaceLogic(passwordText.getText()));
         } else if (DataOrBaud) {
@@ -253,7 +232,7 @@ public class Settings {
      * The backspaceLogic() method is a convenience tool that allows backspace to work without having to repeat the
      * code block multiple times.
      */
-    public String backspaceLogic(String str) {
+    String backspaceLogic(String str) {
         if (str != null && str.length() > 0) {
             str = str.substring(0, str.length() - 1);
         }
@@ -277,7 +256,7 @@ public class Settings {
      * @author APills 1.0
      * Returns the user to the Primary Window
      */
-    public void returnTo(ActionEvent actionEvent) throws IOException {
+    @FXML void returnTo(ActionEvent actionEvent) throws IOException {
         serialSetting();
         Parent simulationsViewParent = FXMLLoader.load(getClass().getResource("Simulations.fxml"));
         Scene simulationsView = new Scene(simulationsViewParent);
@@ -294,7 +273,7 @@ public class Settings {
      * @author APills 1.0        The method serialSetting() gets all of the settings that have been input and then sets variables that are called
      * by the Primary window on initialization to update the serial settings.
      */
-    public void serialSetting() {
+    void serialSetting() {
         VariableStorage.BaudRateVar = Integer.parseInt(baudRate.getText());
         VariableStorage.DataBitsVar = Integer.parseInt(dataBits.getText());
         if (noParity.isSelected()) {
@@ -323,52 +302,52 @@ public class Settings {
         }
     }
 
-    public void baudRateSwitch(ActionEvent actionEvent) {
+    @FXML void baudRateSwitch(ActionEvent actionEvent) {
         VariableStorage.BaudRateVar = Integer.parseInt(baudRate.getText());
         actionEvent.consume();
     }
 
-    public void dataBitSwitch(ActionEvent actionEvent) {
+    @FXML void dataBitSwitch(ActionEvent actionEvent) {
         VariableStorage.DataBitsVar = Integer.parseInt(dataBits.getText());
         actionEvent.consume();
     }
 
-    public void paritySwitch0(ActionEvent actionEvent) {
+    @FXML void paritySwitch0(ActionEvent actionEvent) {
         VariableStorage.ParityModeVar = 0;
         actionEvent.consume();
     }
 
-    public void paritySwitch1(ActionEvent actionEvent) {
+    @FXML void paritySwitch1(ActionEvent actionEvent) {
         VariableStorage.ParityModeVar = 1;
         actionEvent.consume();
     }
 
-    public void paritySwitch2(ActionEvent actionEvent) {
+    @FXML void paritySwitch2(ActionEvent actionEvent) {
         VariableStorage.ParityModeVar = 2;
         actionEvent.consume();
     }
 
-    public void paritySwitch3(ActionEvent actionEvent) {
+    @FXML void paritySwitch3(ActionEvent actionEvent) {
         VariableStorage.ParityModeVar = 3;
         actionEvent.consume();
     }
 
-    public void paritySwitch4(ActionEvent actionEvent) {
+    @FXML void paritySwitch4(ActionEvent actionEvent) {
         VariableStorage.ParityModeVar = 4;
         actionEvent.consume();
     }
 
-    public void stopBitSwitch1(ActionEvent actionEvent) {
+    @FXML void stopBitSwitch1(ActionEvent actionEvent) {
         VariableStorage.StopBitsVar = 1;
         actionEvent.consume();
     }
 
-    public void stopBitSwitch2(ActionEvent actionEvent) {
+    @FXML void stopBitSwitch2(ActionEvent actionEvent) {
         VariableStorage.StopBitsVar = 2;
         actionEvent.consume();
     }
 
-    public void stopBitSwitch3(ActionEvent actionEvent) {
+    @FXML void stopBitSwitch3(ActionEvent actionEvent) {
         VariableStorage.StopBitsVar = 3;
         actionEvent.consume();
     }
@@ -378,7 +357,7 @@ public class Settings {
      * @author APills 1.0
      * Sets Data Bits or Baud Rate Boolean to Baud Rate
      */
-    public void baudClicked(MouseEvent mouseEvent) {
+    @FXML void baudClicked(MouseEvent mouseEvent) {
         DataOrBaud = false;
         mouseEvent.consume();
     }
@@ -388,7 +367,7 @@ public class Settings {
      * @author APills 1.0
      * Sets Data Bits or Baud Rate Boolean to Data Bits
      */
-    public void dataBitsClicked(MouseEvent mouseEvent) {
+    @FXML void dataBitsClicked(MouseEvent mouseEvent) {
         DataOrBaud = true;
         mouseEvent.consume();
     }
@@ -398,7 +377,7 @@ public class Settings {
      * @author APills 1.0
      * Sets Data Bits or Baud Rate Boolean to Password Field
      */
-    public void passwordSwitch(MouseEvent mouseEvent) {
+    @FXML void passwordSwitch(MouseEvent mouseEvent) {
         DataOrBaud = null;
         mouseEvent.consume();
     }
@@ -407,9 +386,8 @@ public class Settings {
         Platform.runLater(enable);
     }
 
-    public void testpass(ActionEvent actionEvent) {
+    @FXML void testpass(ActionEvent actionEvent) {
         String getPass = passwordText.getText();
-        //System.out.println(getPass);
         if (getPass.equals(VariableStorage.Password)) {
             VariableStorage.PassFails = 0;
             VariableStorage.Timeout = 0;
@@ -417,7 +395,6 @@ public class Settings {
             enableWithPassword();
         } else if (VariableStorage.PassFails % 5 == 0 && VariableStorage.PassFails > 0) {
             VariableStorage.Timeout = 6 * VariableStorage.PassFails;
-            //System.out.println(VariableStorage.Timeout);
             VariableStorage.PassFails++;
             passwordText.setText("");
             if (VariableStorage.Timeout > 0) {
@@ -431,7 +408,7 @@ public class Settings {
         actionEvent.consume();
     }
 
-    public void changepass(ActionEvent actionEvent) throws IOException {
+    @FXML void changepass(ActionEvent actionEvent) throws IOException {
         boolean testSuccess = VariableStorage.storePass(passwordText.getText());
         if (testSuccess) {
             VariableStorage.Password = passwordText.getText();
